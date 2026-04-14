@@ -91,8 +91,8 @@ async function scanCity(cityKey: CityKey): Promise<Project[]> {
   const userPrompt = `Search for vibe-coded and creative tech projects from ${city.displayName} (search terms: ${terms}).`;
 
   const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 4096,
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 2048,
     tools: [{ type: 'web_search_20250305' as const, name: 'web_search' }] as any,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userPrompt }],
@@ -130,7 +130,7 @@ async function main() {
       writeFileSync(outPath, '[]', 'utf-8');
     }
     // Brief pause between cities to avoid rate limits
-    await new Promise(r => setTimeout(r, 800));
+    await new Promise(r => setTimeout(r, 5000));
   }
 
   console.log('='.repeat(50));
