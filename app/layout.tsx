@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${vt323.variable} ${ibmPlexMono.variable}`}>
-      <body>
+      <body style={{ background: '#1a1a1a', color: '#f0e68c' }}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
