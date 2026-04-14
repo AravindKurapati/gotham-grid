@@ -24,6 +24,7 @@ export interface Project {
   description: string;
   category: Category;
   url: string;
+  sourceUrl?: string;
   source: Source;
   date: string;
   likes?: number;

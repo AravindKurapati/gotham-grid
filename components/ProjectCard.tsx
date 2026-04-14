@@ -7,10 +7,23 @@ import ProjectCardExpanded from './ProjectCardExpanded';
 
 interface Props { project: Project; scanCode?: string; }
 
+const SOURCE_LABELS: Record<string, string> = {
+  twitter: 'TWITTER',
+  github: 'GITHUB',
+  reddit: 'REDDIT',
+  hackernews: 'HN',
+  blog: 'BLOG',
+  producthunt: 'PH',
+  other: 'WEB',
+};
+
 export default function ProjectCard({ project, scanCode }: Props) {
   const { theme } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const cat = CATEGORIES[project.category];
+  const sourceLabel = SOURCE_LABELS[project.source] ?? project.source.toUpperCase();
+  const sourceLink = project.sourceUrl ?? project.url;
+  const hasDistinctSource = project.sourceUrl && project.sourceUrl !== project.url;
 
   if (theme === 'flap') {
     return (
@@ -28,11 +41,32 @@ export default function ProjectCard({ project, scanCode }: Props) {
           <td className="py-2 px-3 text-crt-gray font-mono text-xs whitespace-nowrap hidden sm:table-cell">
             {project.author}
           </td>
-          <td className="py-2 px-3 text-crt-pink font-mono text-xs whitespace-nowrap hidden md:table-cell">
-            {project.likes ?? '--'}
+          <td className="py-2 px-3 font-mono text-xs whitespace-nowrap hidden md:table-cell">
+            {project.likes !== undefined && project.likes > 0
+              ? <span className="text-crt-pink">{project.likes}</span>
+              : <span className="text-crt-gray">--</span>}
           </td>
           <td className="py-2 px-3 hidden lg:table-cell">
-            <span className="text-crt-green text-xs font-mono">[*] LIVE</span>
+            <a
+              href={sourceLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-crt-cyan text-xs font-mono hover:text-flap-yellow transition-colors"
+              onClick={e => e.stopPropagation()}
+            >
+              [{sourceLabel}]
+            </a>
+            {hasDistinctSource && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-crt-green text-xs font-mono hover:text-flap-yellow transition-colors ml-2"
+                onClick={e => e.stopPropagation()}
+              >
+                [VIEW]
+              </a>
+            )}
           </td>
         </tr>
         {expanded && (
@@ -64,11 +98,30 @@ export default function ProjectCard({ project, scanCode }: Props) {
         <div className="text-crt-green/70 text-xs font-mono line-clamp-2">{project.description}</div>
       )}
       {!expanded && (
-        <div className="mt-2 flex items-center justify-between">
-          {project.likes !== undefined && (
+        <div className="mt-2 flex items-center gap-3 flex-wrap">
+          {project.likes !== undefined && project.likes > 0 && (
             <span className="text-crt-pink text-xs font-mono">{project.likes} likes</span>
           )}
-          <span className="text-crt-cyan text-xs font-mono">[VIEW -&gt;]</span>
+          <a
+            href={sourceLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-crt-cyan text-xs font-mono hover:text-crt-green transition-colors"
+            onClick={e => e.stopPropagation()}
+          >
+            [{sourceLabel}]
+          </a>
+          {hasDistinctSource && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-crt-green text-xs font-mono hover:text-crt-green/70 transition-colors"
+              onClick={e => e.stopPropagation()}
+            >
+              [VIEW -&gt;]
+            </a>
+          )}
         </div>
       )}
       {expanded && <ProjectCardExpanded project={project} scanCode={scanCode} />}

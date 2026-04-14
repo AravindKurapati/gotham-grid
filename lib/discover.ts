@@ -36,6 +36,7 @@ function parseProjects(text: string, city: CityKey): Project[] {
             ? (String(obj.category) as Category)
             : 'OTHER',
           url: typeof obj.url === 'string' ? obj.url : '',
+          sourceUrl: typeof obj.sourceUrl === 'string' && obj.sourceUrl ? obj.sourceUrl : undefined,
           source: VALID_SOURCES.has(String(obj.source))
             ? (String(obj.source) as Project['source'])
             : 'other',
@@ -68,7 +69,8 @@ Each object must have these fields:
   "author": "@handle or Name",
   "description": "1-2 sentence description",
   "category": "TRANSIT|FOOD|SUNSET|MAPS|UTILITY|AI|ART|OTHER",
-  "url": "https://...",
+  "url": "https://... (the actual project or demo URL)",
+  "sourceUrl": "https://... (the tweet/post/repo URL where it was found -- omit if same as url)",
   "source": "twitter|github|reddit|hackernews|blog|producthunt|other",
   "date": "relative or ISO date",
   "likes": 0

@@ -41,19 +41,33 @@ export default function ProjectCardExpanded({ project, scanCode }: Props) {
     <div className={`font-mono text-xs mt-2 ${textCls}`}>
       <p className={`${dimCls} mb-2`}>{project.description}</p>
       <div className="flex flex-wrap gap-3 mb-2">
-        <span className={dimCls}>SOURCE: {project.source.toUpperCase()}</span>
         <span className={dimCls}>DATE: {project.date}</span>
-        {project.likes !== undefined && <span className={dimCls}>LIKES: {project.likes}</span>}
+        {project.likes !== undefined && project.likes > 0 && (
+          <span className={dimCls}>LIKES: {project.likes}</span>
+        )}
       </div>
-      <a
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${linkCls} underline transition-colors`}
-        onClick={e => e.stopPropagation()}
-      >
-        OPEN PROJECT -&gt;
-      </a>
+      <div className="flex flex-wrap gap-3">
+        <a
+          href={project.sourceUrl ?? project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${linkCls} underline transition-colors`}
+          onClick={e => e.stopPropagation()}
+        >
+          [{project.source === 'hackernews' ? 'HN' : project.source.toUpperCase()}]
+        </a>
+        {project.sourceUrl && project.sourceUrl !== project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${linkCls} underline transition-colors`}
+            onClick={e => e.stopPropagation()}
+          >
+            [VIEW PROJECT]
+          </a>
+        )}
+      </div>
 
       {deepData ? (
         <div className="mt-3 border-t border-current/20 pt-2">
