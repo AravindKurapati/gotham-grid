@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* CRT phosphor colors */
+  --color-crt-black: #0a0a0a;
+  --color-crt-bg: #111111;
+  --color-crt-green: #33ff33;
+  --color-crt-green-dim: #22aa22;
+  --color-crt-green-dark: #1a3a1a;
+  --color-crt-green-darkest: #0d1f0d;
+  --color-crt-amber: #ffaa33;
+  --color-crt-red: #ff6666;
+  --color-crt-pink: #ff66cc;
+  --color-crt-cyan: #66ccff;
+  --color-crt-purple: #cc99ff;
+  --color-crt-gold: #ffcc66;
+  --color-crt-gray: #888888;
+
+  /* Split-flap departure board colors */
+  --color-flap-bg: #1a1a1a;
+  --color-flap-tile: #222222;
+  --color-flap-yellow: #f0e68c;
+  --color-flap-border: #333333;
+
+  /* Fonts */
+  --font-display: 'VT323', monospace;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #33ff33; }
+
+/* Animations */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.85; }
+  94% { opacity: 1; }
+  97% { opacity: 1; }
+  98% { opacity: 0.9; }
+  99% { opacity: 1; }
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(100vw); }
+  to   { transform: translateX(-100%); }
+}
+
+@keyframes scanFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-blink     { animation: blink 1s step-end infinite; }
+.animate-flicker   { animation: flicker 8s ease-in-out infinite; }
+.animate-ticker    { animation: tickerScroll 40s linear infinite; }
+.animate-scan-fade { animation: scanFade 0.2s ease-out forwards; }
+
+/* CRT glow utility */
+.glow-green { text-shadow: 0 0 8px rgba(51, 255, 51, 0.6); }
+.glow-amber { text-shadow: 0 0 8px rgba(255, 170, 51, 0.6); }
+
+/* Scanlines -- only visible when .theme-crt is on <html> */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.10) 2px,
+    rgba(0, 0, 0, 0.10) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
