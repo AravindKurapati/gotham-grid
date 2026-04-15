@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#0a0a0a"/>
+  <!-- Left wing -->
+  <path fill="#33ff33" d="M16,19 L0,15 C2,7 7,6 12,13 Z"/>
+  <!-- Right wing -->
+  <path fill="#33ff33" d="M16,19 L32,15 C30,7 25,6 20,13 Z"/>
+  <!-- Body -->
+  <ellipse cx="16" cy="19" rx="6" ry="4" fill="#33ff33"/>
+  <!-- Left ear -->
+  <polygon points="11,15 12,4 14,15" fill="#33ff33"/>
+  <!-- Right ear -->
+  <polygon points="18,15 20,4 22,15" fill="#33ff33"/>
+</svg>

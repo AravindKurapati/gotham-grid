@@ -35,7 +35,40 @@ export default function Header({
     <header className={`border-b ${border} pb-3 mb-3`}>
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
         <div>
-          <h1 className={`font-display text-3xl md:text-4xl tracking-widest ${titleCls}`}>
+          <h1 className={`font-display text-3xl md:text-4xl tracking-widest ${titleCls} flex items-center gap-2`}>
+            {/* Bat-wing GG monogram */}
+            <svg
+              viewBox="0 0 48 28"
+              width="38"
+              height="22"
+              aria-hidden="true"
+              style={{ display: 'inline-block', flexShrink: 0 }}
+            >
+              <rect width="48" height="28" fill="#0a0a0a" />
+              {/* Left wing */}
+              <path fill="currentColor" d="M24,22 L1,18 C3,9 10,7 15,15 Z" />
+              {/* Right wing */}
+              <path fill="currentColor" d="M24,22 L47,18 C45,9 38,7 33,15 Z" />
+              {/* Body */}
+              <ellipse cx="24" cy="22" rx="9" ry="5" fill="currentColor" />
+              {/* Left ear */}
+              <polygon points="20,17 19,7 22,17" fill="currentColor" />
+              {/* Right ear */}
+              <polygon points="26,17 29,7 28,17" fill="currentColor" />
+              {/* GG monogram — black on colored body */}
+              <text
+                x="24"
+                y="25"
+                textAnchor="middle"
+                fill="#0a0a0a"
+                fontSize="7"
+                fontFamily="monospace"
+                fontWeight="bold"
+                letterSpacing="0"
+              >
+                GG
+              </text>
+            </svg>
             GOTHAM GRID
           </h1>
           <p className={`font-mono text-xs ${subCls}`}>

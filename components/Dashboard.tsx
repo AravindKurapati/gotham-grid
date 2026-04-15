@@ -12,6 +12,7 @@ import ScanlineOverlay from './ScanlineOverlay';
 import LiveScanModal from './LiveScanModal';
 import AgentStatus from './AgentStatus';
 import BootSequence from './BootSequence';
+import Footer from './Footer';
 
 interface Props {
   initialData: Record<CityKey, Project[]>;
@@ -157,6 +158,7 @@ export default function Dashboard({ initialData }: Props) {
           <ProjectGrid projects={filteredProjects} scanCode={scanCode} />
         )}
         <Ticker projects={baseProjects} />
+        <Footer />
       </div>
       {showModal && (
         <LiveScanModal

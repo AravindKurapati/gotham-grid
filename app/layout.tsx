@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     title: 'GOTHAM GRID',
     description: 'Scanning the grid. Tracking the vibe.',
   },
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
