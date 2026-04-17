@@ -17,73 +17,92 @@ const BOOT_LINES = [
 const ROUTES = [
   {
     id: 'a',
-    color: '#33ff33',
-    points: '3,92 28,76 55,82 78,61 105,66 130,45 158,50 197,26',
+    color: '#9ee94f',
+    points: '0,73 28,73 45,63 60,63 78,47 94,47 118,36 141,36 161,28 190,28 216,16 240,16',
     delay: '0s',
   },
   {
     id: 'c',
-    color: '#66ccff',
-    points: '0,35 22,42 43,38 70,52 96,46 122,64 146,58 176,78 200,73',
-    delay: '0.6s',
+    color: '#5fe5c0',
+    points: '0,39 25,39 45,45 64,45 80,59 105,59 122,65 143,65 165,79 190,79 220,96 240,96',
+    delay: '0.7s',
   },
   {
     id: 'q',
-    color: '#ffcc66',
-    points: '12,108 38,92 64,95 86,78 103,85 126,70 150,72 183,96',
-    delay: '1.1s',
+    color: '#d9df58',
+    points: '0,19 30,19 43,31 60,31 79,52 96,52 122,42 149,42 178,56 207,56 240,68',
+    delay: '1.2s',
   },
   {
     id: 'r',
-    color: '#ff6666',
-    points: '30,8 47,27 62,32 75,48 88,58 104,77 119,84 138,107',
-    delay: '1.7s',
+    color: '#d97052',
+    points: '44,0 44,19 57,32 70,49 82,66 96,84 112,101 140,101 169,111 210,111 240,116',
+    delay: '1.8s',
   },
   {
     id: 'g',
-    color: '#cc99ff',
-    points: '118,6 112,25 124,41 119,56 132,70 128,90 140,118',
-    delay: '2.2s',
+    color: '#66ccff',
+    points: '0,54 31,54 47,59 66,59 85,71 106,71 130,82 155,82 184,83 209,93 240,93',
+    delay: '2.4s',
+  },
+  {
+    id: 'n',
+    color: '#a8df45',
+    points: '105,0 105,20 122,38 122,57 136,73 136,94 151,120',
+    delay: '2.9s',
   },
 ] as const;
 
 const STATIONS = [
-  [28, 76],
-  [55, 82],
-  [78, 61],
-  [105, 66],
-  [130, 45],
-  [158, 50],
-  [22, 42],
-  [70, 52],
-  [122, 64],
-  [176, 78],
-  [38, 92],
-  [86, 78],
-  [150, 72],
-  [47, 27],
-  [75, 48],
-  [104, 77],
-  [119, 84],
-  [112, 25],
-  [124, 41],
-  [128, 90],
+  [30, 19],
+  [44, 19],
+  [57, 32],
+  [60, 31],
+  [64, 45],
+  [78, 47],
+  [79, 52],
+  [80, 59],
+  [85, 71],
+  [94, 47],
+  [96, 52],
+  [96, 84],
+  [105, 20],
+  [105, 59],
+  [118, 36],
+  [122, 38],
+  [122, 57],
+  [122, 65],
+  [130, 82],
+  [136, 73],
+  [141, 36],
+  [143, 65],
+  [149, 42],
+  [155, 82],
+  [161, 28],
+  [165, 79],
+  [178, 56],
+  [190, 28],
+  [190, 79],
+  [207, 56],
+  [209, 93],
+  [216, 16],
 ] as const;
 
 const BOROUGH_LABELS = [
-  { label: 'MANHATTAN', x: 73, y: 34 },
-  { label: 'BROOKLYN', x: 105, y: 93 },
-  { label: 'QUEENS', x: 153, y: 35 },
-  { label: 'BRONX', x: 111, y: 16 },
-  { label: 'STATEN ISLAND', x: 34, y: 101 },
+  { label: 'MANHATTAN', x: 74, y: 30, size: 6.8 },
+  { label: 'QUEENS', x: 178, y: 31, size: 6.2 },
+  { label: 'BRONX', x: 191, y: 57, size: 6.2 },
+  { label: 'BROOKLYN', x: 194, y: 88, size: 6.4 },
+  { label: 'STATEN ISLAND', x: 199, y: 108, size: 5.8 },
 ] as const;
 
-const DATA_COLUMNS = [
-  { text: '01 A7 QN GRID', x: 13, y: 16 },
-  { text: 'BKLYN NODE 33', x: 169, y: 12 },
-  { text: 'BX 4D SCAN', x: 141, y: 88 },
-  { text: 'MN LOCAL 09', x: 57, y: 12 },
-  { text: 'SI RELAY 5', x: 23, y: 54 },
+const DATA_MARKS = [
+  { text: 'x12.5', x: 17, y: 103 },
+  { text: 'y09.2', x: 18, y: 108 },
+  { text: 'A-22c', x: 0, y: 12 },
+  { text: 'MN.774', x: 135, y: 12 },
+  { text: 'BX:SCAN', x: 206, y: 78 },
+  { text: 'QNS-118', x: 202, y: 36 },
 ] as const;
 
 function routePath(points: string) {
@@ -94,7 +113,7 @@ function MtaSchematicBackground({ isExiting }: { isExiting: boolean }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 120"
+      viewBox="0 0 240 120"
       preserveAspectRatio="none"
       className="absolute inset-0 w-full h-full"
       aria-hidden="true"
@@ -104,63 +123,79 @@ function MtaSchematicBackground({ isExiting }: { isExiting: boolean }) {
       }}
     >
       <defs>
-        <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="0.8" result="blur" />
+        <filter id="routeGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="0.45" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        <pattern id="schematicGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+        <filter id="softBloom" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.4" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <pattern id="fineGrid" width="4" height="4" patternUnits="userSpaceOnUse">
           <path
-            d="M 10 0 L 0 0 0 10"
+            d="M 4 0 L 0 0 0 4"
             fill="none"
             stroke="#33ff33"
-            strokeOpacity="0.12"
-            strokeWidth="0.25"
+            strokeOpacity="0.13"
+            strokeWidth="0.18"
           />
+        </pattern>
+        <pattern id="dotMatrix" width="2.4" height="2.4" patternUnits="userSpaceOnUse">
+          <circle cx="0.45" cy="0.45" r="0.12" fill="#33ff33" fillOpacity="0.26" />
         </pattern>
       </defs>
 
-      <rect width="200" height="120" fill="url(#schematicGrid)" />
+      <rect width="240" height="120" fill="#050807" />
+      <rect width="240" height="120" fill="url(#fineGrid)" />
+      <rect width="240" height="120" fill="url(#dotMatrix)" opacity="0.72" />
       <path
-        d="M0 22 H200 M0 58 H200 M0 96 H200 M34 0 V120 M82 0 V120 M132 0 V120 M178 0 V120"
-        stroke="#33ff33"
-        strokeOpacity="0.08"
+        d="M0 23 H240 M0 50 H240 M0 76 H240 M0 102 H240 M22 0 V120 M66 0 V120 M110 0 V120 M154 0 V120 M198 0 V120"
+        stroke="#55ff66"
+        strokeOpacity="0.14"
         strokeWidth="0.35"
       />
 
-      {DATA_COLUMNS.map(column => (
+      {DATA_MARKS.map(mark => (
         <text
-          key={column.text}
-          x={column.x}
-          y={column.y}
-          fill="#33ff33"
-          fillOpacity="0.23"
-          fontSize="2.7"
+          key={`${mark.text}-${mark.x}`}
+          x={mark.x}
+          y={mark.y}
+          fill="#a8ff9a"
+          fillOpacity="0.2"
+          fontSize="2.6"
           fontFamily="monospace"
           letterSpacing="0"
-          transform={`rotate(90 ${column.x} ${column.y})`}
         >
-          {column.text}
-          <animate
-            attributeName="fill-opacity"
-            values="0.08;0.36;0.12"
-            dur="3.4s"
-            begin={`${column.x / 50}s`}
-            repeatCount="indefinite"
-          />
+          {mark.text}
         </text>
       ))}
 
-      {BOROUGH_LABELS.map(({ label, x, y }) => (
+      <g opacity="0.28">
+        {Array.from({ length: 18 }).map((_, index) => (
+          <path
+            key={index}
+            d={`M${index * 14 - 20} ${10 + (index % 4) * 17} H${index * 14 + 62}`}
+            stroke="#95f06d"
+            strokeDasharray="0.7 1.5"
+            strokeWidth="0.22"
+          />
+        ))}
+      </g>
+
+      {BOROUGH_LABELS.map(({ label, x, y, size }) => (
         <text
           key={label}
           x={x}
           y={y}
-          fill="#33ff33"
-          fillOpacity="0.22"
-          fontSize="5"
+          fill="#b7ffd2"
+          fillOpacity="0.24"
+          fontSize={size}
           fontFamily="monospace"
           fontWeight="700"
           letterSpacing="0"
@@ -177,32 +212,32 @@ function MtaSchematicBackground({ isExiting }: { isExiting: boolean }) {
               points={route.points}
               fill="none"
               stroke={route.color}
-              strokeOpacity="0.58"
-              strokeWidth="1.15"
+              strokeOpacity="0.68"
+              strokeWidth="0.7"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points={route.points}
               fill="none"
-              stroke="#ffffff"
-              strokeOpacity="0.38"
-              strokeWidth="0.25"
+              stroke="#eaffde"
+              strokeOpacity="0.28"
+              strokeWidth="0.14"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeDasharray="1.2 3"
+              strokeDasharray="1 2.4"
             />
-            <circle r="1.8" fill={route.color} opacity="0.95">
+            <circle r="1" fill={route.color} opacity="0.95" filter="url(#softBloom)">
               <animateMotion
-                dur="4.8s"
+                dur="6.2s"
                 begin={route.delay}
                 repeatCount="indefinite"
                 path={routePath(route.points)}
               />
               <animate
                 attributeName="opacity"
-                values="0;1;1;0"
-                dur="4.8s"
+                values="0;0.9;0.9;0"
+                dur="6.2s"
                 begin={route.delay}
                 repeatCount="indefinite"
               />
@@ -217,22 +252,22 @@ function MtaSchematicBackground({ isExiting }: { isExiting: boolean }) {
             key={`${cx}-${cy}`}
             cx={cx}
             cy={cy}
-            r="1.5"
-            fill="#0a0a0a"
-            stroke="#f7fff7"
-            strokeOpacity="0.78"
-            strokeWidth="0.65"
+            r="0.85"
+            fill="#07100a"
+            stroke="#caffbf"
+            strokeOpacity="0.72"
+            strokeWidth="0.35"
           />
         ))}
       </g>
 
       {ROUTES.map((route, index) => (
-        <g key={`${route.id}-badge`} transform={`translate(${156 + index * 9} 112)`}>
-          <circle r="3.5" fill={route.color} fillOpacity="0.85" />
+        <g key={`${route.id}-badge`} transform={`translate(${180 + index * 8} 111)`}>
+          <circle r="3" fill={route.color} fillOpacity="0.78" />
           <text
-            y="1.2"
-            fill="#0a0a0a"
-            fontSize="3.6"
+            y="1"
+            fill="#061006"
+            fontSize="3"
             fontFamily="monospace"
             fontWeight="700"
             textAnchor="middle"
@@ -290,7 +325,7 @@ export default function BootSequence({ onComplete }: Props) {
 
   return (
     <div
-      className="min-h-screen bg-crt-black text-crt-green font-mono flex items-center justify-center p-8 relative overflow-hidden"
+      className="min-h-screen bg-crt-black text-crt-green font-mono flex items-center justify-start px-[7vw] py-8 relative overflow-hidden"
       style={{
         opacity: isExiting ? 0 : 1,
         transition: isExiting ? 'opacity 0.45s ease-in' : undefined,
@@ -298,15 +333,15 @@ export default function BootSequence({ onComplete }: Props) {
     >
       <MtaSchematicBackground isExiting={isExiting} />
 
-      <div className="max-w-xl w-full relative z-10">
-        <pre className="text-crt-green text-sm mb-4 leading-tight whitespace-pre">{`+================================================+
+      <div className="max-w-[560px] w-full relative z-10 bg-crt-black/55 py-5 pr-5">
+        <pre className="text-crt-green text-base mb-5 leading-tight whitespace-pre glow-green">{`+================================================+
 |           GOTHAM GRID v1.0                     |
 |      GLOBAL VIBE-CODE SCANNER                  |
 +================================================+`}</pre>
 
-        <div className="space-y-1 text-sm mb-4 min-h-[144px]">
+        <div className="space-y-2 text-base mb-5 min-h-[166px]">
           {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
-            <p key={i} className="text-crt-green animate-scan-fade">{line}</p>
+            <p key={i} className="text-crt-green animate-scan-fade glow-green">{line}</p>
           ))}
           {visibleLines < BOOT_LINES.length && (
             <span className="animate-blink">_</span>
@@ -314,9 +349,9 @@ export default function BootSequence({ onComplete }: Props) {
         </div>
 
         {showProgress && (
-          <div className="mb-4 text-sm">
-            <p className="mb-1 text-crt-green/70">&gt; LOADING GRID DATA...</p>
-            <p className="text-crt-green">
+          <div className="mb-5 text-base">
+            <p className="mb-2 text-crt-green/80">&gt; LOADING GRID DATA...</p>
+            <p className="text-crt-green glow-green">
               [{`#`.repeat(filled)}{`.`.repeat(empty)}] {progress}%
             </p>
           </div>
@@ -325,7 +360,7 @@ export default function BootSequence({ onComplete }: Props) {
         {showEnter && (
           <button
             onClick={handleEnter}
-            className="mt-4 border border-crt-green text-crt-green px-6 py-2 font-mono text-sm hover:bg-crt-green hover:text-crt-black transition-colors cursor-pointer animate-scan-fade"
+            className="mt-2 ml-24 border border-crt-green text-crt-green px-8 py-2 font-mono text-base hover:bg-crt-green hover:text-crt-black transition-colors cursor-pointer animate-scan-fade"
           >
             [ENTER THE GRID]
           </button>
