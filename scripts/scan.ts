@@ -1,18 +1,24 @@
 import * as dotenv from 'dotenv';
 import { writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
-import Anthropic from '@anthropic-ai/sdk';
+import Groq from 'groq-sdk';
+import { tavily } from '@tavily/core';
 import { CITIES, CITY_KEYS } from '../lib/cities';
-import type { Project, CityKey, Category } from '../lib/types';
+import type { Project, CityKey, Category, CityConfig } from '../lib/types';
 
 dotenv.config({ path: '.env.local' });
 
-if (!process.env.ANTHROPIC_API_KEY) {
-  console.error('[ERR] ANTHROPIC_API_KEY not set. Add it to .env.local');
+if (!process.env.GROQ_API_KEY) {
+  console.error('[ERR] GROQ_API_KEY not set. Add it to .env.local');
+  process.exit(1);
+}
+if (!process.env.TAVILY_API_KEY) {
+  console.error('[ERR] TAVILY_API_KEY not set. Add it to .env.local');
   process.exit(1);
 }
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const tavilyClient = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
 const VALID_CATEGORIES = new Set(['TRANSIT', 'FOOD', 'SUNSET', 'MAPS', 'UTILITY', 'AI', 'ART', 'OTHER']);
 const VALID_SOURCES = new Set(['twitter', 'github', 'reddit', 'hackernews', 'blog', 'producthunt', 'other']);
@@ -60,18 +66,9 @@ function parseProjects(text: string, city: CityKey): Project[] {
   }
 }
 
-const SYSTEM_PROMPT = `You are GOTHAM GRID scanner. Search the web for creative coding projects, apps, visualizations, and tech demos themed around a specific city.
+const SYSTEM_PROMPT = `You are GOTHAM GRID scanner. You will be given raw web search results about creative coding projects from a specific city.
 
-Focus on:
-- Vibe-coded apps and demos shared on Twitter/X in 2024-2026
-- GitHub repos with city-themed creative projects
-- Reddit and Hacker News posts about city-specific apps
-- Blog posts and Product Hunt launches
-- Deployed web apps and interactive demos
-
-Categories: TRANSIT, FOOD, SUNSET, MAPS, UTILITY, AI, ART, OTHER.
-
-Return ONLY a valid JSON array. No markdown, no backticks, no preamble.
+Extract and return ONLY a valid JSON array of projects found in the search results. No markdown, no backticks, no preamble.
 Each object:
 {
   "title": "Project Name",
@@ -85,24 +82,62 @@ Each object:
   "likes": 0
 }
 
-Return 8-15 unique, REAL projects that actually exist. Do not invent fake ones.`;
+Only include REAL projects from the search results. Do not invent anything.`;
+
+function buildQueries(city: CityConfig): string[] {
+  const name = city.name;
+  return [
+    `${name} data visualization project 2024 2025`,
+    `${name} interactive map app site:github.com OR site:twitter.com`,
+    `"I built" "${name}" app twitter OR reddit`,
+    `${name} open data creative coding project`,
+    `${name} side project launched vibe coding`,
+    ...city.searchTerms.slice(0, 3).map(t => `${t} creative tech project`),
+  ];
+}
+
+async function tavilySearch(queries: string[]): Promise<string> {
+  const seen = new Set<string>();
+  const chunks: string[] = [];
+
+  for (const q of queries) {
+    try {
+      const res = await tavilyClient.search(q, { maxResults: 5 });
+      for (const r of res.results) {
+        if (!seen.has(r.url)) {
+          seen.add(r.url);
+          chunks.push(`[${chunks.length + 1}] ${r.title}\nURL: ${r.url}\n${r.content}`);
+        }
+      }
+    } catch {
+      // skip failed query
+    }
+    await new Promise(r => setTimeout(r, 500));
+  }
+
+  return chunks.join('\n\n');
+}
 
 async function scanCity(cityKey: CityKey): Promise<Project[]> {
   const city = CITIES[cityKey];
-  const terms = city.searchTerms.join(', ');
-  const userPrompt = `Search for vibe-coded and creative tech projects from ${city.displayName} (search terms: ${terms}).`;
+  const queries = buildQueries(city);
+  const searchText = await tavilySearch(queries);
 
-  const response = await anthropic.messages.create({
-    model: 'claude-haiku-4-5-20251001',
+  if (!searchText.trim()) return [];
+
+  const response = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
     max_tokens: 2048,
-    tools: [{ type: 'web_search_20250305' as const, name: 'web_search' }] as any,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userPrompt }],
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      {
+        role: 'user',
+        content: `Search results for creative tech projects from ${city.displayName}:\n\n${searchText}\n\nExtract 8-15 unique projects as a JSON array.`,
+      },
+    ],
   });
 
-  const textBlocks = response.content.filter(b => b.type === 'text') as Array<{ type: 'text'; text: string }>;
-  const text = textBlocks.map(b => b.text).join('\n');
-
+  const text = response.choices[0]?.message?.content ?? '';
   return parseProjects(text, cityKey);
 }
 
@@ -111,12 +146,15 @@ function pad(s: string, len: number): string {
 }
 
 async function main() {
-  console.log('\n[GOTHAM GRID SCANNER]');
+  const argCities = process.argv.slice(2).filter(a => a in CITIES) as CityKey[];
+  const citiesToScan: CityKey[] = argCities.length > 0 ? argCities : CITY_KEYS;
+
+  console.log('\n[GOTHAM GRID SCANNER] — Tavily + Groq llama-3.3-70b-versatile');
   console.log('='.repeat(50));
   mkdirSync(join(process.cwd(), 'data'), { recursive: true });
 
   let total = 0;
-  for (const cityKey of CITY_KEYS) {
+  for (const cityKey of citiesToScan) {
     const city = CITIES[cityKey];
     process.stdout.write(`> SCANNING ${pad(city.displayName, 22)} `);
     try {
@@ -127,16 +165,14 @@ async function main() {
       console.log(`${projects.length} projects`);
     } catch (err) {
       console.log(`ERR: ${err instanceof Error ? err.message : String(err)}`);
-      // Write empty array so the app still loads
       const outPath = join(process.cwd(), 'data', `${cityKey}.json`);
       writeFileSync(outPath, '[]', 'utf-8');
     }
-    // Brief pause between cities to avoid rate limits
-    await new Promise(r => setTimeout(r, 5000));
+    await new Promise(r => setTimeout(r, 2000));
   }
 
   console.log('='.repeat(50));
-  console.log(`[DONE] ${total} total projects across ${CITY_KEYS.length} cities`);
+  console.log(`[DONE] ${total} total projects across ${citiesToScan.length} cities`);
 }
 
 main().catch(err => {

@@ -1,13 +1,7 @@
 export type Category = 'TRANSIT' | 'FOOD' | 'SUNSET' | 'MAPS' | 'UTILITY' | 'AI' | 'ART' | 'OTHER';
 export type Source = 'twitter' | 'github' | 'reddit' | 'hackernews' | 'blog' | 'producthunt' | 'other';
 
-export type CityKey =
-  | 'nyc' | 'london' | 'tokyo' | 'berlin' | 'paris'
-  | 'sf' | 'seoul' | 'mumbai' | 'lagos' | 'sao_paulo'
-  | 'hyderabad' | 'bangalore' | 'delhi' | 'chennai'
-  | 'dubai' | 'singapore' | 'sydney' | 'toronto'
-  | 'amsterdam' | 'stockholm' | 'tel_aviv' | 'budapest'
-  | 'brussels' | 'athens' | 'los_angeles';
+export type CityKey = 'nyc' | 'london' | 'sf' | 'los_angeles';
 
 export interface DeepScanData {
   githubStars?: number;
