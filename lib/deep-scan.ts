@@ -1,5 +1,8 @@
-import { anthropic } from './anthropic';
+import Groq from 'groq-sdk';
+import { searchOne } from './tavily';
 import type { DeepScanData } from './types';
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY ?? '' });
 
 function sanitize(s: unknown): string {
   if (typeof s !== 'string') return '';
@@ -7,29 +10,33 @@ function sanitize(s: unknown): string {
 }
 
 export async function deepScanProject(url: string, title: string): Promise<DeepScanData> {
-  const prompt = `Search for detailed information about this project: "${title}" at ${url}.
-Find: GitHub stars (if applicable), tech stack used, last updated date, and a 2-3 sentence technical summary.
-Also assign a "vibe score" from 1-10 based on creativity, polish, and cultural relevance.
+  const searchText = await searchOne(`${title} site:github.com OR tech stack OR stars`, 8);
 
-Return ONLY a JSON object with no markdown:
+  const prompt = `You are analyzing a creative coding project. Here are web search results about it:
+
+${searchText}
+
+Project: "${title}"
+URL: ${url}
+
+Based on the search results above, extract and return ONLY a JSON object with no markdown:
 {
   "githubStars": 0,
   "techStack": ["React", "D3"],
   "lastUpdated": "2025-01-15",
-  "summary": "...",
+  "summary": "2-3 sentence technical summary",
   "vibeScore": 7
-}`;
+}
 
-  const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
+Only use information found in the search results. Use null for fields not found.`;
+
+  const response = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
     max_tokens: 1024,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tools: [{ type: 'web_search_20250305' as const, name: 'web_search' }] as any,
     messages: [{ role: 'user', content: prompt }],
   });
 
-  const textBlocks = response.content.filter(b => b.type === 'text') as Array<{ type: 'text'; text: string }>;
-  const text = textBlocks.map(b => b.text).join('\n');
+  const text = response.choices[0]?.message?.content ?? '';
 
   let json = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
   const start = json.indexOf('{');
