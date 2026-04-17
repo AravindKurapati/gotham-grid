@@ -14,12 +14,88 @@ const BOOT_LINES = [
   '[BOOT] System ready.......................... OK',
 ];
 
-function GothamSkyline({ isExiting }: { isExiting: boolean }) {
+const ROUTES = [
+  {
+    id: 'a',
+    color: '#33ff33',
+    points: '3,92 28,76 55,82 78,61 105,66 130,45 158,50 197,26',
+    delay: '0s',
+  },
+  {
+    id: 'c',
+    color: '#66ccff',
+    points: '0,35 22,42 43,38 70,52 96,46 122,64 146,58 176,78 200,73',
+    delay: '0.6s',
+  },
+  {
+    id: 'q',
+    color: '#ffcc66',
+    points: '12,108 38,92 64,95 86,78 103,85 126,70 150,72 183,96',
+    delay: '1.1s',
+  },
+  {
+    id: 'r',
+    color: '#ff6666',
+    points: '30,8 47,27 62,32 75,48 88,58 104,77 119,84 138,107',
+    delay: '1.7s',
+  },
+  {
+    id: 'g',
+    color: '#cc99ff',
+    points: '118,6 112,25 124,41 119,56 132,70 128,90 140,118',
+    delay: '2.2s',
+  },
+] as const;
+
+const STATIONS = [
+  [28, 76],
+  [55, 82],
+  [78, 61],
+  [105, 66],
+  [130, 45],
+  [158, 50],
+  [22, 42],
+  [70, 52],
+  [122, 64],
+  [176, 78],
+  [38, 92],
+  [86, 78],
+  [150, 72],
+  [47, 27],
+  [75, 48],
+  [104, 77],
+  [119, 84],
+  [112, 25],
+  [124, 41],
+  [128, 90],
+] as const;
+
+const BOROUGH_LABELS = [
+  { label: 'MANHATTAN', x: 73, y: 34 },
+  { label: 'BROOKLYN', x: 105, y: 93 },
+  { label: 'QUEENS', x: 153, y: 35 },
+  { label: 'BRONX', x: 111, y: 16 },
+  { label: 'STATEN ISLAND', x: 34, y: 101 },
+] as const;
+
+const DATA_COLUMNS = [
+  { text: '01 A7 QN GRID', x: 13, y: 16 },
+  { text: 'BKLYN NODE 33', x: 169, y: 12 },
+  { text: 'BX 4D SCAN', x: 141, y: 88 },
+  { text: 'MN LOCAL 09', x: 57, y: 12 },
+  { text: 'SI RELAY 5', x: 23, y: 54 },
+] as const;
+
+function routePath(points: string) {
+  return `M${points.replaceAll(' ', ' L')}`;
+}
+
+function MtaSchematicBackground({ isExiting }: { isExiting: boolean }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 200 120"
-      preserveAspectRatio="xMidYMax meet"
+      preserveAspectRatio="none"
       className="absolute inset-0 w-full h-full"
       aria-hidden="true"
       style={{
@@ -28,72 +104,143 @@ function GothamSkyline({ isExiting }: { isExiting: boolean }) {
       }}
     >
       <defs>
-        {/* Bat signal spotlight gradient — bright at source, fades to sky */}
-        <linearGradient id="batSignal" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.09" />
-          <stop offset="60%" stopColor="#ffffff" stopOpacity="0.03" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-        </linearGradient>
+        <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="0.8" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <pattern id="schematicGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+          <path
+            d="M 10 0 L 0 0 0 10"
+            fill="none"
+            stroke="#33ff33"
+            strokeOpacity="0.12"
+            strokeWidth="0.25"
+          />
+        </pattern>
       </defs>
 
-      {/* Bat signal spotlight cone — apex at top of tallest tower (x=127) */}
-      <polygon points="108,2 127,32 146,2" fill="url(#batSignal)" />
+      <rect width="200" height="120" fill="url(#schematicGrid)" />
+      <path
+        d="M0 22 H200 M0 58 H200 M0 96 H200 M34 0 V120 M82 0 V120 M132 0 V120 M178 0 V120"
+        stroke="#33ff33"
+        strokeOpacity="0.08"
+        strokeWidth="0.35"
+      />
 
-      {/* Bat silhouette at apex of signal beam */}
-      <g transform="translate(122, 3) scale(0.2)" fill="#1a1a1a">
-        <path d="M24,22 L1,18 C3,9 10,7 15,15 Z" />
-        <path d="M24,22 L47,18 C45,9 38,7 33,15 Z" />
-        <ellipse cx="24" cy="22" rx="9" ry="5" />
-        <polygon points="20,17 19,7 22,17" />
-        <polygon points="26,17 29,7 28,17" />
+      {DATA_COLUMNS.map(column => (
+        <text
+          key={column.text}
+          x={column.x}
+          y={column.y}
+          fill="#33ff33"
+          fillOpacity="0.23"
+          fontSize="2.7"
+          fontFamily="monospace"
+          letterSpacing="0"
+          transform={`rotate(90 ${column.x} ${column.y})`}
+        >
+          {column.text}
+          <animate
+            attributeName="fill-opacity"
+            values="0.08;0.36;0.12"
+            dur="3.4s"
+            begin={`${column.x / 50}s`}
+            repeatCount="indefinite"
+          />
+        </text>
+      ))}
+
+      {BOROUGH_LABELS.map(({ label, x, y }) => (
+        <text
+          key={label}
+          x={x}
+          y={y}
+          fill="#33ff33"
+          fillOpacity="0.22"
+          fontSize="5"
+          fontFamily="monospace"
+          fontWeight="700"
+          letterSpacing="0"
+          textAnchor="middle"
+        >
+          {label}
+        </text>
+      ))}
+
+      <g filter="url(#routeGlow)">
+        {ROUTES.map(route => (
+          <g key={route.id}>
+            <polyline
+              points={route.points}
+              fill="none"
+              stroke={route.color}
+              strokeOpacity="0.58"
+              strokeWidth="1.15"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <polyline
+              points={route.points}
+              fill="none"
+              stroke="#ffffff"
+              strokeOpacity="0.38"
+              strokeWidth="0.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="1.2 3"
+            />
+            <circle r="1.8" fill={route.color} opacity="0.95">
+              <animateMotion
+                dur="4.8s"
+                begin={route.delay}
+                repeatCount="indefinite"
+                path={routePath(route.points)}
+              />
+              <animate
+                attributeName="opacity"
+                values="0;1;1;0"
+                dur="4.8s"
+                begin={route.delay}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        ))}
       </g>
 
-      {/* ── BUILDING SILHOUETTES (#1a1a1a on #0a0a0a) ── */}
+      <g>
+        {STATIONS.map(([cx, cy]) => (
+          <circle
+            key={`${cx}-${cy}`}
+            cx={cx}
+            cy={cy}
+            r="1.5"
+            fill="#0a0a0a"
+            stroke="#f7fff7"
+            strokeOpacity="0.78"
+            strokeWidth="0.65"
+          />
+        ))}
+      </g>
 
-      {/* Building 1 — left edge, mid-height */}
-      <rect x="0" y="74" width="18" height="46" fill="#1a1a1a" />
-
-      {/* Building 2 — pointed roof */}
-      <rect x="20" y="62" width="14" height="58" fill="#1a1a1a" />
-      <polygon points="20,62 27,53 34,62" fill="#1a1a1a" />
-
-      {/* Building 3 — wide, squat */}
-      <rect x="36" y="80" width="22" height="40" fill="#1a1a1a" />
-
-      {/* Building 4 — tall skyscraper with stepped top */}
-      <rect x="60" y="50" width="16" height="70" fill="#1a1a1a" />
-      <rect x="63" y="44" width="10" height="6" fill="#1a1a1a" />
-      <rect x="65" y="40" width="6" height="4" fill="#1a1a1a" />
-
-      {/* Building 5 — medium */}
-      <rect x="78" y="68" width="20" height="52" fill="#1a1a1a" />
-      <rect x="82" y="63" width="12" height="5" fill="#1a1a1a" />
-
-      {/* Building 6 — medium-tall, peaked */}
-      <rect x="100" y="54" width="18" height="66" fill="#1a1a1a" />
-      <polygon points="100,54 109,46 118,54" fill="#1a1a1a" />
-
-      {/* Building 7 — TALLEST: Gotham Signal Tower (bat signal source) */}
-      <rect x="120" y="32" width="14" height="88" fill="#1a1a1a" />
-      {/* Antenna */}
-      <rect x="125" y="27" width="4" height="5" fill="#1a1a1a" />
-      <rect x="126" y="23" width="2" height="4" fill="#1a1a1a" />
-      {/* Signal lamp */}
-      <circle cx="127" cy="32" r="2" fill="#222222" />
-
-      {/* Building 8 — medium, right of tower */}
-      <rect x="136" y="70" width="18" height="50" fill="#1a1a1a" />
-
-      {/* Building 9 — medium-tall */}
-      <rect x="156" y="58" width="14" height="62" fill="#1a1a1a" />
-      <rect x="159" y="54" width="8" height="4" fill="#1a1a1a" />
-
-      {/* Building 10 */}
-      <rect x="172" y="62" width="16" height="58" fill="#1a1a1a" />
-      <polygon points="172,62 180,54 188,62" fill="#1a1a1a" />
-
-      {/* Building 11 — right edge */}
-      <rect x="190" y="78" width="10" height="42" fill="#1a1a1a" />
+      {ROUTES.map((route, index) => (
+        <g key={`${route.id}-badge`} transform={`translate(${156 + index * 9} 112)`}>
+          <circle r="3.5" fill={route.color} fillOpacity="0.85" />
+          <text
+            y="1.2"
+            fill="#0a0a0a"
+            fontSize="3.6"
+            fontFamily="monospace"
+            fontWeight="700"
+            textAnchor="middle"
+          >
+            {route.id.toUpperCase()}
+          </text>
+        </g>
+      ))}
     </svg>
   );
 }
@@ -149,18 +296,14 @@ export default function BootSequence({ onComplete }: Props) {
         transition: isExiting ? 'opacity 0.45s ease-in' : undefined,
       }}
     >
-      {/* Gotham skyline + bat signal watermark */}
-      <GothamSkyline isExiting={isExiting} />
+      <MtaSchematicBackground isExiting={isExiting} />
 
-      {/* Terminal content — sits above the skyline */}
       <div className="max-w-xl w-full relative z-10">
-        {/* ASCII box header */}
         <pre className="text-crt-green text-sm mb-4 leading-tight whitespace-pre">{`+================================================+
 |           GOTHAM GRID v1.0                     |
 |      GLOBAL VIBE-CODE SCANNER                  |
 +================================================+`}</pre>
 
-        {/* Boot lines (typewriter) */}
         <div className="space-y-1 text-sm mb-4 min-h-[144px]">
           {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
             <p key={i} className="text-crt-green animate-scan-fade">{line}</p>
@@ -170,7 +313,6 @@ export default function BootSequence({ onComplete }: Props) {
           )}
         </div>
 
-        {/* Progress bar */}
         {showProgress && (
           <div className="mb-4 text-sm">
             <p className="mb-1 text-crt-green/70">&gt; LOADING GRID DATA...</p>
@@ -180,7 +322,6 @@ export default function BootSequence({ onComplete }: Props) {
           </div>
         )}
 
-        {/* Enter button */}
         {showEnter && (
           <button
             onClick={handleEnter}
