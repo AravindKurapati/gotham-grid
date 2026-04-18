@@ -52,7 +52,7 @@ export async function searchOne(query: string, maxResults = 5): Promise<string> 
 export async function extractUrl(url: string): Promise<string> {
   try {
     const res = await getClient().extract([url]);
-    return (res as { results?: Array<{ rawContent?: string }> }).results?.[0]?.rawContent ?? '';
+    return res.results[0]?.rawContent ?? '';
   } catch {
     return '';
   }
