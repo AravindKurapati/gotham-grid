@@ -1,5 +1,11 @@
-import Groq from 'groq-sdk';
-import { searchMany, searchRaw } from './tavily';
+import { execute } from './tools';
+import {
+  getCurrentTrace,
+  logTraceSummary,
+  saveAgentTrace,
+  totalTraceCost,
+  withAgentTrace,
+} from './instrumentation';
 import type { Project, Category, CityConfig, CityKey } from './types';
 
 export const ALL_CATEGORIES: Category[] = [
@@ -92,51 +98,16 @@ export interface AgentLoopOptions {
   query?: string;
   maxLoops?: number;
   qualityThreshold?: number;
+  maxCostPerRun?: number;
 }
 
 export interface AgentLoopResult {
   projects: Project[];
   loops: number;
   finalQuality: number;
-}
-
-let groq: Groq | null = null;
-function getGroq() {
-  if (!groq) groq = new Groq({ apiKey: process.env.GROQ_API_KEY ?? '' });
-  return groq;
-}
-
-const SYSTEM_PROMPT = `You are GOTHAM GRID scanner. You will be given raw web search results about creative coding projects from a specific city.
-
-Extract and return ONLY a valid JSON array of projects found in the search results. No markdown, no backticks, no preamble.
-Each object:
-{
-  "title": "Project Name",
-  "author": "@handle or Name",
-  "description": "1-2 sentence description",
-  "category": "TRANSIT|FOOD|SUNSET|MAPS|UTILITY|AI|ART|OTHER",
-  "url": "https://... (the actual project or demo URL)",
-  "sourceUrl": "https://... (the tweet/post/repo URL where it was found -- omit if same as url)",
-  "source": "twitter|github|reddit|hackernews|blog|producthunt|other",
-  "date": "relative or ISO date",
-  "likes": 0
-}
-
-Only include REAL projects from the search results. Do not invent anything.`;
-
-async function callGroq(searchText: string, cityName: string, cityKey: CityKey): Promise<Project[]> {
-  const response = await getGroq().chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
-    max_tokens: 4096,
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      {
-        role: 'user',
-        content: `Search results for creative tech projects from ${cityName}:\n\n${searchText}\n\nExtract 8-15 unique projects as a JSON array.`,
-      },
-    ],
-  });
-  return parseProjects(response.choices[0]?.message?.content ?? '', cityKey);
+  budgetExceeded?: boolean;
+  timedOut?: boolean;
+  warning?: string;
 }
 
 function buildBaseQueries(city: CityConfig, options: AgentLoopOptions): string[] {
@@ -165,8 +136,8 @@ async function buildRefinementQueries(
     const catLower = cat.toLowerCase();
     if (hasUrlIssues) {
       const siteQuery = `site:github.com ${name} ${catLower}`;
-      const raw = await searchRaw([siteQuery], 2);
-      queries.push(raw.length > 0 ? siteQuery : `${name} github project ${catLower} 2025`);
+      const raw = await execute('web_search', { query: siteQuery, maxResults: 2 });
+      queries.push(raw.trim() ? siteQuery : `${name} github project ${catLower} 2025`);
     } else {
       queries.push(`${name} ${catLower} project 2025`);
     }
@@ -175,40 +146,94 @@ async function buildRefinementQueries(
   return queries;
 }
 
-export async function runAgentLoop(
+async function searchQueries(queries: string[], maxResults = 5): Promise<string> {
+  const chunks = await Promise.all(
+    queries.map(query => execute('web_search', { query, maxResults })),
+  );
+  return chunks.filter(chunk => chunk.trim()).join('\n\n');
+}
+
+async function runLoopIteration<T>(fn: () => Promise<T>): Promise<T | 'timeout'> {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      fn(),
+      new Promise<'timeout'>(resolve => {
+        timeout = setTimeout(() => resolve('timeout'), 30_000);
+      }),
+    ]);
+  } finally {
+    if (timeout) clearTimeout(timeout);
+  }
+}
+
+function hasExceededBudget(maxCostPerRun: number): boolean {
+  const trace = getCurrentTrace();
+  return trace ? totalTraceCost(trace) > maxCostPerRun : false;
+}
+
+async function runAgentLoopInner(
   city: CityConfig,
   options: AgentLoopOptions = {},
 ): Promise<AgentLoopResult> {
-  const { maxLoops = 3, qualityThreshold = 0.6 } = options;
+  const { maxLoops = 3, qualityThreshold = 0.6, maxCostPerRun = 0.1 } = options;
+  const trace = getCurrentTrace();
 
   let allProjects: Project[] = [];
   let queries = buildBaseQueries(city, options);
   let loops = 0;
   let finalQuality = 0;
+  let budgetExceeded = false;
+  let timedOut = false;
+  let warning: string | undefined;
 
   for (let i = 0; i < maxLoops; i++) {
     loops = i + 1;
+    if (trace) trace.loopsRun = loops;
 
-    const searchText = await searchMany(queries);
-    if (!searchText.trim()) break;
+    const loopResult = await runLoopIteration(async () => {
+      const searchText = await searchQueries(queries);
+      if (!searchText.trim()) return 'empty' as const;
 
-    const newProjects = await callGroq(searchText, city.displayName, city.key);
+      return execute('parse_projects', {
+        rawResults: searchText,
+        city: city.displayName,
+        cityKey: city.key,
+      });
+    });
+
+    if (loopResult === 'timeout') {
+      timedOut = true;
+      warning = `Loop ${loops} exceeded 30s timeout; returning best results so far.`;
+      break;
+    }
+
+    if (loopResult === 'empty') break;
+
     const existingTitles = new Set(allProjects.map(p => p.title.toLowerCase()));
-    const fresh = newProjects.filter(p => !existingTitles.has(p.title.toLowerCase()));
+    const fresh = loopResult.filter(p => !existingTitles.has(p.title.toLowerCase()));
     allProjects = [...allProjects, ...fresh];
 
     finalQuality = scoreBatch(allProjects);
     const passing = allProjects.filter(scoreProject).length;
+    trace?.qualityScores.push(finalQuality);
+
+    if (hasExceededBudget(maxCostPerRun)) {
+      budgetExceeded = true;
+      warning = `Agent run exceeded maxCostPerRun budget of $${maxCostPerRun.toFixed(2)}.`;
+      console.warn(`[TRACE] ${warning}`);
+      break;
+    }
 
     if (finalQuality >= qualityThreshold || i === maxLoops - 1) {
       console.log(
-        `[AGENT] Loop ${loops}: quality ${Math.round(finalQuality * 100)}% (${passing}/${allProjects.length} pass) — accepting results`,
+        `[AGENT] Loop ${loops}: quality ${Math.round(finalQuality * 100)}% (${passing}/${allProjects.length} pass) -- accepting results`,
       );
       break;
     }
 
     console.log(
-      `[AGENT] Loop ${loops}: quality ${Math.round(finalQuality * 100)}% (${passing}/${allProjects.length} pass) — refining queries...`,
+      `[AGENT] Loop ${loops}: quality ${Math.round(finalQuality * 100)}% (${passing}/${allProjects.length} pass) -- refining queries...`,
     );
 
     const missing = missingCategories(allProjects, options.category);
@@ -218,13 +243,43 @@ export async function runAgentLoop(
 
     if (missing.length > 0) {
       console.log(
-        `[AGENT] Missing categories: ${missing.slice(0, 3).join(', ')} — adding targeted queries`,
+        `[AGENT] Missing categories: ${missing.slice(0, 3).join(', ')} -- adding targeted queries`,
       );
     }
 
     queries = await buildRefinementQueries(city, missing, hasUrlIssues);
+    if (hasExceededBudget(maxCostPerRun)) {
+      budgetExceeded = true;
+      warning = `Agent run exceeded maxCostPerRun budget of $${maxCostPerRun.toFixed(2)}.`;
+      console.warn(`[TRACE] ${warning}`);
+      break;
+    }
     if (queries.length === 0) break;
   }
 
-  return { projects: allProjects, loops, finalQuality };
+  if (trace) {
+    trace.loopsRun = loops;
+    trace.finalProjectCount = allProjects.length;
+    trace.timedOut = timedOut || undefined;
+    trace.budgetExceeded = budgetExceeded || undefined;
+    trace.warning = warning;
+  }
+
+  return { projects: allProjects, loops, finalQuality, budgetExceeded, timedOut, warning };
+}
+
+export async function runAgentLoop(
+  city: CityConfig,
+  options: AgentLoopOptions = {},
+): Promise<AgentLoopResult> {
+  const { result, trace } = await withAgentTrace(city.key, () => runAgentLoopInner(city, options));
+  logTraceSummary(trace);
+  try {
+    saveAgentTrace(trace);
+  } catch (err) {
+    console.warn(
+      `[TRACE] Failed to save agent trace: ${err instanceof Error ? err.message : String(err)}`,
+    );
+  }
+  return result;
 }

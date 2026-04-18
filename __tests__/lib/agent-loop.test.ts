@@ -14,6 +14,7 @@ jest.mock('groq-sdk', () => ({
 jest.mock('@/lib/tavily', () => ({
   searchMany: jest.fn(),
   searchRaw: jest.fn(),
+  extractUrl: jest.fn(),
 }));
 
 import { scoreProject, scoreBatch, missingCategories, runAgentLoop } from '@/lib/agent-loop';
@@ -145,7 +146,8 @@ describe('runAgentLoop', () => {
     expect(result.projects.length).toBeGreaterThan(0);
     expect(result.loops).toBe(1);
     expect(result.finalQuality).toBeGreaterThanOrEqual(0.6);
-    expect(mockSearchMany).toHaveBeenCalledTimes(1);
+    expect(mockSearchMany).toHaveBeenCalledTimes(6);
+    expect(mockGroqCreate).toHaveBeenCalledTimes(1);
   });
 
   it('runs a second loop when quality is below threshold', async () => {
@@ -172,7 +174,8 @@ describe('runAgentLoop', () => {
 
     const result = await runAgentLoop(testCity, { maxLoops: 3, qualityThreshold: 0.6 });
     expect(result.loops).toBe(2);
-    expect(mockSearchMany).toHaveBeenCalledTimes(2);
+    expect(mockSearchMany).toHaveBeenCalledTimes(12);
+    expect(mockGroqCreate).toHaveBeenCalledTimes(2);
   });
 
   it('stops after maxLoops even if quality stays low', async () => {
@@ -188,7 +191,8 @@ describe('runAgentLoop', () => {
 
     const result = await runAgentLoop(testCity, { maxLoops: 2, qualityThreshold: 0.9 });
     expect(result.loops).toBe(2);
-    expect(mockSearchMany).toHaveBeenCalledTimes(2);
+    expect(mockSearchMany).toHaveBeenCalledTimes(12);
+    expect(mockGroqCreate).toHaveBeenCalledTimes(2);
   });
 
   it('deduplicates projects across loops by title', async () => {
