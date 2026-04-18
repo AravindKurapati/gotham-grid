@@ -9,6 +9,7 @@ export interface DeepScanData {
   lastUpdated?: string;
   summary?: string;
   vibeScore?: number;
+  status?: 'LIVE' | 'OFFLINE' | 'UNKNOWN';
 }
 
 export interface Project {
