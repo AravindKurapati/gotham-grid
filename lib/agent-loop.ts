@@ -13,8 +13,8 @@ export const ALL_CATEGORIES: Category[] = [
   'OTHER',
 ];
 
-const VALID_CATEGORIES = new Set(ALL_CATEGORIES);
-const VALID_SOURCES = new Set([
+const VALID_CATEGORIES = new Set<string>(ALL_CATEGORIES);
+const VALID_SOURCES = new Set<string>([
   'twitter',
   'github',
   'reddit',
