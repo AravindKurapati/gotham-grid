@@ -1,25 +1,59 @@
 import Groq from 'groq-sdk';
-import { searchOne } from './tavily';
+import { searchOne, extractUrl } from './tavily';
 import type { DeepScanData } from './types';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY ?? '' });
+let groq: Groq | null = null;
+function getGroq() {
+  if (!groq) groq = new Groq({ apiKey: process.env.GROQ_API_KEY ?? '' });
+  return groq;
+}
 
 function sanitize(s: unknown): string {
   if (typeof s !== 'string') return '';
   return s.replace(/[\u2013\u2014]/g, '--').trim();
 }
 
+async function checkLiveness(url: string): Promise<boolean> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 2000);
+
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      signal: controller.signal,
+      redirect: 'manual',
+    });
+    return res.status < 400;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 export async function deepScanProject(url: string, title: string): Promise<DeepScanData> {
-  const searchText = await searchOne(`${title} site:github.com OR tech stack OR stars`, 8);
+  const live = await checkLiveness(url);
+  if (!live) {
+    return { status: 'OFFLINE' };
+  }
 
-  const prompt = `You are analyzing a creative coding project. Here are web search results about it:
+  const [pageContent, searchText] = await Promise.all([
+    extractUrl(url),
+    searchOne(`${title} site:github.com OR tech stack OR stars`, 8),
+  ]);
 
+  const prompt = `You are analyzing a creative coding project. Here are sources about it:
+
+PAGE CONTENT:
+${pageContent || '(not available)'}
+
+WEB SEARCH RESULTS:
 ${searchText}
 
 Project: "${title}"
 URL: ${url}
 
-Based on the search results above, extract and return ONLY a JSON object with no markdown:
+Based on the above, extract and return ONLY a JSON object with no markdown:
 {
   "githubStars": 0,
   "techStack": ["React", "D3"],
@@ -28,9 +62,9 @@ Based on the search results above, extract and return ONLY a JSON object with no
   "vibeScore": 7
 }
 
-Only use information found in the search results. Use null for fields not found.`;
+Prefer data from the page content when it conflicts with search results. Use null for fields not found.`;
 
-  const response = await groq.chat.completions.create({
+  const response = await getGroq().chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     max_tokens: 1024,
     messages: [{ role: 'user', content: prompt }],
@@ -41,19 +75,23 @@ Only use information found in the search results. Use null for fields not found.
   let json = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
   const start = json.indexOf('{');
   const end = json.lastIndexOf('}');
-  if (start === -1 || end === -1) return {};
+  if (start === -1 || end === -1) return { status: 'LIVE' };
   json = json.slice(start, end + 1);
 
   try {
     const raw = JSON.parse(json) as Record<string, unknown>;
     return {
+      status: 'LIVE',
       githubStars: typeof raw.githubStars === 'number' ? raw.githubStars : undefined,
       techStack: Array.isArray(raw.techStack) ? raw.techStack.map(String) : undefined,
       lastUpdated: sanitize(raw.lastUpdated),
       summary: sanitize(raw.summary),
-      vibeScore: typeof raw.vibeScore === 'number' ? Math.min(10, Math.max(1, raw.vibeScore)) : undefined,
+      vibeScore:
+        typeof raw.vibeScore === 'number'
+          ? Math.min(10, Math.max(1, raw.vibeScore))
+          : undefined,
     };
   } catch {
-    return {};
+    return { status: 'LIVE' };
   }
 }
