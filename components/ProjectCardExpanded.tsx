@@ -71,6 +71,12 @@ export default function ProjectCardExpanded({ project, scanCode }: Props) {
 
       {deepData ? (
         <div className="mt-3 border-t border-current/20 pt-2">
+          {deepData.status === 'OFFLINE' && (
+            <div className="mb-2 text-crt-red font-bold">[OFFLINE] — PROJECT LINK DEAD</div>
+          )}
+          {deepData.status === 'LIVE' && (
+            <div className="mb-1 text-crt-green/60">STATUS: LIVE</div>
+          )}
           {deepData.vibeScore !== undefined && (
             <div className="mb-1">
               VIBE: [{`#`.repeat(deepData.vibeScore)}{`.`.repeat(10 - deepData.vibeScore)}] {deepData.vibeScore}/10
