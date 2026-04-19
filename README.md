@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GOTHAM GRID
 
-## Getting Started
+**[Live demo](https://gotham-grid.vercel.app)**
 
-First, run the development server:
+Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I built this -- a retro CRT terminal dashboard that scans the web for creative coding projects from NYC, London, SF, LA, and more.
+
+![GOTHAM GRID dashboard](public/og-image.png)
+
+---
+
+## What it does
+
+On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches the web via Tavily, parses results with Groq LLaMA 3.3 70B, scores each batch for quality, and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a $0.10 cost cap per run. Every tool call is traced and logged to disk.
+
+The aesthetic is full CRT phosphor terminal -- scanlines, VT323 font, green glow, boot sequence on first load.
+
+---
+
+## Agent loop
+
+The core is in `lib/agent-loop.ts`. Each scan run:
+
+1. Builds city-specific search queries
+2. Calls Tavily for web results (tool: `web_search`)
+3. Calls Groq to parse raw results into structured projects (tool: `parse_projects`)
+4. Scores the batch -- filters out projects with no author, no URL, no description, or dates outside 2024-2026
+5. If quality score is below 60%, refines queries and loops again
+6. Caps at 3 loops or $0.10, whichever comes first
+
+Every tool call is instrumented via `lib/instrumentation.ts` -- provider, duration, estimated cost, and status are all recorded per run. Traces saved to `data/traces/`.
+
+---
+
+## Stack
+
+- Next.js 14 (App Router, TypeScript)
+- Tailwind CSS with custom CRT theme
+- Groq SDK (LLaMA 3.3 70B Versatile)
+- Tavily for web search
+- Anthropic SDK (deep scan)
+- Vercel
+
+---
+
+## Running locally
 
 ```bash
+git clone https://github.com/AravindKurapati/gotham-grid
+cd gotham-grid
+npm install
+cp .env.example .env.local   # fill in your keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The site works without any API keys -- the static city data loads instantly. Keys are only needed for live scan and deep scan.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To regenerate the static city data:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run scan
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+32 tests across 4 suites: agent loop quality scoring and refinement logic, cache TTL, deep scan, and rate limiting.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm test
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `.env.example`. Only `TAVILY_API_KEY` and `GROQ_API_KEY` are needed for live scan. `SCAN_CODE` is optional -- set it to gate live scan behind an invite code.
