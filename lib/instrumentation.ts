@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'fs';
+import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { AsyncLocalStorage } from 'async_hooks';
 
@@ -36,6 +36,8 @@ interface TraceContext {
 const storage = new AsyncLocalStorage<TraceContext>();
 
 const ANTHROPIC_ESTIMATED_RATE_PER_TOKEN = 0.000003;
+const TAVILY_SEARCH_COST = 0.004;
+const GROQ_PARSE_COST = 0.0001;
 
 export function getCurrentTrace(): AgentRunTrace | undefined {
   return storage.getStore()?.trace;
@@ -54,18 +56,22 @@ export async function withAgentTrace<T>(
     finalProjectCount: 0,
   };
 
-  let result: T;
   try {
-    result = await storage.run({ trace }, async () => fn(trace));
-  } finally {
+    const result = await storage.run({ trace }, async () => fn(trace));
     trace.endedAt = new Date().toISOString();
+    return { result, trace };
+  } catch (err) {
+    trace.endedAt = new Date().toISOString();
+    throw err;
   }
-  return { result: result!, trace };
 }
 
 function estimateCost(provider: ToolProvider, tokenCount?: number): number {
-  if (provider === 'anthropic') return (tokenCount ?? 0) * ANTHROPIC_ESTIMATED_RATE_PER_TOKEN;
-  return 0;
+  switch (provider) {
+    case 'anthropic': return (tokenCount ?? 0) * ANTHROPIC_ESTIMATED_RATE_PER_TOKEN;
+    case 'tavily': return TAVILY_SEARCH_COST;
+    case 'groq': return GROQ_PARSE_COST;
+  }
 }
 
 export async function recordToolCall<T>(
@@ -137,12 +143,12 @@ export function logTraceSummary(trace: AgentRunTrace): void {
   console.log(`[TRACE] Tools: ${summarizeToolCalls(trace) || 'none'}`);
 }
 
-export function saveAgentTrace(trace: AgentRunTrace): string {
+export async function saveAgentTrace(trace: AgentRunTrace): Promise<string> {
   const tracesDir = join(process.cwd(), 'data', 'traces');
-  mkdirSync(tracesDir, { recursive: true });
+  await mkdir(tracesDir, { recursive: true });
 
   const stamp = (trace.endedAt ?? new Date().toISOString()).replace(/[:.]/g, '-');
   const path = join(tracesDir, `${stamp}.json`);
-  writeFileSync(path, JSON.stringify(trace, null, 2), 'utf-8');
+  await writeFile(path, JSON.stringify(trace, null, 2), 'utf-8');
   return path;
 }

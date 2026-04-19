@@ -1,10 +1,10 @@
 import Groq from 'groq-sdk';
 import { searchMany, extractUrl } from './tavily';
-import { recordToolCall } from './instrumentation';
+import { recordToolCall, type ToolProvider } from './instrumentation';
 import type { Project, CityKey } from './types';
 
 export type ToolName = 'web_search' | 'parse_projects' | 'verify_url';
-export type ToolProvider = 'tavily' | 'groq';
+export type { ToolProvider };
 
 interface ToolDefinition {
   name: ToolName;

@@ -1,28 +1,33 @@
-const mockGroqCreate = jest.fn();
-
-jest.mock('groq-sdk', () => ({
-  __esModule: true,
-  default: jest.fn().mockImplementation(() => ({
-    chat: {
-      completions: {
-        create: mockGroqCreate,
-      },
-    },
-  })),
+jest.mock('@/lib/tools', () => ({
+  execute: jest.fn(),
 }));
 
-jest.mock('@/lib/tavily', () => ({
-  searchMany: jest.fn(),
-  searchRaw: jest.fn(),
-  extractUrl: jest.fn(),
+jest.mock('@/lib/instrumentation', () => ({
+  withAgentTrace: jest.fn(async (_city: string, fn: (trace: unknown) => Promise<unknown>) => {
+    const trace = { city: _city, startedAt: new Date().toISOString(), loopsRun: 0, qualityScores: [], toolCalls: [], finalProjectCount: 0 };
+    const result = await fn(trace);
+    return { result, trace };
+  }),
+  logTraceSummary: jest.fn(),
+  saveAgentTrace: jest.fn().mockResolvedValue('/tmp/trace.json'),
+  getCurrentTrace: jest.fn().mockReturnValue(undefined),
+  totalTraceCost: jest.fn().mockReturnValue(0),
 }));
 
 import { scoreProject, scoreBatch, missingCategories, runAgentLoop } from '@/lib/agent-loop';
-import { searchMany, searchRaw } from '@/lib/tavily';
+import { execute } from '@/lib/tools';
 import type { Project, CityConfig } from '@/lib/types';
 
-const mockSearchMany = searchMany as jest.MockedFunction<typeof searchMany>;
-const mockSearchRaw = searchRaw as jest.MockedFunction<typeof searchRaw>;
+const mockExecute = execute as jest.Mock;
+
+const testCity: CityConfig = {
+  key: 'nyc',
+  name: 'New York',
+  displayName: 'NEW YORK CITY',
+  gridName: 'NYC',
+  searchTerms: ['NYC'],
+  timezone: 'America/New_York',
+};
 
 function makeProject(overrides: Partial<Project> = {}): Project {
   return {
@@ -38,6 +43,15 @@ function makeProject(overrides: Partial<Project> = {}): Project {
     ...overrides,
   };
 }
+
+beforeEach(() => {
+  mockExecute.mockReset();
+  mockExecute.mockImplementation(async (toolName: string) => {
+    if (toolName === 'web_search') return 'search results text';
+    if (toolName === 'parse_projects') return [];
+    return '';
+  });
+});
 
 describe('scoreProject', () => {
   it('passes a well-formed project', () => {
@@ -108,98 +122,85 @@ describe('missingCategories', () => {
   });
 });
 
-beforeEach(() => {
-  mockGroqCreate.mockReset();
-  mockSearchMany.mockReset();
-  mockSearchRaw.mockReset();
-  mockSearchMany.mockResolvedValue('search results text');
-  mockSearchRaw.mockResolvedValue([]);
-});
-
-const testCity: CityConfig = {
-  key: 'nyc',
-  name: 'New York',
-  displayName: 'NEW YORK CITY',
-  gridName: 'NYC',
-  searchTerms: ['NYC'],
-  timezone: 'America/New_York',
-};
-
 describe('runAgentLoop', () => {
   it('returns projects from a single loop when quality is above threshold', async () => {
-    mockGroqCreate.mockResolvedValue({
-      choices: [{
-        message: {
-          content: JSON.stringify([
-            { title: 'NYC Transit App', author: '@dev', description: 'A great transit visualization app', category: 'TRANSIT', url: 'https://example.com', source: 'github', date: '2025-03-01' },
-            { title: 'NYC Food Map', author: '@chef', description: 'An interactive map of NYC food trucks', category: 'FOOD', url: 'https://food.example.com', source: 'twitter', date: '2025-04-01' },
-            { title: 'NYC Sunset Tracker', author: '@sky', description: 'Track beautiful sunsets across NYC boroughs', category: 'SUNSET', url: 'https://sunset.example.com', source: 'blog', date: '2025-02-01' },
-            { title: 'NYC Utility Tool', author: '@util', description: 'Utility app for NYC residents with live data', category: 'UTILITY', url: 'https://util.example.com', source: 'reddit', date: '2025-01-01' },
-            { title: 'NYC AI Project', author: '@ai', description: 'Machine learning model trained on NYC taxi data', category: 'AI', url: 'https://ai.example.com', source: 'github', date: '2025-05-01' },
-            { title: 'NYC Art Gen', author: '@art', description: 'Generative art inspired by NYC subway routes', category: 'ART', url: 'https://art.example.com', source: 'blog', date: '2025-06-01' },
-          ]),
-        },
-      }],
+    const goodProjects: Project[] = [
+      makeProject({ title: 'NYC Transit App', author: '@dev', description: 'A great transit visualization app', category: 'TRANSIT', url: 'https://example.com', date: '2025-03-01' }),
+      makeProject({ title: 'NYC Food Map', author: '@chef', description: 'An interactive map of NYC food trucks', category: 'FOOD', url: 'https://food.example.com', date: '2025-04-01' }),
+      makeProject({ title: 'NYC Sunset Tracker', author: '@sky', description: 'Track beautiful sunsets across NYC boroughs', category: 'SUNSET', url: 'https://sunset.example.com', date: '2025-02-01' }),
+      makeProject({ title: 'NYC Utility Tool', author: '@util', description: 'Utility app for NYC residents with live data', category: 'UTILITY', url: 'https://util.example.com', date: '2025-01-01' }),
+      makeProject({ title: 'NYC AI Project', author: '@ai', description: 'Machine learning model trained on NYC taxi data', category: 'AI', url: 'https://ai.example.com', date: '2025-05-01' }),
+      makeProject({ title: 'NYC Art Gen', author: '@art', description: 'Generative art inspired by NYC subway routes', category: 'ART', url: 'https://art.example.com', date: '2025-06-01' }),
+    ];
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'web_search') return 'search results text';
+      if (toolName === 'parse_projects') return goodProjects;
+      return '';
     });
 
     const result = await runAgentLoop(testCity, { maxLoops: 3, qualityThreshold: 0.6 });
     expect(result.projects.length).toBeGreaterThan(0);
     expect(result.loops).toBe(1);
     expect(result.finalQuality).toBeGreaterThanOrEqual(0.6);
-    expect(mockSearchMany).toHaveBeenCalledTimes(6);
-    expect(mockGroqCreate).toHaveBeenCalledTimes(1);
+
+    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
+    expect(searchCalls).toHaveLength(6); // 5 base + 1 from searchTerms
+    expect(parseCalls).toHaveLength(1);
   });
 
   it('runs a second loop when quality is below threshold', async () => {
-    mockGroqCreate
-      .mockResolvedValueOnce({
-        choices: [{
-          message: {
-            content: JSON.stringify([
-              { title: 'Bad Project', author: 'Unknown', description: 'Short', category: 'MAPS', url: '', source: 'other', date: '2019-01-01' },
-            ]),
-          },
-        }],
-      })
-      .mockResolvedValueOnce({
-        choices: [{
-          message: {
-            content: JSON.stringify([
-              { title: 'NYC Transit Viz', author: '@dev', description: 'A great transit visualization for New York', category: 'TRANSIT', url: 'https://example.com', source: 'github', date: '2025-03-01' },
-              { title: 'NYC Food Finder', author: '@chef', description: 'A useful food discovery map for New York', category: 'FOOD', url: 'https://food.example.com', source: 'blog', date: '2025-03-02' },
-            ]),
-          },
-        }],
-      });
+    const badProject = makeProject({ title: 'Bad Project', author: 'Unknown', description: 'Short', category: 'MAPS', url: '', date: '2019-01-01' });
+    const goodProjects: Project[] = [
+      makeProject({ title: 'NYC Transit Viz', author: '@dev', description: 'A great transit visualization for New York', category: 'TRANSIT', url: 'https://example.com', date: '2025-03-01' }),
+      makeProject({ title: 'NYC Food Finder', author: '@chef', description: 'A useful food discovery map for New York', category: 'FOOD', url: 'https://food.example.com', date: '2025-03-02' }),
+    ];
+
+    let parseCallCount = 0;
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'web_search') return 'search results text';
+      if (toolName === 'parse_projects') {
+        return ++parseCallCount === 1 ? [badProject] : goodProjects;
+      }
+      return '';
+    });
 
     const result = await runAgentLoop(testCity, { maxLoops: 3, qualityThreshold: 0.6 });
     expect(result.loops).toBe(2);
-    expect(mockSearchMany).toHaveBeenCalledTimes(12);
-    expect(mockGroqCreate).toHaveBeenCalledTimes(2);
+
+    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
+    expect(searchCalls).toHaveLength(9); // 6 (loop 1) + 3 (refinement queries, loop 2)
+    expect(parseCalls).toHaveLength(2);
   });
 
   it('stops after maxLoops even if quality stays low', async () => {
-    mockGroqCreate.mockResolvedValue({
-      choices: [{
-        message: {
-          content: JSON.stringify([
-            { title: 'Junk', author: 'Unknown', description: 'x', category: 'OTHER', url: '', source: 'other', date: '2000' },
-          ]),
-        },
-      }],
+    const junkProject = makeProject({ title: 'Junk', author: 'Unknown', description: 'x', category: 'OTHER', url: '', date: '2000' });
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'web_search') return 'search results text';
+      if (toolName === 'parse_projects') return [junkProject];
+      return '';
     });
 
     const result = await runAgentLoop(testCity, { maxLoops: 2, qualityThreshold: 0.9 });
     expect(result.loops).toBe(2);
-    expect(mockSearchMany).toHaveBeenCalledTimes(12);
-    expect(mockGroqCreate).toHaveBeenCalledTimes(2);
+
+    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
+    expect(searchCalls).toHaveLength(9); // 6 (loop 1) + 3 (refinement, loop 2)
+    expect(parseCalls).toHaveLength(2);
   });
 
   it('deduplicates projects across loops by title', async () => {
-    const sameProject = { title: 'NYC App', author: '@dev', description: 'A nice app for navigating New York City', category: 'TRANSIT', url: 'https://example.com', source: 'github', date: '2025-01-01' };
-    mockGroqCreate
-      .mockResolvedValueOnce({ choices: [{ message: { content: JSON.stringify([sameProject]) } }] })
-      .mockResolvedValueOnce({ choices: [{ message: { content: JSON.stringify([sameProject]) } }] });
+    const sameProject = makeProject({ title: 'NYC App', author: '@dev', description: 'A nice app for navigating New York City', category: 'TRANSIT', url: 'https://example.com', date: '2025-01-01' });
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'web_search') return 'search results text';
+      if (toolName === 'parse_projects') return [sameProject];
+      return '';
+    });
 
     const result = await runAgentLoop(testCity, { maxLoops: 2, qualityThreshold: 1.1 });
     const titles = result.projects.map(p => p.title);

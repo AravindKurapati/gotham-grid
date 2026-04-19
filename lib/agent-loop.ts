@@ -19,17 +19,6 @@ export const ALL_CATEGORIES: Category[] = [
   'OTHER',
 ];
 
-const VALID_CATEGORIES = new Set<string>(ALL_CATEGORIES);
-const VALID_SOURCES = new Set<string>([
-  'twitter',
-  'github',
-  'reddit',
-  'hackernews',
-  'blog',
-  'producthunt',
-  'other',
-]);
-
 export function scoreProject(p: Project): boolean {
   const hasRealAuthor = p.author !== 'Unknown' && p.author.length > 0;
   const hasUrl = p.url.startsWith('http');
@@ -47,50 +36,6 @@ export function missingCategories(projects: Project[], requested?: Category): Ca
   if (requested) return [];
   const found = new Set(projects.map(p => p.category));
   return ALL_CATEGORIES.filter(c => c !== 'OTHER' && !found.has(c));
-}
-
-function sanitizeText(s: unknown): string {
-  if (typeof s !== 'string') return '';
-  return s.replace(/[\u2013\u2014]/g, '--').trim();
-}
-
-export function parseProjects(text: string, city: CityKey): Project[] {
-  let json = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
-  const start = json.indexOf('[');
-  const end = json.lastIndexOf(']');
-  if (start === -1 || end === -1) return [];
-  json = json.slice(start, end + 1);
-
-  try {
-    const raw: unknown = JSON.parse(json);
-    if (!Array.isArray(raw)) return [];
-    return raw
-      .filter(item => item && typeof item === 'object')
-      .map(item => {
-        const obj = item as Record<string, unknown>;
-        return {
-          id: crypto.randomUUID(),
-          title: sanitizeText(obj.title),
-          author: sanitizeText(obj.author),
-          description: sanitizeText(obj.description),
-          category: VALID_CATEGORIES.has(String(obj.category))
-            ? (String(obj.category) as Category)
-            : 'OTHER',
-          url: typeof obj.url === 'string' ? obj.url : '',
-          sourceUrl:
-            typeof obj.sourceUrl === 'string' && obj.sourceUrl ? obj.sourceUrl : undefined,
-          source: VALID_SOURCES.has(String(obj.source))
-            ? (String(obj.source) as Project['source'])
-            : 'other',
-          date: sanitizeText(obj.date),
-          likes: typeof obj.likes === 'number' ? obj.likes : undefined,
-          city,
-        } satisfies Project;
-      })
-      .filter(p => p.title.length > 0);
-  } catch {
-    return [];
-  }
 }
 
 export interface AgentLoopOptions {
@@ -124,26 +69,18 @@ function buildBaseQueries(city: CityConfig, options: AgentLoopOptions): string[]
   ];
 }
 
-async function buildRefinementQueries(
+function buildRefinementQueries(
   city: CityConfig,
   missing: Category[],
   hasUrlIssues: boolean,
-): Promise<string[]> {
+): string[] {
   const name = city.name;
-  const queries: string[] = [];
-
-  for (const cat of missing.slice(0, 3)) {
+  return missing.slice(0, 3).map(cat => {
     const catLower = cat.toLowerCase();
-    if (hasUrlIssues) {
-      const siteQuery = `site:github.com ${name} ${catLower}`;
-      const raw = await execute('web_search', { query: siteQuery, maxResults: 2 });
-      queries.push(raw.trim() ? siteQuery : `${name} github project ${catLower} 2025`);
-    } else {
-      queries.push(`${name} ${catLower} project 2025`);
-    }
-  }
-
-  return queries;
+    return hasUrlIssues
+      ? `site:github.com ${name} ${catLower}`
+      : `${name} ${catLower} project 2025`;
+  });
 }
 
 async function searchQueries(queries: string[], maxResults = 5): Promise<string> {
@@ -247,7 +184,7 @@ async function runAgentLoopInner(
       );
     }
 
-    queries = await buildRefinementQueries(city, missing, hasUrlIssues);
+    queries = buildRefinementQueries(city, missing, hasUrlIssues);
     if (hasExceededBudget(maxCostPerRun)) {
       budgetExceeded = true;
       warning = `Agent run exceeded maxCostPerRun budget of $${maxCostPerRun.toFixed(2)}.`;
@@ -275,7 +212,7 @@ export async function runAgentLoop(
   const { result, trace } = await withAgentTrace(city.key, () => runAgentLoopInner(city, options));
   logTraceSummary(trace);
   try {
-    saveAgentTrace(trace);
+    await saveAgentTrace(trace);
   } catch (err) {
     console.warn(
       `[TRACE] Failed to save agent trace: ${err instanceof Error ? err.message : String(err)}`,
