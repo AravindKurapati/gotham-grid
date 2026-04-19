@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useTheme } from '@/lib/theme-context';
 import { CITIES } from '@/lib/cities';
 import type { Project, CityKey } from '@/lib/types';
