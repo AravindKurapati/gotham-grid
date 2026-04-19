@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
 export type Theme = 'flap' | 'crt';
 
@@ -14,22 +14,18 @@ const ThemeContext = createContext<ThemeContextValue>({
   toggleTheme: () => {},
 });
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('flap');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'flap';
     const stored = localStorage.getItem('gotham-theme') as Theme | null;
-    if (stored === 'crt' || stored === 'flap') setTheme(stored);
-  }, []);
+    return stored === 'crt' || stored === 'flap' ? stored : 'flap';
+  });
 
   useEffect(() => {
-    if (!mounted) return;
     document.documentElement.classList.remove('theme-flap', 'theme-crt');
     document.documentElement.classList.add(`theme-${theme}`);
     localStorage.setItem('gotham-theme', theme);
-  }, [theme, mounted]);
+  }, [theme]);
 
   const toggleTheme = () => setTheme(t => (t === 'flap' ? 'crt' : 'flap'));
 

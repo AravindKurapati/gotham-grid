@@ -1,4 +1,5 @@
 'use client';
+import { useMemo, useState } from 'react';
 import { useTheme } from '@/lib/theme-context';
 import { CITIES } from '@/lib/cities';
 import type { Project, CityKey } from '@/lib/types';
@@ -14,7 +15,7 @@ export default function StatsBar({ projects, selectedCity }: Props) {
   const valueCls = isFlap ? 'text-flap-yellow' : 'text-crt-green';
 
   const total = projects.length;
-  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const [weekAgo] = useState(() => Date.now() - 7 * 24 * 60 * 60 * 1000);
   const thisWeek = projects.filter(p => {
     try { return new Date(p.date).getTime() > weekAgo; } catch { return false; }
   }).length;
