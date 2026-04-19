@@ -14,12 +14,107 @@ const BOOT_LINES = [
   '[BOOT] System ready.......................... OK',
 ];
 
-function GothamSkyline({ isExiting }: { isExiting: boolean }) {
+const ROUTES = [
+  {
+    id: 'a',
+    color: '#9ee94f',
+    points: '0,73 28,73 45,63 60,63 78,47 94,47 118,36 141,36 161,28 190,28 216,16 240,16',
+    delay: '0s',
+  },
+  {
+    id: 'c',
+    color: '#5fe5c0',
+    points: '0,39 25,39 45,45 64,45 80,59 105,59 122,65 143,65 165,79 190,79 220,96 240,96',
+    delay: '0.7s',
+  },
+  {
+    id: 'q',
+    color: '#d9df58',
+    points: '0,19 30,19 43,31 60,31 79,52 96,52 122,42 149,42 178,56 207,56 240,68',
+    delay: '1.2s',
+  },
+  {
+    id: 'r',
+    color: '#d97052',
+    points: '44,0 44,19 57,32 70,49 82,66 96,84 112,101 140,101 169,111 210,111 240,116',
+    delay: '1.8s',
+  },
+  {
+    id: 'g',
+    color: '#66ccff',
+    points: '0,54 31,54 47,59 66,59 85,71 106,71 130,82 155,82 184,83 209,93 240,93',
+    delay: '2.4s',
+  },
+  {
+    id: 'n',
+    color: '#a8df45',
+    points: '105,0 105,20 122,38 122,57 136,73 136,94 151,120',
+    delay: '2.9s',
+  },
+] as const;
+
+const STATIONS = [
+  [30, 19],
+  [44, 19],
+  [57, 32],
+  [60, 31],
+  [64, 45],
+  [78, 47],
+  [79, 52],
+  [80, 59],
+  [85, 71],
+  [94, 47],
+  [96, 52],
+  [96, 84],
+  [105, 20],
+  [105, 59],
+  [118, 36],
+  [122, 38],
+  [122, 57],
+  [122, 65],
+  [130, 82],
+  [136, 73],
+  [141, 36],
+  [143, 65],
+  [149, 42],
+  [155, 82],
+  [161, 28],
+  [165, 79],
+  [178, 56],
+  [190, 28],
+  [190, 79],
+  [207, 56],
+  [209, 93],
+  [216, 16],
+] as const;
+
+const BOROUGH_LABELS = [
+  { label: 'MANHATTAN', x: 74, y: 30, size: 6.8 },
+  { label: 'QUEENS', x: 178, y: 31, size: 6.2 },
+  { label: 'BRONX', x: 191, y: 57, size: 6.2 },
+  { label: 'BROOKLYN', x: 194, y: 88, size: 6.4 },
+  { label: 'STATEN ISLAND', x: 199, y: 108, size: 5.8 },
+] as const;
+
+const DATA_MARKS = [
+  { text: 'x12.5', x: 17, y: 103 },
+  { text: 'y09.2', x: 18, y: 108 },
+  { text: 'A-22c', x: 0, y: 12 },
+  { text: 'MN.774', x: 135, y: 12 },
+  { text: 'BX:SCAN', x: 206, y: 78 },
+  { text: 'QNS-118', x: 202, y: 36 },
+] as const;
+
+function routePath(points: string) {
+  return `M${points.replaceAll(' ', ' L')}`;
+}
+
+function MtaSchematicBackground({ isExiting }: { isExiting: boolean }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 120"
-      preserveAspectRatio="xMidYMax meet"
+      viewBox="0 0 240 120"
+      preserveAspectRatio="none"
       className="absolute inset-0 w-full h-full"
       aria-hidden="true"
       style={{
@@ -28,72 +123,159 @@ function GothamSkyline({ isExiting }: { isExiting: boolean }) {
       }}
     >
       <defs>
-        {/* Bat signal spotlight gradient — bright at source, fades to sky */}
-        <linearGradient id="batSignal" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.09" />
-          <stop offset="60%" stopColor="#ffffff" stopOpacity="0.03" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-        </linearGradient>
+        <filter id="routeGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="0.45" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="softBloom" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.4" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <pattern id="fineGrid" width="4" height="4" patternUnits="userSpaceOnUse">
+          <path
+            d="M 4 0 L 0 0 0 4"
+            fill="none"
+            stroke="#33ff33"
+            strokeOpacity="0.13"
+            strokeWidth="0.18"
+          />
+        </pattern>
+        <pattern id="dotMatrix" width="2.4" height="2.4" patternUnits="userSpaceOnUse">
+          <circle cx="0.45" cy="0.45" r="0.12" fill="#33ff33" fillOpacity="0.26" />
+        </pattern>
       </defs>
 
-      {/* Bat signal spotlight cone — apex at top of tallest tower (x=127) */}
-      <polygon points="108,2 127,32 146,2" fill="url(#batSignal)" />
+      <rect width="240" height="120" fill="#050807" />
+      <rect width="240" height="120" fill="url(#fineGrid)" />
+      <rect width="240" height="120" fill="url(#dotMatrix)" opacity="0.72" />
+      <path
+        d="M0 23 H240 M0 50 H240 M0 76 H240 M0 102 H240 M22 0 V120 M66 0 V120 M110 0 V120 M154 0 V120 M198 0 V120"
+        stroke="#55ff66"
+        strokeOpacity="0.14"
+        strokeWidth="0.35"
+      />
 
-      {/* Bat silhouette at apex of signal beam */}
-      <g transform="translate(122, 3) scale(0.2)" fill="#1a1a1a">
-        <path d="M24,22 L1,18 C3,9 10,7 15,15 Z" />
-        <path d="M24,22 L47,18 C45,9 38,7 33,15 Z" />
-        <ellipse cx="24" cy="22" rx="9" ry="5" />
-        <polygon points="20,17 19,7 22,17" />
-        <polygon points="26,17 29,7 28,17" />
+      {DATA_MARKS.map(mark => (
+        <text
+          key={`${mark.text}-${mark.x}`}
+          x={mark.x}
+          y={mark.y}
+          fill="#a8ff9a"
+          fillOpacity="0.2"
+          fontSize="2.6"
+          fontFamily="monospace"
+          letterSpacing="0"
+        >
+          {mark.text}
+        </text>
+      ))}
+
+      <g opacity="0.28">
+        {Array.from({ length: 18 }).map((_, index) => (
+          <path
+            key={index}
+            d={`M${index * 14 - 20} ${10 + (index % 4) * 17} H${index * 14 + 62}`}
+            stroke="#95f06d"
+            strokeDasharray="0.7 1.5"
+            strokeWidth="0.22"
+          />
+        ))}
       </g>
 
-      {/* ── BUILDING SILHOUETTES (#1a1a1a on #0a0a0a) ── */}
+      {BOROUGH_LABELS.map(({ label, x, y, size }) => (
+        <text
+          key={label}
+          x={x}
+          y={y}
+          fill="#b7ffd2"
+          fillOpacity="0.24"
+          fontSize={size}
+          fontFamily="monospace"
+          fontWeight="700"
+          letterSpacing="0"
+          textAnchor="middle"
+        >
+          {label}
+        </text>
+      ))}
 
-      {/* Building 1 — left edge, mid-height */}
-      <rect x="0" y="74" width="18" height="46" fill="#1a1a1a" />
+      <g filter="url(#routeGlow)">
+        {ROUTES.map(route => (
+          <g key={route.id}>
+            <polyline
+              points={route.points}
+              fill="none"
+              stroke={route.color}
+              strokeOpacity="0.68"
+              strokeWidth="0.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <polyline
+              points={route.points}
+              fill="none"
+              stroke="#eaffde"
+              strokeOpacity="0.28"
+              strokeWidth="0.14"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="1 2.4"
+            />
+            <circle r="1" fill={route.color} opacity="0.95" filter="url(#softBloom)">
+              <animateMotion
+                dur="6.2s"
+                begin={route.delay}
+                repeatCount="indefinite"
+                path={routePath(route.points)}
+              />
+              <animate
+                attributeName="opacity"
+                values="0;0.9;0.9;0"
+                dur="6.2s"
+                begin={route.delay}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        ))}
+      </g>
 
-      {/* Building 2 — pointed roof */}
-      <rect x="20" y="62" width="14" height="58" fill="#1a1a1a" />
-      <polygon points="20,62 27,53 34,62" fill="#1a1a1a" />
+      <g>
+        {STATIONS.map(([cx, cy]) => (
+          <circle
+            key={`${cx}-${cy}`}
+            cx={cx}
+            cy={cy}
+            r="0.85"
+            fill="#07100a"
+            stroke="#caffbf"
+            strokeOpacity="0.72"
+            strokeWidth="0.35"
+          />
+        ))}
+      </g>
 
-      {/* Building 3 — wide, squat */}
-      <rect x="36" y="80" width="22" height="40" fill="#1a1a1a" />
-
-      {/* Building 4 — tall skyscraper with stepped top */}
-      <rect x="60" y="50" width="16" height="70" fill="#1a1a1a" />
-      <rect x="63" y="44" width="10" height="6" fill="#1a1a1a" />
-      <rect x="65" y="40" width="6" height="4" fill="#1a1a1a" />
-
-      {/* Building 5 — medium */}
-      <rect x="78" y="68" width="20" height="52" fill="#1a1a1a" />
-      <rect x="82" y="63" width="12" height="5" fill="#1a1a1a" />
-
-      {/* Building 6 — medium-tall, peaked */}
-      <rect x="100" y="54" width="18" height="66" fill="#1a1a1a" />
-      <polygon points="100,54 109,46 118,54" fill="#1a1a1a" />
-
-      {/* Building 7 — TALLEST: Gotham Signal Tower (bat signal source) */}
-      <rect x="120" y="32" width="14" height="88" fill="#1a1a1a" />
-      {/* Antenna */}
-      <rect x="125" y="27" width="4" height="5" fill="#1a1a1a" />
-      <rect x="126" y="23" width="2" height="4" fill="#1a1a1a" />
-      {/* Signal lamp */}
-      <circle cx="127" cy="32" r="2" fill="#222222" />
-
-      {/* Building 8 — medium, right of tower */}
-      <rect x="136" y="70" width="18" height="50" fill="#1a1a1a" />
-
-      {/* Building 9 — medium-tall */}
-      <rect x="156" y="58" width="14" height="62" fill="#1a1a1a" />
-      <rect x="159" y="54" width="8" height="4" fill="#1a1a1a" />
-
-      {/* Building 10 */}
-      <rect x="172" y="62" width="16" height="58" fill="#1a1a1a" />
-      <polygon points="172,62 180,54 188,62" fill="#1a1a1a" />
-
-      {/* Building 11 — right edge */}
-      <rect x="190" y="78" width="10" height="42" fill="#1a1a1a" />
+      {ROUTES.map((route, index) => (
+        <g key={`${route.id}-badge`} transform={`translate(${180 + index * 8} 111)`}>
+          <circle r="3" fill={route.color} fillOpacity="0.78" />
+          <text
+            y="1"
+            fill="#061006"
+            fontSize="3"
+            fontFamily="monospace"
+            fontWeight="700"
+            textAnchor="middle"
+          >
+            {route.id.toUpperCase()}
+          </text>
+        </g>
+      ))}
     </svg>
   );
 }
@@ -143,48 +325,42 @@ export default function BootSequence({ onComplete }: Props) {
 
   return (
     <div
-      className="min-h-screen bg-crt-black text-crt-green font-mono flex items-center justify-center p-8 relative overflow-hidden"
+      className="min-h-screen bg-crt-black text-crt-green font-mono flex items-center justify-start px-[7vw] py-8 relative overflow-hidden"
       style={{
         opacity: isExiting ? 0 : 1,
         transition: isExiting ? 'opacity 0.45s ease-in' : undefined,
       }}
     >
-      {/* Gotham skyline + bat signal watermark */}
-      <GothamSkyline isExiting={isExiting} />
+      <MtaSchematicBackground isExiting={isExiting} />
 
-      {/* Terminal content — sits above the skyline */}
-      <div className="max-w-xl w-full relative z-10">
-        {/* ASCII box header */}
-        <pre className="text-crt-green text-sm mb-4 leading-tight whitespace-pre">{`+================================================+
+      <div className="max-w-[560px] w-full relative z-10 bg-crt-black/55 py-5 pr-5">
+        <pre className="text-crt-green text-base mb-5 leading-tight whitespace-pre glow-green">{`+================================================+
 |           GOTHAM GRID v1.0                     |
 |      GLOBAL VIBE-CODE SCANNER                  |
 +================================================+`}</pre>
 
-        {/* Boot lines (typewriter) */}
-        <div className="space-y-1 text-sm mb-4 min-h-[144px]">
+        <div className="space-y-2 text-base mb-5 min-h-[166px]">
           {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
-            <p key={i} className="text-crt-green animate-scan-fade">{line}</p>
+            <p key={i} className="text-crt-green animate-scan-fade glow-green">{line}</p>
           ))}
           {visibleLines < BOOT_LINES.length && (
             <span className="animate-blink">_</span>
           )}
         </div>
 
-        {/* Progress bar */}
         {showProgress && (
-          <div className="mb-4 text-sm">
-            <p className="mb-1 text-crt-green/70">&gt; LOADING GRID DATA...</p>
-            <p className="text-crt-green">
+          <div className="mb-5 text-base">
+            <p className="mb-2 text-crt-green/80">&gt; LOADING GRID DATA...</p>
+            <p className="text-crt-green glow-green">
               [{`#`.repeat(filled)}{`.`.repeat(empty)}] {progress}%
             </p>
           </div>
         )}
 
-        {/* Enter button */}
         {showEnter && (
           <button
             onClick={handleEnter}
-            className="mt-4 border border-crt-green text-crt-green px-6 py-2 font-mono text-sm hover:bg-crt-green hover:text-crt-black transition-colors cursor-pointer animate-scan-fade"
+            className="mt-2 ml-24 border border-crt-green text-crt-green px-8 py-2 font-mono text-base hover:bg-crt-green hover:text-crt-black transition-colors cursor-pointer animate-scan-fade"
           >
             [ENTER THE GRID]
           </button>
