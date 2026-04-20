@@ -2,7 +2,7 @@
 
 **[Live demo](https://gotham-grid.vercel.app)**
 
-Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I built this -- a retro CRT terminal dashboard that scans GitHub for creative coding projects from NYC, London, SF, LA, and more.
+Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I made this retro  dashboard that scans GitHub for creative coding projects from NYC, London, SF and LA.
 
 ![GOTHAM GRID dashboard](public/og-image.png)
 
@@ -10,7 +10,7 @@ Twitter has been going absolutely insane lately. People are shipping vibe-coded 
 
 ## What it does
 
-On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches GitHub repositories directly, parses results with Groq LLaMA 3.3 70B, scores each batch for quality, and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a $0.10 cost cap per run. Every tool call is traced and logged to disk.
+On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches GitHub repositories directly, parses results with Groq LLaMA 3.3 70B, scores each batch for quality and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a $0.10 cost cap per run. Every tool call is traced and logged to disk.
 
 The aesthetic is full CRT phosphor terminal -- scanlines, VT323 font, green glow, boot sequence on first load.
 
@@ -52,7 +52,7 @@ cp .env.example .env.local   # fill in your keys
 npm run dev
 ```
 
-The site works without any API keys -- the static city data loads instantly. Keys are only needed for live scan and deep scan.
+The site works without any API keys -- the static city data loads instantly. Live scan can use unauthenticated GitHub search, but `GITHUB_TOKEN` is recommended for higher rate limits. Tavily/Groq keys are only needed for legacy parser tooling and deep scan enrichment.
 
 To regenerate the static city data:
 

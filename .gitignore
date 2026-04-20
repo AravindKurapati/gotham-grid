@@ -42,3 +42,7 @@ data/traces/*.json
 *.tsbuildinfo
 next-env.d.ts
 data/traces/
+
+# AI assistant context files
+CLAUDE.md
+AGENTS.md

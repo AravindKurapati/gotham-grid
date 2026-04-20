@@ -47,6 +47,7 @@ function makeProject(overrides: Partial<Project> = {}): Project {
 beforeEach(() => {
   mockExecute.mockReset();
   mockExecute.mockImplementation(async (toolName: string) => {
+    if (toolName === 'github_search') return [];
     if (toolName === 'web_search') return 'search results text';
     if (toolName === 'parse_projects') return [];
     return '';
@@ -134,6 +135,7 @@ describe('runAgentLoop', () => {
     ];
 
     mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return goodProjects;
       if (toolName === 'web_search') return 'search results text';
       if (toolName === 'parse_projects') return goodProjects;
       return '';
@@ -144,10 +146,10 @@ describe('runAgentLoop', () => {
     expect(result.loops).toBe(1);
     expect(result.finalQuality).toBeGreaterThanOrEqual(0.6);
 
-    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'github_search');
     const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
-    expect(searchCalls).toHaveLength(6); // 5 base + 1 from searchTerms
-    expect(parseCalls).toHaveLength(1);
+    expect(searchCalls).toHaveLength(6); // 4 base + 2 city-term searches
+    expect(parseCalls).toHaveLength(0);
   });
 
   it('runs a second loop when quality is below threshold', async () => {
@@ -159,6 +161,9 @@ describe('runAgentLoop', () => {
 
     let parseCallCount = 0;
     mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') {
+        return ++parseCallCount <= 6 ? [badProject] : goodProjects;
+      }
       if (toolName === 'web_search') return 'search results text';
       if (toolName === 'parse_projects') {
         return ++parseCallCount === 1 ? [badProject] : goodProjects;
@@ -169,16 +174,17 @@ describe('runAgentLoop', () => {
     const result = await runAgentLoop(testCity, { maxLoops: 3, qualityThreshold: 0.6 });
     expect(result.loops).toBe(2);
 
-    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'github_search');
     const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
     expect(searchCalls).toHaveLength(9); // 6 (loop 1) + 3 (refinement queries, loop 2)
-    expect(parseCalls).toHaveLength(2);
+    expect(parseCalls).toHaveLength(0);
   });
 
   it('stops after maxLoops even if quality stays low', async () => {
     const junkProject = makeProject({ title: 'Junk', author: 'Unknown', description: 'x', category: 'OTHER', url: '', date: '2000' });
 
     mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return [junkProject];
       if (toolName === 'web_search') return 'search results text';
       if (toolName === 'parse_projects') return [junkProject];
       return '';
@@ -187,16 +193,17 @@ describe('runAgentLoop', () => {
     const result = await runAgentLoop(testCity, { maxLoops: 2, qualityThreshold: 0.9 });
     expect(result.loops).toBe(2);
 
-    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const searchCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'github_search');
     const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
     expect(searchCalls).toHaveLength(9); // 6 (loop 1) + 3 (refinement, loop 2)
-    expect(parseCalls).toHaveLength(2);
+    expect(parseCalls).toHaveLength(0);
   });
 
   it('deduplicates projects across loops by title', async () => {
     const sameProject = makeProject({ title: 'NYC App', author: '@dev', description: 'A nice app for navigating New York City', category: 'TRANSIT', url: 'https://example.com', date: '2025-01-01' });
 
     mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return [sameProject];
       if (toolName === 'web_search') return 'search results text';
       if (toolName === 'parse_projects') return [sameProject];
       return '';

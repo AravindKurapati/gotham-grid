@@ -1,9 +1,10 @@
 import Groq from 'groq-sdk';
 import { searchMany, extractUrl } from './tavily';
+import { searchGitHubProjects, type GitHubSearchParams } from './github';
 import { recordToolCall, type ToolProvider } from './instrumentation';
 import type { Project, CityKey } from './types';
 
-export type ToolName = 'web_search' | 'parse_projects' | 'verify_url';
+export type ToolName = 'web_search' | 'github_search' | 'parse_projects' | 'verify_url';
 export type { ToolProvider };
 
 interface ToolDefinition {
@@ -17,6 +18,11 @@ export const TOOLS: ToolDefinition[] = [
     name: 'web_search',
     provider: 'tavily',
     schema: { query: 'string', maxResults: 'number' },
+  },
+  {
+    name: 'github_search',
+    provider: 'github',
+    schema: { query: 'string', maxResults: 'number', city: 'CityConfig' },
   },
   {
     name: 'parse_projects',
@@ -47,12 +53,14 @@ export interface VerifyUrlParams {
 
 type ToolParams = {
   web_search: WebSearchParams;
+  github_search: GitHubSearchParams;
   parse_projects: ParseProjectsParams;
   verify_url: VerifyUrlParams;
 };
 
 type ToolResults = {
   web_search: string;
+  github_search: Project[];
   parse_projects: Project[];
   verify_url: string;
 };
@@ -96,11 +104,18 @@ Each object:
   "url": "https://... (the actual project or demo URL)",
   "sourceUrl": "https://... (the tweet/post/repo URL where it was found -- omit if same as url)",
   "source": "twitter|github|reddit|hackernews|blog|producthunt|other",
-  "date": "relative or ISO date",
+  "date": "YYYY or YYYY-MM format only — if only a relative date is available, estimate the year. Never use words like 'recently', 'ago', 'last week', etc.",
   "likes": 0
 }
 
-Only include REAL projects from the search results. Do not invent anything.`;
+Only include REAL projects from the search results. Do not invent anything.
+
+Author extraction rules (in priority order):
+- GitHub repo → use the repo owner as author (format: "@owner")
+- Tweet/X post → use the Twitter/X handle (format: "@handle")
+- Blog post or article → use the byline name
+- Reddit post → use the Reddit username (format: "u/username")
+- Only fall back to "Unknown" as absolute last resort when zero author signal exists`;
 
 function sanitizeText(s: unknown): string {
   if (typeof s !== 'string') return '';
@@ -179,6 +194,8 @@ export async function execute<TName extends ToolName>(
         const p = params as WebSearchParams;
         return searchMany([p.query], p.maxResults) as Promise<ToolResults[TName]>;
       }
+      case 'github_search':
+        return searchGitHubProjects(params as GitHubSearchParams) as Promise<ToolResults[TName]>;
       case 'parse_projects':
         return parseProjectsWithGroq(params as ParseProjectsParams) as Promise<ToolResults[TName]>;
       case 'verify_url': {
