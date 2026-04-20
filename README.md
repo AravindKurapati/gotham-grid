@@ -2,7 +2,7 @@
 
 **[Live demo](https://gotham-grid.vercel.app)**
 
-Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I built this -- a retro CRT terminal dashboard that scans the web for creative coding projects from NYC, London, SF, LA, and more.
+Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I built this -- a retro CRT terminal dashboard that scans GitHub for creative coding projects from NYC, London, SF, LA, and more.
 
 ![GOTHAM GRID dashboard](public/og-image.png)
 
@@ -10,7 +10,7 @@ Twitter has been going absolutely insane lately. People are shipping vibe-coded 
 
 ## What it does
 
-On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches the web via Tavily, parses results with Groq LLaMA 3.3 70B, scores each batch for quality, and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a $0.10 cost cap per run. Every tool call is traced and logged to disk.
+On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches GitHub repositories directly, parses results with Groq LLaMA 3.3 70B, scores each batch for quality, and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a $0.10 cost cap per run. Every tool call is traced and logged to disk.
 
 The aesthetic is full CRT phosphor terminal -- scanlines, VT323 font, green glow, boot sequence on first load.
 
@@ -21,13 +21,13 @@ The aesthetic is full CRT phosphor terminal -- scanlines, VT323 font, green glow
 The core is in `lib/agent-loop.ts`. Each scan run:
 
 1. Builds city-specific search queries
-2. Calls Tavily for web results (tool: `web_search`)
-3. Calls Groq to parse raw results into structured projects (tool: `parse_projects`)
-4. Scores the batch -- filters out projects with no author, no URL, no description, or dates outside 2024-2026
+2. Searches GitHub repositories directly via the GitHub API (`lib/github.ts`)
+3. Maps repo metadata into structured project cards
+4. Calls Groq to score and parse results (tool: `parse_projects`)
 5. If quality score is below 60%, refines queries and loops again
 6. Caps at 3 loops or $0.10, whichever comes first
 
-Every tool call is instrumented via `lib/instrumentation.ts` -- provider, duration, estimated cost, and status are all recorded per run. Traces saved to `data/traces/`.
+Every tool call is instrumented via `lib/instrumentation.ts` -- provider, duration, estimated cost, and status are all recorded per run. Traces saved to `data/traces/`. GitHub is tracked as a provider alongside Groq.
 
 ---
 
@@ -36,7 +36,7 @@ Every tool call is instrumented via `lib/instrumentation.ts` -- provider, durati
 - Next.js 14 (App Router, TypeScript)
 - Tailwind CSS with custom CRT theme
 - Groq SDK (LLaMA 3.3 70B Versatile)
-- Tavily for web search
+- GitHub API for repository discovery
 - Anthropic SDK (deep scan)
 - Vercel
 
@@ -74,4 +74,4 @@ npm test
 
 ## Environment variables
 
-See `.env.example`. Only `TAVILY_API_KEY` and `GROQ_API_KEY` are needed for live scan. `SCAN_CODE` is optional -- set it to gate live scan behind an invite code.
+See `.env.example`. `GROQ_API_KEY` is required for live scan. `GITHUB_TOKEN` is optional but recommended to avoid GitHub API rate limits. `SCAN_CODE` is optional -- set it to gate live scan behind an invite code.
