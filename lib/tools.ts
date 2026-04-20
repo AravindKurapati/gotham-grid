@@ -100,7 +100,14 @@ Each object:
   "likes": 0
 }
 
-Only include REAL projects from the search results. Do not invent anything.`;
+Only include REAL projects from the search results. Do not invent anything.
+
+Author extraction rules (in priority order):
+- GitHub repo → use the repo owner as author (format: "@owner")
+- Tweet/X post → use the Twitter/X handle (format: "@handle")
+- Blog post or article → use the byline name
+- Reddit post → use the Reddit username (format: "u/username")
+- Only fall back to "Unknown" as absolute last resort when zero author signal exists`;
 
 function sanitizeText(s: unknown): string {
   if (typeof s !== 'string') return '';

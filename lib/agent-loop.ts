@@ -60,7 +60,7 @@ function buildBaseQueries(city: CityConfig, options: AgentLoopOptions): string[]
   const catFilter = options.category ? ` ${options.category.toLowerCase()}` : '';
   const qFilter = options.query ? ` "${options.query}"` : '';
   return [
-    `${name} data visualization project 2024 2025${qFilter}`,
+    `${name} data visualization project 2025 2026${qFilter}`,
     `${name} interactive map app site:github.com OR site:twitter.com`,
     `"I built" "${name}" app${catFilter}`,
     `${name} open data creative coding project`,
@@ -79,7 +79,7 @@ function buildRefinementQueries(
     const catLower = cat.toLowerCase();
     return hasUrlIssues
       ? `site:github.com ${name} ${catLower}`
-      : `${name} ${catLower} project 2025`;
+      : `${name} ${catLower} project 2025 2026`;
   });
 }
 
@@ -96,7 +96,7 @@ async function runLoopIteration<T>(fn: () => Promise<T>): Promise<T | 'timeout'>
     return await Promise.race([
       fn(),
       new Promise<'timeout'>(resolve => {
-        timeout = setTimeout(() => resolve('timeout'), 30_000);
+        timeout = setTimeout(() => resolve('timeout'), 60_000);
       }),
     ]);
   } finally {
