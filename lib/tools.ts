@@ -96,7 +96,7 @@ Each object:
   "url": "https://... (the actual project or demo URL)",
   "sourceUrl": "https://... (the tweet/post/repo URL where it was found -- omit if same as url)",
   "source": "twitter|github|reddit|hackernews|blog|producthunt|other",
-  "date": "relative or ISO date",
+  "date": "YYYY or YYYY-MM format only — if only a relative date is available, estimate the year. Never use words like 'recently', 'ago', 'last week', etc.",
   "likes": 0
 }
 
