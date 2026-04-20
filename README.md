@@ -4,7 +4,9 @@
 
 Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I made this retro  dashboard that scans GitHub for creative coding projects from NYC, London, SF and LA.
 
-![GOTHAM GRID dashboard](public/og-image.png)
+![GOTHAM GRID dashboard](public/S1.png)
+
+![The projects](public/S2.png)
 
 ---
 
