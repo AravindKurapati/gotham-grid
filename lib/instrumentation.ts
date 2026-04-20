@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { AsyncLocalStorage } from 'async_hooks';
 
-export type ToolProvider = 'tavily' | 'groq' | 'anthropic';
+export type ToolProvider = 'tavily' | 'groq' | 'anthropic' | 'github';
 export type ToolStatus = 'success' | 'failure';
 
 export interface ToolCallTrace {
@@ -71,6 +71,7 @@ function estimateCost(provider: ToolProvider, tokenCount?: number): number {
     case 'anthropic': return (tokenCount ?? 0) * ANTHROPIC_ESTIMATED_RATE_PER_TOKEN;
     case 'tavily': return TAVILY_SEARCH_COST;
     case 'groq': return GROQ_PARSE_COST;
+    case 'github': return 0;
   }
 }
 

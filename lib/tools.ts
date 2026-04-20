@@ -1,9 +1,10 @@
 import Groq from 'groq-sdk';
 import { searchMany, extractUrl } from './tavily';
+import { searchGitHubProjects, type GitHubSearchParams } from './github';
 import { recordToolCall, type ToolProvider } from './instrumentation';
 import type { Project, CityKey } from './types';
 
-export type ToolName = 'web_search' | 'parse_projects' | 'verify_url';
+export type ToolName = 'web_search' | 'github_search' | 'parse_projects' | 'verify_url';
 export type { ToolProvider };
 
 interface ToolDefinition {
@@ -17,6 +18,11 @@ export const TOOLS: ToolDefinition[] = [
     name: 'web_search',
     provider: 'tavily',
     schema: { query: 'string', maxResults: 'number' },
+  },
+  {
+    name: 'github_search',
+    provider: 'github',
+    schema: { query: 'string', maxResults: 'number', city: 'CityConfig' },
   },
   {
     name: 'parse_projects',
@@ -47,12 +53,14 @@ export interface VerifyUrlParams {
 
 type ToolParams = {
   web_search: WebSearchParams;
+  github_search: GitHubSearchParams;
   parse_projects: ParseProjectsParams;
   verify_url: VerifyUrlParams;
 };
 
 type ToolResults = {
   web_search: string;
+  github_search: Project[];
   parse_projects: Project[];
   verify_url: string;
 };
@@ -186,6 +194,8 @@ export async function execute<TName extends ToolName>(
         const p = params as WebSearchParams;
         return searchMany([p.query], p.maxResults) as Promise<ToolResults[TName]>;
       }
+      case 'github_search':
+        return searchGitHubProjects(params as GitHubSearchParams) as Promise<ToolResults[TName]>;
       case 'parse_projects':
         return parseProjectsWithGroq(params as ParseProjectsParams) as Promise<ToolResults[TName]>;
       case 'verify_url': {

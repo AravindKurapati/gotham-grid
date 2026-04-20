@@ -6,7 +6,7 @@ import {
   totalTraceCost,
   withAgentTrace,
 } from './instrumentation';
-import type { Project, Category, CityConfig, CityKey } from './types';
+import type { Project, Category, CityConfig } from './types';
 
 export const ALL_CATEGORIES: Category[] = [
   'TRANSIT',
@@ -24,6 +24,7 @@ export function scoreProject(p: Project): boolean {
   const hasUrl = p.url.startsWith('http');
   const hasDescription = p.description.length > 20;
   const hasDate = /202[4-6]/.test(p.date);
+
   return hasRealAuthor && hasUrl && hasDescription && hasDate;
 }
 
@@ -57,37 +58,39 @@ export interface AgentLoopResult {
 
 function buildBaseQueries(city: CityConfig, options: AgentLoopOptions): string[] {
   const name = city.name;
-  const catFilter = options.category ? ` ${options.category.toLowerCase()}` : '';
-  const qFilter = options.query ? ` "${options.query}"` : '';
+  const shortName = city.gridName === 'NYC' ? 'NYC' : city.gridName;
+  const userQuery = options.query ? ` ${options.query}` : '';
+  const categoryQuery = options.category ? ` ${options.category.toLowerCase()}` : '';
+  const updated = 'pushed:>=2024-01-01';
+
   return [
-    `${name} data visualization project 2025 2026${qFilter}`,
-    `${name} interactive map app site:github.com OR site:twitter.com`,
-    `"I built" "${name}" app${catFilter}`,
-    `${name} open data creative coding project`,
-    `${name} side project launched vibe coding${qFilter}`,
-    ...city.searchTerms.slice(0, 2).map(t => `${t} creative tech project`),
+    `"${name}" "open data" map ${updated}${userQuery}${categoryQuery}`,
+    `"${name}" dashboard visualization ${updated}${userQuery}${categoryQuery}`,
+    `"${name}" transit subway bus ${updated}${userQuery}${categoryQuery}`,
+    `"${name}" civic app ${updated}${userQuery}${categoryQuery}`,
+    `${shortName} mapbox leaflet ${updated}${userQuery}${categoryQuery}`,
+    `${shortName} creative-coding p5 ${updated}${userQuery}${categoryQuery}`,
   ];
 }
 
 function buildRefinementQueries(
   city: CityConfig,
   missing: Category[],
-  hasUrlIssues: boolean,
 ): string[] {
   const name = city.name;
-  return missing.slice(0, 3).map(cat => {
-    const catLower = cat.toLowerCase();
-    return hasUrlIssues
-      ? `site:github.com ${name} ${catLower}`
-      : `${name} ${catLower} project 2025 2026`;
-  });
+  const updated = 'pushed:>=2024-01-01';
+  return missing.slice(0, 3).map(cat => `"${name}" ${cat.toLowerCase()} ${updated}`);
 }
 
-async function searchQueries(queries: string[], maxResults = 5): Promise<string> {
-  const chunks = await Promise.all(
-    queries.map(query => execute('web_search', { query, maxResults })),
+async function searchGitHubQueries(
+  city: CityConfig,
+  queries: string[],
+  maxResults = 8,
+): Promise<Project[]> {
+  const batches = await Promise.all(
+    queries.map(query => execute('github_search', { query, maxResults, city })),
   );
-  return chunks.filter(chunk => chunk.trim()).join('\n\n');
+  return batches.flat();
 }
 
 async function runLoopIteration<T>(fn: () => Promise<T>): Promise<T | 'timeout'> {
@@ -129,14 +132,8 @@ async function runAgentLoopInner(
     if (trace) trace.loopsRun = loops;
 
     const loopResult = await runLoopIteration(async () => {
-      const searchText = await searchQueries(queries);
-      if (!searchText.trim()) return 'empty' as const;
-
-      return execute('parse_projects', {
-        rawResults: searchText,
-        city: city.displayName,
-        cityKey: city.key,
-      });
+      const projects = await searchGitHubQueries(city, queries);
+      return projects.length > 0 ? projects : 'empty' as const;
     });
 
     if (loopResult === 'timeout') {
@@ -148,7 +145,13 @@ async function runAgentLoopInner(
     if (loopResult === 'empty') break;
 
     const existingTitles = new Set(allProjects.map(p => p.title.toLowerCase()));
-    const fresh = loopResult.filter(p => !existingTitles.has(p.title.toLowerCase()));
+    const fresh: Project[] = [];
+    for (const project of loopResult) {
+      const title = project.title.toLowerCase();
+      if (existingTitles.has(title)) continue;
+      existingTitles.add(title);
+      fresh.push(project);
+    }
     allProjects = [...allProjects, ...fresh];
 
     finalQuality = scoreBatch(allProjects);
@@ -174,9 +177,6 @@ async function runAgentLoopInner(
     );
 
     const missing = missingCategories(allProjects, options.category);
-    const hasUrlIssues =
-      allProjects.length > 0 &&
-      allProjects.filter(p => !p.url.startsWith('http')).length / allProjects.length > 0.3;
 
     if (missing.length > 0) {
       console.log(
@@ -184,7 +184,7 @@ async function runAgentLoopInner(
       );
     }
 
-    queries = buildRefinementQueries(city, missing, hasUrlIssues);
+    queries = buildRefinementQueries(city, missing);
     if (hasExceededBudget(maxCostPerRun)) {
       budgetExceeded = true;
       warning = `Agent run exceeded maxCostPerRun budget of $${maxCostPerRun.toFixed(2)}.`;
