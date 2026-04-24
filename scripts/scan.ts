@@ -11,10 +11,6 @@ if (!process.env.GROQ_API_KEY) {
   console.error('[ERR] GROQ_API_KEY not set. Add it to .env.local');
   process.exit(1);
 }
-if (!process.env.TAVILY_API_KEY) {
-  console.error('[ERR] TAVILY_API_KEY not set. Add it to .env.local');
-  process.exit(1);
-}
 
 function pad(s: string, len: number): string {
   return s.padEnd(len, '.');
@@ -24,7 +20,7 @@ async function main() {
   const argCities = process.argv.slice(2).filter(a => a in CITIES) as CityKey[];
   const citiesToScan: CityKey[] = argCities.length > 0 ? argCities : CITY_KEYS;
 
-  console.log('\n[GOTHAM GRID SCANNER] -- Tavily + Groq llama-3.3-70b-versatile');
+  console.log('\n[GOTHAM GRID SCANNER] -- GitHub + Groq llama-3.3-70b-versatile');
   console.log('='.repeat(50));
   mkdirSync(join(process.cwd(), 'data'), { recursive: true });
 
