@@ -1,1 +1,110 @@
-[]
+[
+  {
+    "id": "github-1023759592",
+    "title": "sf examiner data pipeline",
+    "author": "@ew-sfex",
+    "description": "Automated data pipeline for SF Examiner charts and maps using San Francisco open data",
+    "category": "MAPS",
+    "url": "https://github.com/ew-sfex/sf-examiner-data-pipeline",
+    "source": "github",
+    "date": "2026-02",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1129922918",
+    "title": "sf traffic safety dashboard",
+    "author": "@micahwilliams23",
+    "description": "Traffic safety dashboard to visualize data for San Francisco.",
+    "category": "UTILITY",
+    "url": "https://github.com/micahwilliams23/sf-traffic-safety-dashboard",
+    "source": "github",
+    "date": "2026-04",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1000567217",
+    "title": "San Francisco Crime Data Analysis and Trends Dashboard",
+    "author": "@Purva2993",
+    "description": "An interactive data visualization project analyzing over 900,000 police incident reports from San Francisco (2018-Present) using Python for data processing and Tableau for visualization.",
+    "category": "UTILITY",
+    "url": "https://github.com/Purva2993/San-Francisco-Crime-Data-Analysis-and-Trends-Dashboard",
+    "source": "github",
+    "date": "2025-06",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1010474432",
+    "title": "San Francisco Airport Tableau Dashboard",
+    "author": "@ashhh-22",
+    "description": "Interactive Tableau dashboard visualizing flight patterns and route statistics for San Francisco International Airport (SFO).",
+    "category": "UTILITY",
+    "url": "https://github.com/ashhh-22/San-Francisco-Airport-Tableau-Dashboard",
+    "source": "github",
+    "date": "2025-06",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1080233232",
+    "title": "BikeShare Visualization",
+    "author": "@se7ven7-7",
+    "description": "Tableau Public data storytelling project analyzing San Francisco Bikeshare trips. Explores ride duration, popular routes, and user behavior patterns using interactive dashboards.",
+    "category": "ART",
+    "url": "https://github.com/se7ven7-7/BikeShare_Visualization",
+    "source": "github",
+    "date": "2025-10",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1096415635",
+    "title": "Salaries for San Francisco Employee",
+    "author": "@Shrushti72",
+    "description": "This project analyzes employee salary data from San Francisco between 2011-2018. Includes data cleaning, exploratory analysis, visualizations, and Power BI dashboard.",
+    "category": "UTILITY",
+    "url": "https://github.com/Shrushti72/Salaries-for-San-Francisco-Employee",
+    "source": "github",
+    "date": "2025-11",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-871861345",
+    "title": "sf crime dashboard",
+    "author": "@TheSmartCatt",
+    "description": "This repository contains a Streamlit application that visualizes police department incidents data from San Francisco for the year 2016.",
+    "category": "UTILITY",
+    "url": "https://github.com/TheSmartCatt/sf-crime-dashboard",
+    "source": "github",
+    "date": "2024-10",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-975683438",
+    "title": "Crime Data Analysis",
+    "author": "@Kushagra-Sedwal",
+    "description": "Tableau dashboard for visualizing San Francisco crime data, identifying regional trends and hot spots with interactive filtering and geo-mapping.",
+    "category": "MAPS",
+    "url": "https://github.com/Kushagra-Sedwal/Crime-Data-Analysis",
+    "source": "github",
+    "date": "2025-04",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-802724646",
+    "title": "Interactive Sales Performance Dashboard for a Bike Shop Using a Data Visualization Approach",
+    "author": "@AnchaNarasimha",
+    "description": "The Bike Haven, a renowned San Francisco bike shop, is aiming to create an interactive Tableau dashboard that showcases sales data across various product categories, highlights top products and customers, and compares actual sales to budget forecasts.",
+    "category": "UTILITY",
+    "url": "https://github.com/AnchaNarasimha/Interactive-Sales-Performance-Dashboard-for-a-Bike-Shop-Using-a-Data-Visualization-Approach",
+    "source": "github",
+    "date": "2024-05",
+    "likes": 0,
+    "city": "sf"
+  }
+]

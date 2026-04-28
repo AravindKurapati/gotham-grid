@@ -1,1 +1,99 @@
-[]
+[
+  {
+    "id": "github-866037125",
+    "title": "AI Transformers 045",
+    "author": "@Bhargav-Ram-I",
+    "description": "The Los Angeles Crime Analysis Dashboard is a comprehensive data visualization project that leverages Python to analyze crime data from Los Angeles. By utilizing tools like Pandas for data preprocessing and Streamlit for building an interactive dashboard, this project provides valuable insights into crime trends, patterns, and hotspots.",
+    "category": "UTILITY",
+    "url": "https://github.com/Bhargav-Ram-I/AI-Transformers_045",
+    "source": "github",
+    "date": "2024-11",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-1190662841",
+    "title": "Crime Data Analysis Dashboard Los Angeles",
+    "author": "@Rotich12",
+    "description": "Data analytics dashboard leveraging Dash, Plotly, Folium and Pandas to explore temporal and spatial crime patterns with interactive filtering and visualization.",
+    "category": "UTILITY",
+    "url": "https://github.com/Rotich12/Crime-Data-Analysis-Dashboard-Los-Angeles",
+    "source": "github",
+    "date": "2026-03",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-822876129",
+    "title": "Crime Analysis in Los Angeles 2020 2024",
+    "author": "@Chavez56",
+    "description": "Crime Case in Los Angeles 2020-2024",
+    "category": "UTILITY",
+    "url": "https://github.com/Chavez56/Crime-Analysis-in-Los-Angeles-2020-2024",
+    "source": "github",
+    "date": "2024-07",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-1051761320",
+    "title": "Los Angeles Crime Data Dashboard",
+    "author": "@youssefmoustafa456-wq",
+    "description": "This project provides an interactive dashboard for analyzing crime data in Los Angeles. The dashboard allows users to explore crime trends, types of crimes, and demographic insights. Built using Excel (with slicers and charts) for clear visualization and easy interaction.",
+    "category": "UTILITY",
+    "url": "https://github.com/youssefmoustafa456-wq/Los-Angeles-Crime-Data-Dashboard",
+    "source": "github",
+    "date": "2025-09",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-1054158650",
+    "title": "los Angeles project ",
+    "author": "@NadaHussein27",
+    "description": "This repository explores crime data in Los Angeles, focusing on data cleaning, transformation, and visualization. It provides insights into crime trends, patterns by location and time, and potential factors influencing crime rates. The project demonstrates SQL for data wrangling and Excel for interactive dashboards and analysis.",
+    "category": "ART",
+    "url": "https://github.com/NadaHussein27/los_Angeles_project-",
+    "source": "github",
+    "date": "2025-09",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-946486798",
+    "title": "los angeles crime data analytics",
+    "author": "@N0AH-14",
+    "description": "This repository hosts a comprehensive analytics pipeline for processing and analyzing Los Angeles Crime Data (2020–Present). It covers extraction, cleaning, ETL, basic machine learning, and visualization, with outputs integrated into PowerBI for interactive dashboards.",
+    "category": "UTILITY",
+    "url": "https://github.com/N0AH-14/los-angeles-crime-data-analytics",
+    "source": "github",
+    "date": "2026-03",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-822475174",
+    "title": "Los Angeles Crime Exploratory Data Analysis And Dashboard",
+    "author": "@Vaibhav-Xo",
+    "description": "LA Crime Data EDA: Unmasking the City’s Dark Secrets 🌆🕵️‍♂️🔍. Step into the gritty underbelly of Los Angeles with this electrifying EDA project! We’re diving deep into the city’s crime data to uncover jaw-dropping trends, shocking patterns, and eye-popping insights. Buckle up for a wild ride through the streets of LA! 👮‍♂️🚔",
+    "category": "UTILITY",
+    "url": "https://colab.research.google.com/drive/1Fk8IJz_x1IqUG-dQN1bQaTjvGb49R5fb?usp=sharing",
+    "sourceUrl": "https://github.com/Vaibhav-Xo/Los_Angeles_Crime_Exploratory_Data_Analysis_And_Dashboard",
+    "source": "github",
+    "date": "2024-07",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "github-751400036",
+    "title": "LA Crime Dashboard",
+    "author": "@yyenchiu",
+    "description": "Generate an interactive dashboard that visualizes data on criminal activity and police arrests in Los Angeles from 2010-2023.",
+    "category": "UTILITY",
+    "url": "https://github.com/yyenchiu/LA_Crime_Dashboard",
+    "source": "github",
+    "date": "2024-02",
+    "likes": 0,
+    "city": "los_angeles"
+  }
+]
