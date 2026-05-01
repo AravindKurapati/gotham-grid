@@ -2,7 +2,9 @@
 
 **[Live demo](https://gotham-grid.vercel.app)**
 
-Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. So I made this retro  dashboard that scans GitHub for creative coding projects from NYC, London, SF and LA.
+Twitter has been going absolutely insane lately. People are shipping vibe-coded projects and pulling millions of views overnight, but there was no good way to actually track what was being built across different cities. 
+
+So I made this retro agentic dashboard that tracks creative and civic tech projects across NYC, London, SF and LA.
 
 ![GOTHAM GRID dashboard](public/S1.png)
 
@@ -17,6 +19,12 @@ On load the dashboard shows pre-fetched project data for each city (zero API cos
 The aesthetic is full CRT phosphor terminal -- scanlines, VT323 font, green glow, boot sequence on first load.
 
 ---
+## Why agentic?
+
+The dashboard itself is the interface. The agent lives behind LIVE SCAN: it takes a city/category/query goal, builds search queries, calls discovery tools, maps results into project cards, scores result quality and refines the next search when coverage is weak.
+
+Every scan is traced with tool calls, duration, estimated cost, quality scores and final project count.
+
 
 ## Agent loop
 
