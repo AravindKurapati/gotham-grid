@@ -95,5 +95,17 @@
     "date": "2024-02",
     "likes": 0,
     "city": "los_angeles"
+  },
+  {
+    "id": "github-1224941014",
+    "title": "vmla fixla app",
+    "author": "@evanvmla",
+    "description": "Fix LA — civic issue reporting app for Los Angeles",
+    "category": "UTILITY",
+    "url": "https://github.com/evanvmla/vmla-fixla-app",
+    "source": "github",
+    "date": "2026-04",
+    "likes": 0,
+    "city": "los_angeles"
   }
 ]
