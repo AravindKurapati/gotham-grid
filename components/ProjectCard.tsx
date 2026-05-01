@@ -5,7 +5,7 @@ import { CATEGORIES } from '@/lib/categories';
 import type { Project } from '@/lib/types';
 import ProjectCardExpanded from './ProjectCardExpanded';
 
-interface Props { project: Project; scanCode?: string; }
+interface Props { project: Project; }
 
 const SOURCE_LABELS: Record<string, string> = {
   twitter: 'TWITTER',
@@ -17,7 +17,7 @@ const SOURCE_LABELS: Record<string, string> = {
   other: 'WEB',
 };
 
-export default function ProjectCard({ project, scanCode }: Props) {
+export default function ProjectCard({ project }: Props) {
   const { theme } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const cat = CATEGORIES[project.category];
@@ -72,7 +72,7 @@ export default function ProjectCard({ project, scanCode }: Props) {
         {expanded && (
           <tr className="bg-flap-tile">
             <td colSpan={5} className="px-4 py-3">
-              <ProjectCardExpanded project={project} scanCode={scanCode} />
+              <ProjectCardExpanded project={project} />
             </td>
           </tr>
         )}
@@ -124,7 +124,7 @@ export default function ProjectCard({ project, scanCode }: Props) {
           )}
         </div>
       )}
-      {expanded && <ProjectCardExpanded project={project} scanCode={scanCode} />}
+      {expanded && <ProjectCardExpanded project={project} />}
     </div>
   );
 }

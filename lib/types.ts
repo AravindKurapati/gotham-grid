@@ -3,15 +3,6 @@ export type Source = 'twitter' | 'github' | 'reddit' | 'hackernews' | 'blog' | '
 
 export type CityKey = 'nyc' | 'london' | 'sf' | 'los_angeles';
 
-export interface DeepScanData {
-  githubStars?: number;
-  techStack?: string[];
-  lastUpdated?: string;
-  summary?: string;
-  vibeScore?: number;
-  status?: 'LIVE' | 'OFFLINE' | 'UNKNOWN';
-}
-
 export interface Project {
   id: string;
   title: string;
@@ -24,7 +15,6 @@ export interface Project {
   date: string;
   likes?: number;
   city: CityKey;
-  deepScan?: DeepScanData;
 }
 
 export interface CityConfig {

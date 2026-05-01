@@ -3,9 +3,9 @@ import { useTheme } from '@/lib/theme-context';
 import type { Project } from '@/lib/types';
 import ProjectCard from './ProjectCard';
 
-interface Props { projects: Project[]; scanCode?: string; }
+interface Props { projects: Project[]; }
 
-export default function ProjectGrid({ projects, scanCode }: Props) {
+export default function ProjectGrid({ projects }: Props) {
   const { theme } = useTheme();
   const isFlap = theme === 'flap';
 
@@ -34,7 +34,7 @@ export default function ProjectGrid({ projects, scanCode }: Props) {
           </thead>
           <tbody>
             {projects.map(p => (
-              <ProjectCard key={p.id} project={p} scanCode={scanCode} />
+              <ProjectCard key={p.id} project={p} />
             ))}
           </tbody>
         </table>
@@ -45,7 +45,7 @@ export default function ProjectGrid({ projects, scanCode }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {projects.map(p => (
-        <ProjectCard key={p.id} project={p} scanCode={scanCode} />
+        <ProjectCard key={p.id} project={p} />
       ))}
     </div>
   );

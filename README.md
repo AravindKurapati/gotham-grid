@@ -39,7 +39,6 @@ Every tool call is instrumented via `lib/instrumentation.ts` -- provider, durati
 - Tailwind CSS with custom CRT theme
 - Groq SDK (LLaMA 3.3 70B Versatile)
 - GitHub API for repository discovery
-- Anthropic SDK (deep scan)
 - Vercel
 
 ---
@@ -54,7 +53,7 @@ cp .env.example .env.local   # fill in your keys
 npm run dev
 ```
 
-The site works without any API keys -- the static city data loads instantly. Live scan can use unauthenticated GitHub search, but `GITHUB_TOKEN` is recommended for higher rate limits. Tavily/Groq keys are only needed for legacy parser tooling and deep scan enrichment.
+The site works without any API keys -- the static city data loads instantly. Live scan can use unauthenticated GitHub search, but `GITHUB_TOKEN` is recommended for higher rate limits. `GROQ_API_KEY` is only needed for the legacy `parse_projects` tool. `TAVILY_API_KEY` is reserved for an upcoming non-GitHub source feature and currently has no effect.
 
 To regenerate the static city data:
 
@@ -66,7 +65,7 @@ npm run scan
 
 ## Tests
 
-32 tests across 4 suites: agent loop quality scoring and refinement logic, cache TTL, deep scan, and rate limiting.
+27 tests across 3 suites: agent loop quality scoring and refinement logic, cache TTL, and rate limiting.
 
 ```bash
 npm test

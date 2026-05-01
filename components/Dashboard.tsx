@@ -155,7 +155,7 @@ export default function Dashboard({ initialData }: Props) {
         {isScanning ? (
           <AgentStatus city={selectedCity} />
         ) : (
-          <ProjectGrid projects={filteredProjects} scanCode={scanCode} />
+          <ProjectGrid projects={filteredProjects} />
         )}
         <Ticker projects={baseProjects} />
         <Footer />
