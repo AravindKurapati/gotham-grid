@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { AsyncLocalStorage } from 'async_hooks';
 
-export type ToolProvider = 'tavily' | 'groq' | 'anthropic' | 'github';
+export type ToolProvider = 'tavily' | 'groq' | 'github';
 export type ToolStatus = 'success' | 'failure';
 
 export interface ToolCallTrace {
@@ -35,7 +35,6 @@ interface TraceContext {
 
 const storage = new AsyncLocalStorage<TraceContext>();
 
-const ANTHROPIC_ESTIMATED_RATE_PER_TOKEN = 0.000003;
 const TAVILY_SEARCH_COST = 0.004;
 const GROQ_PARSE_COST = 0.0001;
 
@@ -66,9 +65,8 @@ export async function withAgentTrace<T>(
   }
 }
 
-function estimateCost(provider: ToolProvider, tokenCount?: number): number {
+function estimateCost(provider: ToolProvider): number {
   switch (provider) {
-    case 'anthropic': return (tokenCount ?? 0) * ANTHROPIC_ESTIMATED_RATE_PER_TOKEN;
     case 'tavily': return TAVILY_SEARCH_COST;
     case 'groq': return GROQ_PARSE_COST;
     case 'github': return 0;
@@ -79,7 +77,6 @@ export async function recordToolCall<T>(
   toolName: string,
   provider: ToolProvider,
   fn: () => Promise<T>,
-  tokenCount?: number,
 ): Promise<T> {
   const trace = getCurrentTrace();
   const started = Date.now();
@@ -94,7 +91,7 @@ export async function recordToolCall<T>(
       startTime,
       endTime: new Date(ended).toISOString(),
       durationMs: ended - started,
-      estimatedCost: estimateCost(provider, tokenCount),
+      estimatedCost: estimateCost(provider),
       status: 'success',
     });
     return result;
@@ -106,7 +103,7 @@ export async function recordToolCall<T>(
       startTime,
       endTime: new Date(ended).toISOString(),
       durationMs: ended - started,
-      estimatedCost: estimateCost(provider, tokenCount),
+      estimatedCost: estimateCost(provider),
       status: 'failure',
       error: err instanceof Error ? err.message : String(err),
     });
