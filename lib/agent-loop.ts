@@ -61,7 +61,7 @@ function buildBaseQueries(city: CityConfig, options: AgentLoopOptions): string[]
   const shortName = city.gridName === 'NYC' ? 'NYC' : city.gridName;
   const userQuery = options.query ? ` ${options.query}` : '';
   const categoryQuery = options.category ? ` ${options.category.toLowerCase()}` : '';
-  const updated = 'pushed:>=2024-01-01';
+  const updated = 'pushed:>=2025-01-01';
 
   return [
     `"${name}" "open data" map ${updated}${userQuery}${categoryQuery}`,
@@ -78,21 +78,51 @@ function buildRefinementQueries(
   missing: Category[],
 ): string[] {
   const name = city.name;
-  const updated = 'pushed:>=2024-01-01';
+  const updated = 'pushed:>=2025-01-01';
   return missing.slice(0, 3).map(cat => `"${name}" ${cat.toLowerCase()} ${updated}`);
 }
 
 function buildTavilyBaseQueries(city: CityConfig, options: AgentLoopOptions): string[] {
   const name = city.name;
+  const short = city.gridName;
   const userQuery = options.query ? ` ${options.query}` : '';
   const categoryQuery = options.category ? ` ${options.category.toLowerCase()}` : '';
+  const extra = `${userQuery}${categoryQuery}`;
+
   return [
-    `${name} creative coding project 2025${userQuery}${categoryQuery}`,
-    `${name} civic tech dashboard 2025${userQuery}${categoryQuery}`,
-    `${name} data visualization blog 2025${userQuery}${categoryQuery}`,
-    `${name} generative art ${userQuery}${categoryQuery}`,
-    `${name} open data tool 2024 2025${userQuery}${categoryQuery}`,
-    `${name} indie web app launch ${userQuery}${categoryQuery}`,
+    // Hacker News Show HN — devs posting projects
+    `site:news.ycombinator.com "Show HN" "${name}" 2025 2026${extra}`,
+    `site:news.ycombinator.com "Show HN" "${short}" 2025 2026${extra}`,
+
+    // Reddit — city subreddits + project subreddits
+    `site:reddit.com "I built" "${name}" app 2025 2026${extra}`,
+    `site:reddit.com "${short}" "I made" OR "I created" project 2026${extra}`,
+    `site:reddit.com "${name}" visualization OR dashboard OR "open data" 2026${extra}`,
+
+    // Product Hunt — startup/indie app launches
+    `site:producthunt.com "${name}" 2025 2026${extra}`,
+    `site:producthunt.com "${short}" app launch 2026${extra}`,
+
+    // Observable — data viz notebooks
+    `site:observablehq.com "${name}" 2025 2026${extra}`,
+
+    // dev.to / Hashnode — developer blogs
+    `site:dev.to "I built" "${name}" 2025 2026${extra}`,
+    `site:hashnode.com "${name}" project 2026${extra}`,
+
+    // Shipping language people actually use
+    `"I built" "${name}" app 2026${extra}`,
+    `"built in ${name}" OR "made in ${name}" project 2026${extra}`,
+    `"${short}" "side project" OR "weekend project" 2025 2026${extra}`,
+
+    // Civic / creative tech
+    `"${name}" civic tech "open data" project 2026${extra}`,
+    `"${name}" generative art creative coding 2025 2026${extra}`,
+    `"${name}" transit OR subway app 2025 2026${extra}`,
+
+    // Glitch / Codepen — hosted demos
+    `site:glitch.com "${name}" 2025 2026${extra}`,
+    `site:codepen.io "${name}" OR "${short}" 2025 2026${extra}`,
   ];
 }
 
@@ -107,6 +137,8 @@ async function searchGitHubQueries(
   return batches.flat();
 }
 
+const TAVILY_BATCH_SIZE = 6;
+
 async function searchTavilyProjects(
   city: CityConfig,
   queries: string[],
@@ -117,17 +149,25 @@ async function searchTavilyProjects(
   }
   try {
     const texts = await Promise.all(
-      queries.map(query => execute('web_search', { query, maxResults: 5 })),
+      queries.map(query => execute('web_search', { query, maxResults: 3 })),
     );
-    const combined = texts.filter(t => typeof t === 'string' && t.length > 0).join('\n\n');
-    if (!combined) return [];
 
-    const projects = await execute('parse_projects', {
-      rawResults: combined,
-      city: city.name,
-      cityKey: city.key,
-    });
-    return projects.filter(p => !isGitHubUrl(p.url));
+    // Batch results to stay within Groq's TPM limit
+    const allProjects: Project[] = [];
+    for (let i = 0; i < texts.length; i += TAVILY_BATCH_SIZE) {
+      const batch = texts.slice(i, i + TAVILY_BATCH_SIZE);
+      const combined = batch.filter(t => typeof t === 'string' && t.length > 0).join('\n\n');
+      if (!combined) continue;
+
+      const projects = await execute('parse_projects', {
+        rawResults: combined,
+        city: city.name,
+        cityKey: city.key,
+      });
+      allProjects.push(...projects.filter(p => !isGitHubUrl(p.url)));
+    }
+
+    return allProjects;
   } catch (err) {
     console.warn(
       `[AGENT] Tavily branch failed: ${err instanceof Error ? err.message : String(err)} -- continuing with GitHub-only`,
