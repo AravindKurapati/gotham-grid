@@ -14,7 +14,7 @@ So I made this retro agentic dashboard that tracks creative and civic tech proje
 
 ## What it does
 
-On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches GitHub repositories directly, parses results with Groq LLaMA 3.3 70B, scores each batch for quality and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a $0.10 cost cap per run. Every tool call is traced and logged to disk.
+On load the dashboard shows pre-fetched project data for each city (zero API cost). Hit "LIVE SCAN" and a multi-loop AI agent kicks in: it searches GitHub repositories directly, optionally supplements with Tavily web search to surface non-GitHub projects (blogs, civic-tech sites, Observable notebooks), parses results with Groq LLaMA 3.3 70B, scores each batch for quality and refines its search queries if the results aren't good enough. Up to 3 loops, with a 30s per-loop timeout and a synthetic $0.10 cost cap per run as a safety rail. Every tool call is traced and logged to disk.
 
 The aesthetic is full CRT phosphor terminal -- scanlines, VT323 font, green glow, boot sequence on first load.
 
@@ -30,14 +30,15 @@ Every scan is traced with tool calls, duration, estimated cost, quality scores a
 
 The core is in `lib/agent-loop.ts`. Each scan run:
 
-1. Builds city-specific search queries
-2. Searches GitHub repositories directly via the GitHub API (`lib/github.ts`)
-3. Maps repo metadata into structured project cards
-4. Calls Groq to score and parse results (tool: `parse_projects`)
-5. If quality score is below 60%, refines queries and loops again
-6. Caps at 3 loops or $0.10, whichever comes first
+1. Builds city-specific search queries (one set for GitHub, one set for the web)
+2. In parallel: searches GitHub repositories via the GitHub API (`lib/github.ts`) and, if `TAVILY_API_KEY` is set, runs a Tavily web search (`lib/tavily.ts`) for non-GitHub project mentions
+3. Maps GitHub repo metadata directly into structured project cards
+4. Feeds Tavily web results to Groq (`parse_projects`) which extracts blog/site projects in the same `Project` shape; results pointing at github.com are dropped (the GitHub branch handles those)
+5. Merges and dedupes both branches by title and normalized URL
+6. If quality score is below 60%, refines queries and loops again -- refinement is GitHub-only; Tavily runs only on the first loop to keep credits low
+7. Caps at 3 loops or the synthetic $0.10 budget, whichever comes first
 
-Every tool call is instrumented via `lib/instrumentation.ts` -- provider, duration, estimated cost, and status are all recorded per run. Traces saved to `data/traces/`. GitHub is tracked as a provider alongside Groq.
+Every tool call is instrumented via `lib/instrumentation.ts` -- provider, duration, estimated cost, and status are all recorded per run. Traces saved to `data/traces/`. Providers tracked: `github`, `tavily`, `groq`.
 
 ---
 
@@ -45,8 +46,9 @@ Every tool call is instrumented via `lib/instrumentation.ts` -- provider, durati
 
 - Next.js 14 (App Router, TypeScript)
 - Tailwind CSS with custom CRT theme
-- Groq SDK (LLaMA 3.3 70B Versatile)
 - GitHub API for repository discovery
+- Tavily for non-GitHub project discovery (optional)
+- Groq SDK (LLaMA 3.3 70B Versatile) for parsing web results into project cards
 - Vercel
 
 ---
@@ -61,7 +63,7 @@ cp .env.example .env.local   # fill in your keys
 npm run dev
 ```
 
-The site works without any API keys -- the static city data loads instantly. Live scan can use unauthenticated GitHub search, but `GITHUB_TOKEN` is recommended for higher rate limits. `GROQ_API_KEY` is only needed for the legacy `parse_projects` tool. `TAVILY_API_KEY` is reserved for an upcoming non-GitHub source feature and currently has no effect.
+The site works without any API keys -- the static city data loads instantly. Live scan can use unauthenticated GitHub search, but `GITHUB_TOKEN` is recommended for higher rate limits. `TAVILY_API_KEY` and `GROQ_API_KEY` are optional; setting both unlocks the non-GitHub source path during live scan. Without them the scanner runs in GitHub-only mode (no errors, just less source diversity).
 
 To regenerate the static city data:
 
@@ -73,7 +75,7 @@ npm run scan
 
 ## Tests
 
-27 tests across 3 suites: agent loop quality scoring and refinement logic, cache TTL, and rate limiting.
+31 tests across 3 suites: agent loop (GitHub + Tavily branch, quality scoring, refinement, dedup, graceful degrade), cache TTL, and rate limiting.
 
 ```bash
 npm test
@@ -83,4 +85,9 @@ npm test
 
 ## Environment variables
 
-See `.env.example`. `GROQ_API_KEY` is required for live scan. `GITHUB_TOKEN` is optional but recommended to avoid GitHub API rate limits. `SCAN_CODE` is optional -- set it to gate live scan behind an invite code.
+See `.env.example`.
+
+- `GITHUB_TOKEN` -- optional but recommended to avoid GitHub API rate limits.
+- `TAVILY_API_KEY` -- optional. Enables the non-GitHub source path. Free tier (1k credits/month) covers normal usage.
+- `GROQ_API_KEY` -- optional, required only when `TAVILY_API_KEY` is set (Groq parses Tavily results into project cards). Free tier covers normal usage.
+- `SCAN_CODE` -- optional. Set it to gate live scan behind an invite code.

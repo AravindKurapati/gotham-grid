@@ -45,6 +45,7 @@ function makeProject(overrides: Partial<Project> = {}): Project {
 }
 
 beforeEach(() => {
+  delete process.env.TAVILY_API_KEY;
   mockExecute.mockReset();
   mockExecute.mockImplementation(async (toolName: string) => {
     if (toolName === 'github_search') return [];
@@ -212,5 +213,88 @@ describe('runAgentLoop', () => {
     const result = await runAgentLoop(testCity, { maxLoops: 2, qualityThreshold: 1.1 });
     const titles = result.projects.map(p => p.title);
     expect(titles.filter(t => t === 'NYC App').length).toBe(1);
+  });
+});
+
+describe('runAgentLoop with Tavily branch', () => {
+  afterEach(() => {
+    delete process.env.TAVILY_API_KEY;
+  });
+
+  it('skips Tavily branch when TAVILY_API_KEY is unset', async () => {
+    delete process.env.TAVILY_API_KEY;
+    const githubProject = makeProject({ title: 'GH One', url: 'https://github.com/a/b' });
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return [githubProject];
+      if (toolName === 'web_search') return 'should not be called';
+      if (toolName === 'parse_projects') return [];
+      return '';
+    });
+
+    await runAgentLoop(testCity, { maxLoops: 1, qualityThreshold: 0.0 });
+
+    const webCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
+    expect(webCalls).toHaveLength(0);
+    expect(parseCalls).toHaveLength(0);
+  });
+
+  it('runs Tavily branch on first loop only when key is set and merges results', async () => {
+    process.env.TAVILY_API_KEY = 'test-key';
+    const ghProject = makeProject({ title: 'GH Repo', author: '@dev', description: 'A great GitHub repository for transit', category: 'TRANSIT', url: 'https://github.com/a/b', date: '2025-03-01' });
+    const blogProject = makeProject({ title: 'Blog Post', author: '@writer', description: 'A long-form post about civic data work', category: 'UTILITY', url: 'https://blog.example.com/post', source: 'blog', date: '2025-04-01' });
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return [ghProject];
+      if (toolName === 'web_search') return 'search text';
+      if (toolName === 'parse_projects') return [blogProject];
+      return '';
+    });
+
+    const result = await runAgentLoop(testCity, { maxLoops: 1, qualityThreshold: 0.0 });
+
+    const titles = result.projects.map(p => p.title);
+    expect(titles).toContain('GH Repo');
+    expect(titles).toContain('Blog Post');
+
+    const webCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
+    const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
+    expect(webCalls).toHaveLength(6);
+    expect(parseCalls).toHaveLength(1);
+  });
+
+  it('drops Tavily results that point at github.com', async () => {
+    process.env.TAVILY_API_KEY = 'test-key';
+    const ghProject = makeProject({ title: 'GH Real', author: '@dev', description: 'A genuine github repository project', category: 'TRANSIT', url: 'https://github.com/a/b', date: '2025-03-01' });
+    const tavilyGhDup = makeProject({ title: 'Tavily Dup', author: '@dev', description: 'Tavily found this same repo via a blog mention', category: 'TRANSIT', url: 'https://github.com/a/b', source: 'blog', date: '2025-03-01' });
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return [ghProject];
+      if (toolName === 'web_search') return 'search text';
+      if (toolName === 'parse_projects') return [tavilyGhDup];
+      return '';
+    });
+
+    const result = await runAgentLoop(testCity, { maxLoops: 1, qualityThreshold: 0.0 });
+    const titles = result.projects.map(p => p.title);
+    expect(titles).toContain('GH Real');
+    expect(titles).not.toContain('Tavily Dup');
+  });
+
+  it('continues with GitHub-only when Tavily branch throws', async () => {
+    process.env.TAVILY_API_KEY = 'test-key';
+    const ghProject = makeProject({ title: 'GH Resilient', author: '@dev', description: 'Project that survives a Tavily failure', category: 'TRANSIT', url: 'https://github.com/a/b', date: '2025-03-01' });
+
+    mockExecute.mockImplementation(async (toolName: string) => {
+      if (toolName === 'github_search') return [ghProject];
+      if (toolName === 'web_search') throw new Error('tavily exploded');
+      if (toolName === 'parse_projects') return [];
+      return '';
+    });
+
+    const result = await runAgentLoop(testCity, { maxLoops: 1, qualityThreshold: 0.0 });
+    const titles = result.projects.map(p => p.title);
+    expect(titles).toEqual(['GH Resilient']);
   });
 });

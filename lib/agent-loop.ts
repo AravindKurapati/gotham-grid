@@ -82,6 +82,20 @@ function buildRefinementQueries(
   return missing.slice(0, 3).map(cat => `"${name}" ${cat.toLowerCase()} ${updated}`);
 }
 
+function buildTavilyBaseQueries(city: CityConfig, options: AgentLoopOptions): string[] {
+  const name = city.name;
+  const userQuery = options.query ? ` ${options.query}` : '';
+  const categoryQuery = options.category ? ` ${options.category.toLowerCase()}` : '';
+  return [
+    `${name} creative coding project 2025${userQuery}${categoryQuery}`,
+    `${name} civic tech dashboard 2025${userQuery}${categoryQuery}`,
+    `${name} data visualization blog 2025${userQuery}${categoryQuery}`,
+    `${name} generative art ${userQuery}${categoryQuery}`,
+    `${name} open data tool 2024 2025${userQuery}${categoryQuery}`,
+    `${name} indie web app launch ${userQuery}${categoryQuery}`,
+  ];
+}
+
 async function searchGitHubQueries(
   city: CityConfig,
   queries: string[],
@@ -91,6 +105,69 @@ async function searchGitHubQueries(
     queries.map(query => execute('github_search', { query, maxResults, city })),
   );
   return batches.flat();
+}
+
+async function searchTavilyProjects(
+  city: CityConfig,
+  queries: string[],
+): Promise<Project[]> {
+  if (!process.env.TAVILY_API_KEY) {
+    console.log('[AGENT] TAVILY_API_KEY not set -- skipping web source, GitHub-only');
+    return [];
+  }
+  try {
+    const texts = await Promise.all(
+      queries.map(query => execute('web_search', { query, maxResults: 5 })),
+    );
+    const combined = texts.filter(t => typeof t === 'string' && t.length > 0).join('\n\n');
+    if (!combined) return [];
+
+    const projects = await execute('parse_projects', {
+      rawResults: combined,
+      city: city.name,
+      cityKey: city.key,
+    });
+    return projects.filter(p => !isGitHubUrl(p.url));
+  } catch (err) {
+    console.warn(
+      `[AGENT] Tavily branch failed: ${err instanceof Error ? err.message : String(err)} -- continuing with GitHub-only`,
+    );
+    return [];
+  }
+}
+
+function isGitHubUrl(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === 'github.com' || host.endsWith('.github.com');
+  } catch {
+    return false;
+  }
+}
+
+function normalizeUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    const path = u.pathname.replace(/\/+$/, '');
+    return `${u.protocol}//${u.hostname.toLowerCase()}${path}`;
+  } catch {
+    return url.trim().toLowerCase();
+  }
+}
+
+function mergeAndDedupe(existing: Project[], incoming: Project[]): Project[] {
+  const seenTitles = new Set(existing.map(p => p.title.toLowerCase()));
+  const seenUrls = new Set(existing.map(p => normalizeUrl(p.url)));
+  const fresh: Project[] = [];
+  for (const project of incoming) {
+    const title = project.title.toLowerCase();
+    const url = normalizeUrl(project.url);
+    if (seenTitles.has(title) || seenUrls.has(url)) continue;
+    seenTitles.add(title);
+    seenUrls.add(url);
+    fresh.push(project);
+  }
+  return [...existing, ...fresh];
 }
 
 async function runLoopIteration<T>(fn: () => Promise<T>): Promise<T | 'timeout'> {
@@ -130,9 +207,15 @@ async function runAgentLoopInner(
   for (let i = 0; i < maxLoops; i++) {
     loops = i + 1;
     if (trace) trace.loopsRun = loops;
+    const isFirstLoop = i === 0;
 
     const loopResult = await runLoopIteration(async () => {
-      const projects = await searchGitHubQueries(city, queries);
+      const githubPromise = searchGitHubQueries(city, queries);
+      const tavilyPromise = isFirstLoop
+        ? searchTavilyProjects(city, buildTavilyBaseQueries(city, options))
+        : Promise.resolve<Project[]>([]);
+      const [githubProjects, tavilyProjects] = await Promise.all([githubPromise, tavilyPromise]);
+      const projects = [...githubProjects, ...tavilyProjects];
       return projects.length > 0 ? projects : 'empty' as const;
     });
 
@@ -144,15 +227,7 @@ async function runAgentLoopInner(
 
     if (loopResult === 'empty') break;
 
-    const existingTitles = new Set(allProjects.map(p => p.title.toLowerCase()));
-    const fresh: Project[] = [];
-    for (const project of loopResult) {
-      const title = project.title.toLowerCase();
-      if (existingTitles.has(title)) continue;
-      existingTitles.add(title);
-      fresh.push(project);
-    }
-    allProjects = [...allProjects, ...fresh];
+    allProjects = mergeAndDedupe(allProjects, loopResult);
 
     finalQuality = scoreBatch(allProjects);
     const passing = allProjects.filter(scoreProject).length;
