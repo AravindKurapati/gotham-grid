@@ -94,35 +94,13 @@ function buildTavilyBaseQueries(city: CityConfig, options: AgentLoopOptions): st
     `site:news.ycombinator.com "Show HN" "${name}" 2025 2026${extra}`,
     `site:news.ycombinator.com "Show HN" "${short}" 2025 2026${extra}`,
 
-    // Reddit — city subreddits + project subreddits
+    // Reddit — people posting what they built
     `site:reddit.com "I built" "${name}" app 2025 2026${extra}`,
     `site:reddit.com "${short}" "I made" OR "I created" project 2026${extra}`,
-    `site:reddit.com "${name}" visualization OR dashboard OR "open data" 2026${extra}`,
 
-    // Product Hunt — startup/indie app launches
-    `site:producthunt.com "${name}" 2025 2026${extra}`,
-    `site:producthunt.com "${short}" app launch 2026${extra}`,
-
-    // Observable — data viz notebooks
-    `site:observablehq.com "${name}" 2025 2026${extra}`,
-
-    // dev.to / Hashnode — developer blogs
-    `site:dev.to "I built" "${name}" 2025 2026${extra}`,
-    `site:hashnode.com "${name}" project 2026${extra}`,
-
-    // Shipping language people actually use
+    // Shipping language
     `"I built" "${name}" app 2026${extra}`,
-    `"built in ${name}" OR "made in ${name}" project 2026${extra}`,
     `"${short}" "side project" OR "weekend project" 2025 2026${extra}`,
-
-    // Civic / creative tech
-    `"${name}" civic tech "open data" project 2026${extra}`,
-    `"${name}" generative art creative coding 2025 2026${extra}`,
-    `"${name}" transit OR subway app 2025 2026${extra}`,
-
-    // Glitch / Codepen — hosted demos
-    `site:glitch.com "${name}" 2025 2026${extra}`,
-    `site:codepen.io "${name}" OR "${short}" 2025 2026${extra}`,
   ];
 }
 
@@ -164,7 +142,7 @@ async function searchTavilyProjects(
         city: city.name,
         cityKey: city.key,
       });
-      allProjects.push(...projects.filter(p => !isGitHubUrl(p.url)));
+      allProjects.push(...projects.filter(p => !isGitHubUrl(p.url) && !isNoiseDomain(p.url)));
     }
 
     return allProjects;
@@ -176,10 +154,27 @@ async function searchTavilyProjects(
   }
 }
 
+const NOISE_DOMAINS = new Set([
+  'youtube.com', 'youtu.be',
+  'instagram.com',
+  'tiktok.com',
+  'facebook.com',
+  'linkedin.com',
+]);
+
 function isGitHubUrl(url: string): boolean {
   try {
     const host = new URL(url).hostname.toLowerCase();
     return host === 'github.com' || host.endsWith('.github.com');
+  } catch {
+    return false;
+  }
+}
+
+function isNoiseDomain(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
+    return NOISE_DOMAINS.has(host);
   } catch {
     return false;
   }

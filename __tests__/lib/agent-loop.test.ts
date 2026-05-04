@@ -260,8 +260,8 @@ describe('runAgentLoop with Tavily branch', () => {
 
     const webCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'web_search');
     const parseCalls = mockExecute.mock.calls.filter(([name]: [string]) => name === 'parse_projects');
-    expect(webCalls).toHaveLength(18);
-    expect(parseCalls).toHaveLength(3); // 18 queries / 6 per batch
+    expect(webCalls).toHaveLength(6);
+    expect(parseCalls).toHaveLength(1); // 6 queries / 6 per batch
   });
 
   it('drops Tavily results that point at github.com', async () => {
