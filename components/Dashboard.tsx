@@ -42,7 +42,10 @@ export default function Dashboard({ initialData }: Props) {
     setBootDone(done);
   }, []);
 
-  const baseProjects = liveProjects ?? (initialData[selectedCity] ?? []);
+  const baseProjects = useMemo(
+    () => liveProjects ?? (initialData[selectedCity] ?? []),
+    [liveProjects, initialData, selectedCity],
+  );
 
   const filteredProjects = useMemo(() => {
     let p = baseProjects;
