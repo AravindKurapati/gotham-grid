@@ -72,18 +72,6 @@
     "city": "sf"
   },
   {
-    "id": "github-871861345",
-    "title": "sf crime dashboard",
-    "author": "@TheSmartCatt",
-    "description": "This repository contains a Streamlit application that visualizes police department incidents data from San Francisco for the year 2016.",
-    "category": "UTILITY",
-    "url": "https://github.com/TheSmartCatt/sf-crime-dashboard",
-    "source": "github",
-    "date": "2024-10",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
     "id": "github-975683438",
     "title": "Crime Data Analysis",
     "author": "@Kushagra-Sedwal",
@@ -96,14 +84,26 @@
     "city": "sf"
   },
   {
-    "id": "github-802724646",
-    "title": "Interactive Sales Performance Dashboard for a Bike Shop Using a Data Visualization Approach",
-    "author": "@AnchaNarasimha",
-    "description": "The Bike Haven, a renowned San Francisco bike shop, is aiming to create an interactive Tableau dashboard that showcases sales data across various product categories, highlights top products and customers, and compares actual sales to budget forecasts.",
+    "id": "github-968420270",
+    "title": "Crime Data Analysis PowerBI ",
+    "author": "@deeksha25022004",
+    "description": "A Power BI dashboard visualizing 12-month crime forecasts across San Francisco police districts. It enables interactive comparison through trend lines, bar charts, and district-level filters using pre-processed forecast data.",
     "category": "UTILITY",
-    "url": "https://github.com/AnchaNarasimha/Interactive-Sales-Performance-Dashboard-for-a-Bike-Shop-Using-a-Data-Visualization-Approach",
+    "url": "https://github.com/deeksha25022004/Crime-Data-Analysis-PowerBI-",
     "source": "github",
-    "date": "2024-05",
+    "date": "2025-04",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1186258766",
+    "title": "SCI MET",
+    "author": "@chasenunez",
+    "description": "A browser-based, interactive dashboard for visualizing researcher output profiles using principles from the San Francisco Declaration on Research Assessment (DORA). Instead of reducing a career to a single number (h-index, Impact Factor), this dashboard shows a different, more holistic picture.",
+    "category": "UTILITY",
+    "url": "https://github.com/chasenunez/SCI_MET",
+    "source": "github",
+    "date": "2026-04",
     "likes": 0,
     "city": "sf"
   }

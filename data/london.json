@@ -13,18 +13,6 @@
     "city": "london"
   },
   {
-    "id": "github-747921068",
-    "title": "Personal Project Londoner Super Mart ",
-    "author": "@greatlink4422",
-    "description": "Londoner Super Mart Data Analysis and Visualization/ Dashboard",
-    "category": "UTILITY",
-    "url": "https://github.com/greatlink4422/Personal-Project-Londoner-Super-Mart-",
-    "source": "github",
-    "date": "2024-01",
-    "likes": 0,
-    "city": "london"
-  },
-  {
     "id": "github-1149633435",
     "title": "london crime analysis dashboard",
     "author": "@riyyaguptaa",
@@ -33,18 +21,6 @@
     "url": "https://github.com/riyyaguptaa/london-crime-analysis-dashboard",
     "source": "github",
     "date": "2026-02",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "github-819263392",
-    "title": "London Bike Rides Dashboard",
-    "author": "@JaiBhatia19",
-    "description": "Analysis and visualization of London bike rides data using Tableau and Python for data preprocessing.",
-    "category": "UTILITY",
-    "url": "https://github.com/JaiBhatia19/London-Bike-Rides-Dashboard",
-    "source": "github",
-    "date": "2024-06",
     "likes": 0,
     "city": "london"
   },
@@ -73,18 +49,6 @@
     "city": "london"
   },
   {
-    "id": "github-854205859",
-    "title": "London Bike Sharing Dashboard",
-    "author": "@Mahalakshmi-Iyer",
-    "description": "A dashboard built using Tableau to visualize bike sharing data",
-    "category": "UTILITY",
-    "url": "https://github.com/Mahalakshmi-Iyer/London-Bike-Sharing-Dashboard",
-    "source": "github",
-    "date": "2024-09",
-    "likes": 0,
-    "city": "london"
-  },
-  {
     "id": "github-1120026355",
     "title": "Greater London property dashboard",
     "author": "@CHAMATHSARA-KDU",
@@ -97,14 +61,110 @@
     "city": "london"
   },
   {
-    "id": "github-773091462",
-    "title": "London bike sharing visualization",
-    "author": "@MaksymilianWojnowski",
-    "description": "The \"London Bike Sharing\" project showcases a data-driven exploration into the dynamics of bike-sharing usage in London. Through an interactive Tableau dashboard, users can discover how environmental factors and time influence bike rental patterns",
+    "id": "github-1003933068",
+    "title": "Lodon bike rides dashboard",
+    "author": "@starkparsa",
+    "description": "Building a dashboard using tableau to visualize London bike rides.",
     "category": "UTILITY",
-    "url": "https://github.com/MaksymilianWojnowski/London-bike-sharing-visualization",
+    "url": "https://github.com/starkparsa/Lodon_bike_rides_dashboard",
     "source": "github",
-    "date": "2024-03",
+    "date": "2025-07",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "github-948938333",
+    "title": "covid dashboard java",
+    "author": "@jd-paul",
+    "description": "A Java Swing application that visualizes COVID-19 data for London.",
+    "category": "UTILITY",
+    "url": "https://github.com/jd-paul/covid-dashboard-java",
+    "source": "github",
+    "date": "2025-03",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "github-1027619478",
+    "title": "London electricity demand prediction dashboard",
+    "author": "@hetu412patel",
+    "description": "Interactive dashboard predicting London’s electricity demand using weather data. Built without programming using Orange (data mining) and Tableau (analysis & visualization). Shows how weather affects demand with clear, interactive insights.",
+    "category": "SUNSET",
+    "url": "https://github.com/hetu412patel/London_electricity_demand_prediction_dashboard",
+    "source": "github",
+    "date": "2026-03",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "github-1126537141",
+    "title": "Greater London Property Price Monitor Dashboard",
+    "author": "@SHAYNI-KDU",
+    "description": "Project Overview The Greater London Property Price Monitor Dashboard is an analytical visualization project designed to explore property market trends across London, UK from 2020 to 2023.",
+    "category": "UTILITY",
+    "url": "https://github.com/SHAYNI-KDU/Greater_London_Property_Price_Monitor_Dashboard",
+    "source": "github",
+    "date": "2026-04",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "1111c824-603d-4f82-929e-c84b58936f57",
+    "title": "Semantic Calculator",
+    "author": "@king-man",
+    "description": "A semantic calculator based on a large language model that approximates calculations based on trained-in knowledge",
+    "category": "AI",
+    "url": "https://news.ycombinator.com/item?id=43988533",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "a6a7de17-a818-49c7-b551-6560f4c927fc",
+    "title": "London Build",
+    "author": "u/subwaybuilder",
+    "description": "A build of the London subway system in a game before it started crashing",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/subwaybuilder/comments/1q0raba/london_build_2025/",
+    "source": "reddit",
+    "date": "2025",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "90909f51-c53f-42b3-ac99-309b2ad605bc",
+    "title": "MetallicaLIVE App",
+    "author": "Unknown",
+    "description": "An app for meeting others before Metallica shows",
+    "category": "UTILITY",
+    "url": "https://www.reddit.com/r/MetallicaLIVE/comments/1otov8x/anyone_else_going_to_the_2026_london_show_alone/",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "5552ee5a-37c7-4746-a61f-1f8b27a9ba7e",
+    "title": "The Masquerade Reawakened",
+    "author": "Unknown",
+    "description": "A project scheduled for 2026, with a passionate community and a game in development",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/vtmb/comments/1nr4iyf/we_are_proud_to_present_the_5th_and_perhaps_last/",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "f1414114-7914-44df-b18b-98f8c0f28603",
+    "title": "C++ Show and Tell",
+    "author": "u/cpp",
+    "description": "A thread for sharing C++ projects, including tools and games",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/cpp/comments/1qvkkfn/c_show_and_tell_february_2026/",
+    "source": "reddit",
+    "date": "2026",
     "likes": 0,
     "city": "london"
   }
