@@ -61,7 +61,7 @@ function buildBaseQueries(city: CityConfig, options: AgentLoopOptions): string[]
   const shortName = city.gridName === 'NYC' ? 'NYC' : city.gridName;
   const userQuery = options.query ? ` ${options.query}` : '';
   const categoryQuery = options.category ? ` ${options.category.toLowerCase()}` : '';
-  const updated = 'pushed:>=2024-01-01';
+  const updated = 'pushed:>=2025-01-01';
 
   return [
     `"${name}" "open data" map ${updated}${userQuery}${categoryQuery}`,
@@ -78,8 +78,30 @@ function buildRefinementQueries(
   missing: Category[],
 ): string[] {
   const name = city.name;
-  const updated = 'pushed:>=2024-01-01';
+  const updated = 'pushed:>=2025-01-01';
   return missing.slice(0, 3).map(cat => `"${name}" ${cat.toLowerCase()} ${updated}`);
+}
+
+function buildTavilyBaseQueries(city: CityConfig, options: AgentLoopOptions): string[] {
+  const name = city.name;
+  const short = city.gridName;
+  const userQuery = options.query ? ` ${options.query}` : '';
+  const categoryQuery = options.category ? ` ${options.category.toLowerCase()}` : '';
+  const extra = `${userQuery}${categoryQuery}`;
+
+  return [
+    // Hacker News Show HN — devs posting projects
+    `site:news.ycombinator.com "Show HN" "${name}" 2025 2026${extra}`,
+    `site:news.ycombinator.com "Show HN" "${short}" 2025 2026${extra}`,
+
+    // Reddit — people posting what they built
+    `site:reddit.com "I built" "${name}" app 2025 2026${extra}`,
+    `site:reddit.com "${short}" "I made" OR "I created" project 2026${extra}`,
+
+    // Shipping language
+    `"I built" "${name}" app 2026${extra}`,
+    `"${short}" "side project" OR "weekend project" 2025 2026${extra}`,
+  ];
 }
 
 async function searchGitHubQueries(
@@ -91,6 +113,96 @@ async function searchGitHubQueries(
     queries.map(query => execute('github_search', { query, maxResults, city })),
   );
   return batches.flat();
+}
+
+const TAVILY_BATCH_SIZE = 6;
+
+async function searchTavilyProjects(
+  city: CityConfig,
+  queries: string[],
+): Promise<Project[]> {
+  if (!process.env.TAVILY_API_KEY) {
+    console.log('[AGENT] TAVILY_API_KEY not set -- skipping web source, GitHub-only');
+    return [];
+  }
+  try {
+    const texts = await Promise.all(
+      queries.map(query => execute('web_search', { query, maxResults: 3 })),
+    );
+
+    // Batch results to stay within Groq's TPM limit
+    const allProjects: Project[] = [];
+    for (let i = 0; i < texts.length; i += TAVILY_BATCH_SIZE) {
+      const batch = texts.slice(i, i + TAVILY_BATCH_SIZE);
+      const combined = batch.filter(t => typeof t === 'string' && t.length > 0).join('\n\n');
+      if (!combined) continue;
+
+      const projects = await execute('parse_projects', {
+        rawResults: combined,
+        city: city.name,
+        cityKey: city.key,
+      });
+      allProjects.push(...projects.filter(p => !isGitHubUrl(p.url) && !isNoiseDomain(p.url)));
+    }
+
+    return allProjects;
+  } catch (err) {
+    console.warn(
+      `[AGENT] Tavily branch failed: ${err instanceof Error ? err.message : String(err)} -- continuing with GitHub-only`,
+    );
+    return [];
+  }
+}
+
+const NOISE_DOMAINS = new Set([
+  'youtube.com', 'youtu.be',
+  'instagram.com',
+  'tiktok.com',
+  'facebook.com',
+  'linkedin.com',
+]);
+
+function isGitHubUrl(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === 'github.com' || host.endsWith('.github.com');
+  } catch {
+    return false;
+  }
+}
+
+function isNoiseDomain(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
+    return NOISE_DOMAINS.has(host);
+  } catch {
+    return false;
+  }
+}
+
+function normalizeUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    const path = u.pathname.replace(/\/+$/, '');
+    return `${u.protocol}//${u.hostname.toLowerCase()}${path}`;
+  } catch {
+    return url.trim().toLowerCase();
+  }
+}
+
+function mergeAndDedupe(existing: Project[], incoming: Project[]): Project[] {
+  const seenTitles = new Set(existing.map(p => p.title.toLowerCase()));
+  const seenUrls = new Set(existing.map(p => normalizeUrl(p.url)));
+  const fresh: Project[] = [];
+  for (const project of incoming) {
+    const title = project.title.toLowerCase();
+    const url = normalizeUrl(project.url);
+    if (seenTitles.has(title) || seenUrls.has(url)) continue;
+    seenTitles.add(title);
+    seenUrls.add(url);
+    fresh.push(project);
+  }
+  return [...existing, ...fresh];
 }
 
 async function runLoopIteration<T>(fn: () => Promise<T>): Promise<T | 'timeout'> {
@@ -130,9 +242,15 @@ async function runAgentLoopInner(
   for (let i = 0; i < maxLoops; i++) {
     loops = i + 1;
     if (trace) trace.loopsRun = loops;
+    const isFirstLoop = i === 0;
 
     const loopResult = await runLoopIteration(async () => {
-      const projects = await searchGitHubQueries(city, queries);
+      const githubPromise = searchGitHubQueries(city, queries);
+      const tavilyPromise = isFirstLoop
+        ? searchTavilyProjects(city, buildTavilyBaseQueries(city, options))
+        : Promise.resolve<Project[]>([]);
+      const [githubProjects, tavilyProjects] = await Promise.all([githubPromise, tavilyPromise]);
+      const projects = [...githubProjects, ...tavilyProjects];
       return projects.length > 0 ? projects : 'empty' as const;
     });
 
@@ -144,15 +262,7 @@ async function runAgentLoopInner(
 
     if (loopResult === 'empty') break;
 
-    const existingTitles = new Set(allProjects.map(p => p.title.toLowerCase()));
-    const fresh: Project[] = [];
-    for (const project of loopResult) {
-      const title = project.title.toLowerCase();
-      if (existingTitles.has(title)) continue;
-      existingTitles.add(title);
-      fresh.push(project);
-    }
-    allProjects = [...allProjects, ...fresh];
+    allProjects = mergeAndDedupe(allProjects, loopResult);
 
     finalQuality = scoreBatch(allProjects);
     const passing = allProjects.filter(scoreProject).length;

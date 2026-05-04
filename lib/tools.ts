@@ -1,9 +1,10 @@
 import Groq from 'groq-sdk';
+import { searchMany } from './tavily';
 import { searchGitHubProjects, type GitHubSearchParams } from './github';
 import { recordToolCall, type ToolProvider } from './instrumentation';
 import type { Project, CityKey } from './types';
 
-export type ToolName = 'github_search' | 'parse_projects';
+export type ToolName = 'web_search' | 'github_search' | 'parse_projects';
 export type { ToolProvider };
 
 interface ToolDefinition {
@@ -13,6 +14,11 @@ interface ToolDefinition {
 }
 
 export const TOOLS: ToolDefinition[] = [
+  {
+    name: 'web_search',
+    provider: 'tavily',
+    schema: { query: 'string', maxResults: 'number' },
+  },
   {
     name: 'github_search',
     provider: 'github',
@@ -25,6 +31,11 @@ export const TOOLS: ToolDefinition[] = [
   },
 ];
 
+export interface WebSearchParams {
+  query: string;
+  maxResults: number;
+}
+
 export interface ParseProjectsParams {
   rawResults: string;
   city: string;
@@ -32,11 +43,13 @@ export interface ParseProjectsParams {
 }
 
 type ToolParams = {
+  web_search: WebSearchParams;
   github_search: GitHubSearchParams;
   parse_projects: ParseProjectsParams;
 };
 
 type ToolResults = {
+  web_search: string;
   github_search: Project[];
   parse_projects: Project[];
 };
@@ -68,14 +81,24 @@ const VALID_SOURCES = new Set<string>([
   'other',
 ]);
 
-const SYSTEM_PROMPT = `You are GOTHAM GRID scanner. You will be given raw web search results about creative coding projects from a specific city.
+const SYSTEM_PROMPT = `You are GOTHAM GRID scanner. You will be given raw web search results and must extract only developer-built projects.
 
-Extract and return ONLY a valid JSON array of projects found in the search results. No markdown, no backticks, no preamble.
+A VALID project is: a web app, mobile app, data visualization, interactive tool, API, notebook, or creative coding piece that a developer or designer actually built and shipped.
+
+SKIP anything that is:
+- A YouTube video, Instagram reel, TikTok, or other video/social media post
+- A news article, press release, or event announcement
+- A physical event, expo, conference, or venue
+- A commercial product or company (not indie/community built)
+- An organization, nonprofit, or government agency page
+- A job posting, course, or tutorial
+
+Extract and return ONLY a valid JSON array. No markdown, no backticks, no preamble.
 Each object:
 {
   "title": "Project Name",
   "author": "@handle or Name",
-  "description": "1-2 sentence description",
+  "description": "1-2 sentence description of what the project does",
   "category": "TRANSIT|FOOD|SUNSET|MAPS|UTILITY|AI|ART|OTHER",
   "url": "https://... (the actual project or demo URL)",
   "sourceUrl": "https://... (the tweet/post/repo URL where it was found -- omit if same as url)",
@@ -84,7 +107,7 @@ Each object:
   "likes": 0
 }
 
-Only include REAL projects from the search results. Do not invent anything.
+Only include REAL projects from the search results. Do not invent anything. If nothing in the results qualifies, return an empty array [].
 
 Author extraction rules (in priority order):
 - GitHub repo → use the repo owner as author (format: "@owner")
@@ -166,6 +189,10 @@ export async function execute<TName extends ToolName>(
 
   return recordToolCall(toolName, definition.provider, async () => {
     switch (toolName) {
+      case 'web_search': {
+        const p = params as WebSearchParams;
+        return searchMany([p.query], p.maxResults) as Promise<ToolResults[TName]>;
+      }
       case 'github_search':
         return searchGitHubProjects(params as GitHubSearchParams) as Promise<ToolResults[TName]>;
       case 'parse_projects':

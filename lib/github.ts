@@ -95,7 +95,8 @@ export async function searchGitHubProjects({
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
   };
-  if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const ghToken = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;
+  if (ghToken) headers.Authorization = `Bearer ${ghToken}`;
 
   const res = await fetch(url, { headers });
   if (!res.ok) {
