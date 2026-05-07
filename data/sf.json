@@ -106,5 +106,57 @@
     "date": "2026-04",
     "likes": 0,
     "city": "sf"
+  },
+  {
+    "id": "3754643c-e52c-4b2b-a582-c9b89b5eabe7",
+    "title": "Immersive Gaussian Splat experience of Sutro Tower",
+    "author": "Unknown",
+    "description": "An immersive Gaussian Splat experience of Sutro Tower in San Francisco",
+    "category": "ART",
+    "url": "https://news.ycombinator.com/item?id=43120582",
+    "sourceUrl": "https://news.ycombinator.com/item?id=43120582",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "d7273861-88fd-4f73-bd18-e84927059274",
+    "title": "Flue",
+    "author": "momentmaker",
+    "description": "A TypeScript framework for building the next generation of agents",
+    "category": "AI",
+    "url": "https://flueframework.com",
+    "sourceUrl": "https://news.ycombinator.com/front?day=2026-05-02&p=2",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "d9f5eeaa-0331-4a39-b3ed-5ba75a270572",
+    "title": "AI slop exhibit at SFO Museum",
+    "author": "Unknown",
+    "description": "An AI exhibit at the SFO Museum",
+    "category": "ART",
+    "url": "https://www.reddit.com/r/bayarea/comments/1pk0f5c/ai_slop_exhibit_at_sfo_museum/",
+    "sourceUrl": "https://www.reddit.com/r/bayarea/comments/1pk0f5c/ai_slop_exhibit_at_sfo_museum/",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "9e284afe-393a-456d-ba6b-8c0cc5804c54",
+    "title": "San Francisco App Developers",
+    "author": "Unknown",
+    "description": "A list of app developers in San Francisco",
+    "category": "OTHER",
+    "url": "https://www.businessofapps.com/app-developers/san-francisco/",
+    "sourceUrl": "https://www.businessofapps.com/app-developers/san-francisco/",
+    "source": "blog",
+    "date": "2026",
+    "likes": 0,
+    "city": "sf"
   }
 ]

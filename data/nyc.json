@@ -169,10 +169,10 @@
     "city": "nyc"
   },
   {
-    "id": "a8ed7a0b-71a8-4cd7-ad63-df7597253098",
+    "id": "4446ca1f-285f-42cb-bd39-d4d6626ad10b",
     "title": "HN Wrapped 2025",
     "author": "@hubraumhugo",
-    "description": "An interactive tool that generates roasts and stats based on a user's Hacker News activity, as well as a personalized front page from 2035 and an xkcd-style comic",
+    "description": "A web app that uses LLM to review your year on Hacker News, generating roasts and stats based on your activity",
     "category": "OTHER",
     "url": "https://kadoa.com/",
     "sourceUrl": "https://news.ycombinator.com/item?id=46336104",
@@ -182,11 +182,37 @@
     "city": "nyc"
   },
   {
-    "id": "b627584b-a42a-4686-a499-2b59b47181c3",
-    "title": "NYC Rentals Dashboard",
-    "author": "Unknown",
-    "description": "An interactive dashboard to explore NYC rentals data",
-    "category": "UTILITY",
+    "id": "10e62477-6c6a-494b-90e5-3b36f7c81ff1",
+    "title": "Time Portal",
+    "author": "u/unknown",
+    "description": "A mobile app to explore historical photos of New York, with over 1,000,000 photos from the 19th and 20th centuries",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/nycHistory/comments/1kj57ek/i_built_time_portal_an_app_to_explore_historical/",
+    "sourceUrl": "https://www.reddit.com/r/nycHistory/comments/1kj57ek/i_built_time_portal_an_app_to_explore_historical/",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "48df1adf-fd80-44bb-8b38-feae8825bfee",
+    "title": "ComedyRadar.LOL",
+    "author": "u/unknown",
+    "description": "A website that aggregates all NYC standup comedy shows in one place, allowing users to filter by date, time, and neighborhood",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/AskNYC/comments/1qmjhkd/best_nyc_apps_no_one_knows_about/",
+    "sourceUrl": "https://www.reddit.com/r/AskNYC/comments/1qmjhkd/best_nyc_apps_no_one_knows_about/",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "8b5e92ab-46d8-4f1c-a2db-d3e1eca5cfe1",
+    "title": "An interactive dashboard to explore NYC rentals data",
+    "author": "u/unknown",
+    "description": "A web app that allows users to explore NYC rentals data, including median prices and other statistics",
+    "category": "OTHER",
     "url": "https://leaseswap.nyc",
     "sourceUrl": "https://news.ycombinator.com/item?id=44730691",
     "source": "hackernews",
@@ -195,16 +221,16 @@
     "city": "nyc"
   },
   {
-    "id": "6252fac9-988b-4080-9b7f-3e45d23d8800",
-    "title": "Forkestrate",
-    "author": "u/uhohhotdog555",
-    "description": "A recipe app that rethinks how recipes are followed, especially for those who find the traditional format overwhelming",
-    "category": "FOOD",
-    "url": "https://www.forkestrate.com",
-    "sourceUrl": "https://www.reddit.com/r/SideProject/comments/1mb217x/we_built_an_app_that_completely_reimagines_how_to",
-    "source": "reddit",
+    "id": "23401730-9f05-44c3-8050-62f419327d1d",
+    "title": "Pop",
+    "author": "@ryandority",
+    "description": "A social experience app that aims to change the way people date, focusing on social, spontaneous, and real interactions",
+    "category": "OTHER",
+    "url": "https://apps.apple.com/",
+    "sourceUrl": "https://news.ycombinator.com/item?id=43259942",
+    "source": "hackernews",
     "date": "2025",
-    "likes": 0,
+    "likes": 3,
     "city": "nyc"
   }
 ]
