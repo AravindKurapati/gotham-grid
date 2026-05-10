@@ -108,11 +108,11 @@
     "city": "los_angeles"
   },
   {
-    "id": "fe6cfc24-a9dd-4f36-85ca-23388eec7319",
+    "id": "8e5ae477-80f8-4dd5-a3e7-78a67f420f22",
     "title": "LA Wildfire Satellite Analysis",
     "author": "xingyzt",
-    "description": "A satellite analysis project for LA wildfires",
-    "category": "UTILITY",
+    "description": "A satellite analysis project for tracking LA wildfires",
+    "category": "OTHER",
     "url": "https://news.ycombinator.com/item?id=42641530",
     "sourceUrl": "https://news.ycombinator.com/item?id=42641530",
     "source": "hackernews",
@@ -121,14 +121,27 @@
     "city": "los_angeles"
   },
   {
-    "id": "56600959-2a51-4b62-89ea-09f021bb2296",
-    "title": "LA Metro App",
-    "author": "Unknown",
-    "description": "A new app for LA Metro for trip planning, fare payment, and customer communications",
+    "id": "404e6831-6296-448e-8a15-e1a20d2d28bb",
+    "title": "LA Metro Trip Planner App",
+    "author": "u/LAMetro",
+    "description": "A trip planning app for LA Metro, currently seeking a developer",
     "category": "TRANSIT",
     "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app/",
     "sourceUrl": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app/",
     "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "5bff6d76-4281-4081-a802-40754b5fbb04",
+    "title": "22 GB of Hacker News in SQLite",
+    "author": "Unknown",
+    "description": "A project that provides 22 GB of Hacker News data in SQLite format",
+    "category": "UTILITY",
+    "url": "https://news.ycombinator.com/highlights?next=46943789",
+    "sourceUrl": "https://news.ycombinator.com/highlights?next=46943789",
+    "source": "hackernews",
     "date": "2026",
     "likes": 0,
     "city": "los_angeles"
