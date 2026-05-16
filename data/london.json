@@ -109,16 +109,29 @@
     "city": "london"
   },
   {
-    "id": "725eb4cb-168f-4a33-b7dc-7acd776eddbc",
-    "title": "Minimal Accountability Tracker",
-    "author": "u/jvscholz",
-    "description": "A minimal accountability tracker for 2026, built as a web widget and mobile app",
-    "category": "UTILITY",
-    "url": "https://jvscholz.com/blog/countdown.html",
-    "sourceUrl": "https://www.reddit.com/r/webdev/comments/1q0xmva/i_built_a_minimal_accountability_tracker_for_2026/",
+    "id": "f4058d49-21d9-4278-a0b1-8b6bc3ca8971",
+    "title": "Search London StreetView panoramas",
+    "author": "Unknown",
+    "description": "A project that allows users to search London StreetView panoramas by text",
+    "category": "MAPS",
+    "url": "https://london.publicinsights.uk",
+    "sourceUrl": "https://news.ycombinator.com/item?id=45995913",
+    "source": "hackernews",
+    "date": "2025",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "67475d74-cfaa-49af-98df-d2bcf4d6c9d1",
+    "title": "The Masquerade Reawakened",
+    "author": "u/Unknown",
+    "description": "A project that is scheduled for 2026, with a passion for the subject matter",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/vtmb/comments/1nr4iyf/we_are_proud_to_present_the_5th_and_perhaps_last/",
+    "sourceUrl": "https://www.reddit.com/r/vtmb/comments/1nr4iyf/we_are_proud_to_present_the_5th_and_perhaps_last/",
     "source": "reddit",
     "date": "2026",
-    "likes": 0,
+    "likes": 281,
     "city": "london"
   }
 ]
