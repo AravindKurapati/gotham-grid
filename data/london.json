@@ -13,6 +13,18 @@
     "city": "london"
   },
   {
+    "id": "github-1085477676",
+    "title": "0110 digital product frontend",
+    "author": "@webdevgenius2014",
+    "description": "0110 is a London-based digital product studio designing efficient, high-performance platforms for sport. From endurance apps to athlete dashboards, we create focused UX for race platforms, data visualization, and sports technology.",
+    "category": "ART",
+    "url": "https://github.com/webdevgenius2014/0110_digital_product_frontend",
+    "source": "github",
+    "date": "2025-11",
+    "likes": 0,
+    "city": "london"
+  },
+  {
     "id": "github-1149633435",
     "title": "london crime analysis dashboard",
     "author": "@riyyaguptaa",
@@ -97,41 +109,29 @@
     "city": "london"
   },
   {
-    "id": "github-1126537141",
-    "title": "Greater London Property Price Monitor Dashboard",
-    "author": "@SHAYNI-KDU",
-    "description": "Project Overview The Greater London Property Price Monitor Dashboard is an analytical visualization project designed to explore property market trends across London, UK from 2020 to 2023.",
-    "category": "UTILITY",
-    "url": "https://github.com/SHAYNI-KDU/Greater_London_Property_Price_Monitor_Dashboard",
-    "source": "github",
-    "date": "2026-04",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "f4058d49-21d9-4278-a0b1-8b6bc3ca8971",
+    "id": "905174a2-706f-4e60-884a-5df2d254fe5b",
     "title": "Search London StreetView panoramas",
-    "author": "Unknown",
-    "description": "A project that allows users to search London StreetView panoramas by text",
+    "author": "@dang",
+    "description": "A project that allows users to search London StreetView panoramas by texture, providing a unique way to explore the city",
     "category": "MAPS",
-    "url": "https://london.publicinsights.uk",
-    "sourceUrl": "https://news.ycombinator.com/item?id=45995913",
+    "url": "https://news.ycombinator.com/item?id=45995660",
+    "sourceUrl": "https://news.ycombinator.com/posts?id=dang&next=45995660",
     "source": "hackernews",
-    "date": "2025",
+    "date": "2026",
     "likes": 0,
     "city": "london"
   },
   {
-    "id": "67475d74-cfaa-49af-98df-d2bcf4d6c9d1",
-    "title": "The Masquerade Reawakened",
-    "author": "u/Unknown",
-    "description": "A project that is scheduled for 2026, with a passion for the subject matter",
-    "category": "OTHER",
-    "url": "https://www.reddit.com/r/vtmb/comments/1nr4iyf/we_are_proud_to_present_the_5th_and_perhaps_last/",
-    "sourceUrl": "https://www.reddit.com/r/vtmb/comments/1nr4iyf/we_are_proud_to_present_the_5th_and_perhaps_last/",
+    "id": "ccadb4c5-33a6-4eea-b049-ea9bdbbaac4b",
+    "title": "Popular routes course planner for road cycling in London",
+    "author": "Unknown",
+    "description": "A free Garmin app for planning road cycling routes in London, using popular routes and course planners",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/GarminWatches/comments/1nenln9/popular_routes_course_planner_for_road_cycling_in/",
+    "sourceUrl": "https://www.reddit.com/r/GarminWatches/comments/1nenln9/popular_routes_course_planner_for_road_cycling_in/",
     "source": "reddit",
     "date": "2026",
-    "likes": 281,
+    "likes": 0,
     "city": "london"
   }
 ]
