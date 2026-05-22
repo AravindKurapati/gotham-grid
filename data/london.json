@@ -107,31 +107,5 @@
     "date": "2026-03",
     "likes": 0,
     "city": "london"
-  },
-  {
-    "id": "905174a2-706f-4e60-884a-5df2d254fe5b",
-    "title": "Search London StreetView panoramas",
-    "author": "@dang",
-    "description": "A project that allows users to search London StreetView panoramas by texture, providing a unique way to explore the city",
-    "category": "MAPS",
-    "url": "https://news.ycombinator.com/item?id=45995660",
-    "sourceUrl": "https://news.ycombinator.com/posts?id=dang&next=45995660",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "ccadb4c5-33a6-4eea-b049-ea9bdbbaac4b",
-    "title": "Popular routes course planner for road cycling in London",
-    "author": "Unknown",
-    "description": "A free Garmin app for planning road cycling routes in London, using popular routes and course planners",
-    "category": "TRANSIT",
-    "url": "https://www.reddit.com/r/GarminWatches/comments/1nenln9/popular_routes_course_planner_for_road_cycling_in/",
-    "sourceUrl": "https://www.reddit.com/r/GarminWatches/comments/1nenln9/popular_routes_course_planner_for_road_cycling_in/",
-    "source": "reddit",
-    "date": "2026",
-    "likes": 0,
-    "city": "london"
   }
 ]
