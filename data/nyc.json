@@ -1,5 +1,17 @@
 [
   {
+    "id": "github-955594304",
+    "title": "EquitableMapsProject",
+    "author": "@femmecubator",
+    "description": "We're excited to announce an upcoming hackathon centered around Equitable Mapping, where participants will collaborate to create innovative prototypes for maps that enhance the accessibility and usability of New York City's Open Data.",
+    "category": "MAPS",
+    "url": "https://github.com/femmecubator/EquitableMapsProject",
+    "source": "github",
+    "date": "2025-05",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
     "id": "github-153635181",
     "title": "nyc boundaries menu",
     "author": "@dcookchi",
@@ -9,6 +21,18 @@
     "source": "github",
     "date": "2025-07",
     "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "github-1247408874",
+    "title": "DataAnalysisProject18 Urban Analytics Airbnb Market Intelligence",
+    "author": "@kariuki392",
+    "description": "Objective: Analyse 48,895 New York City Airbnb 🏙️ listings to uncover pricing dynamics across boroughs and neighbourhoods, identify demand signals, profile host performance, map the geographic distribution of the market, and deliver actionable intelligence for hosts, investors, and urban planners. Dataset: New York City Airbnb Open Data 2019",
+    "category": "MAPS",
+    "url": "https://github.com/kariuki392/DataAnalysisProject18-Urban-Analytics-Airbnb-Market-Intelligence",
+    "source": "github",
+    "date": "2026-05",
+    "likes": 1,
     "city": "nyc"
   },
   {
@@ -177,58 +201,6 @@
     "url": "https://github.com/vpradoQEDC/NYC_Rep_Lookup",
     "source": "github",
     "date": "2026-03",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "84f56064-f5af-4680-bb22-1e84bbb8fb34",
-    "title": "SpeakeasyFinder",
-    "author": "u/author_not_specified",
-    "description": "An interactive website that maps and reviews hidden bars and speakeasies in NYC",
-    "category": "FOOD",
-    "url": "https://speakeasyfinder.com",
-    "sourceUrl": "https://www.reddit.com/r/nyc/comments/1mck8fv/i_created_an_interactive_website_of_all_hidden/",
-    "source": "reddit",
-    "date": "2025",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "8820ee42-cfa0-4e6b-a5ed-f4e5fcf99c1f",
-    "title": "All Text in NYC",
-    "author": "Yufeng Zhang",
-    "description": "A searchable tool that explores text captured across Google Street View imagery in NYC",
-    "category": "OTHER",
-    "url": "https://alltext.nyc",
-    "sourceUrl": "https://news.ycombinator.com/item?id=41344245",
-    "source": "hackernews",
-    "date": "2024",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "da14ddbc-ae9b-4461-86d2-779b6aa1a9a4",
-    "title": "NYC Halal Food Ranking",
-    "author": "u/author_not_specified",
-    "description": "A website that ranks and reviews halal food trucks and carts in NYC",
-    "category": "FOOD",
-    "url": "not_specified",
-    "sourceUrl": "https://www.reddit.com/r/FoodNYC/comments/1dsb1y2/50_nyc_halal_truckscarts_later_i_made_a_website/",
-    "source": "reddit",
-    "date": "2024",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "995f206a-4675-4c1f-b2e0-755a8712d626",
-    "title": "Search London StreetView panoramas by text",
-    "author": "dfworks",
-    "description": "A searchable tool that explores text captured across Google Street View imagery in London",
-    "category": "OTHER",
-    "url": "https://london.publicinsights.uk",
-    "sourceUrl": "https://news.ycombinator.com/item?id=45995913",
-    "source": "hackernews",
-    "date": "2025",
     "likes": 0,
     "city": "nyc"
   }

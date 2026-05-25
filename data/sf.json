@@ -108,42 +108,29 @@
     "city": "sf"
   },
   {
-    "id": "05b31793-bd21-4440-b90b-d5d9f8cb049d",
-    "title": "49ers App",
-    "author": "PwC",
-    "description": "The official San Francisco 49ers mobile app, featuring Sourdough Sam AI and personalized content",
-    "category": "OTHER",
-    "url": "https://www.49ers.com/news/inside-the-new-49ers-app-a-closer-look-at-whats-new",
-    "sourceUrl": "https://www.49ers.com/news/inside-the-new-49ers-app-a-closer-look-at-whats-new",
-    "source": "blog",
-    "date": "2026-04",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "87e86a5d-60c1-4f27-b266-2c56ca1285f8",
-    "title": "Moltbook",
-    "author": "dang",
-    "description": "A social network for moltbots to hang out",
-    "category": "OTHER",
-    "url": "https://news.ycombinator.com/posts?id=dang&next=46828658",
-    "sourceUrl": "https://news.ycombinator.com/posts?id=dang&next=46828658",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "3169acf7-56c5-40a6-90fb-df1235d1b587",
-    "title": "DeepSeek My User Agent",
-    "author": "Unknown",
-    "description": "A tool to analyze user agents",
+    "id": "36236b98-f89f-4e6f-bb0e-a173c0998e32",
+    "title": "Interactive California Budget",
+    "author": "@sberens",
+    "description": "An interactive dashboard for the California budget, allowing users to explore and understand the budget in a more engaging way",
     "category": "UTILITY",
-    "url": "https://news.ycombinator.com/item?id=42834648",
-    "sourceUrl": "https://news.ycombinator.com/item?id=42834648",
+    "url": "https://california-budget.com",
+    "sourceUrl": "https://news.ycombinator.com/item?id=46891290",
     "source": "hackernews",
     "date": "2026",
-    "likes": 0,
+    "likes": 39,
+    "city": "sf"
+  },
+  {
+    "id": "cf39ab98-534c-496f-9d10-7681f4a71c90",
+    "title": "See what readers who loved your favorite book/author also loved to read",
+    "author": "@bwb",
+    "description": "A web app that allows users to enter a book or author and see what other books readers who loved that book/author also loved to read",
+    "category": "OTHER",
+    "url": "https://shepherd.com",
+    "sourceUrl": "https://news.ycombinator.com/item?id=46419822",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 134,
     "city": "sf"
   }
 ]
