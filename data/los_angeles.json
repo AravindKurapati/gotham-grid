@@ -106,5 +106,57 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
+  },
+  {
+    "id": "c0e6cf8f-4260-418f-87cf-7938d96bbdf1",
+    "title": "Bluesky / AT Proto client",
+    "author": "@practical.engineering",
+    "description": "A terminal-only Bluesky / AT Proto client built by practical.engineering",
+    "category": "UTILITY",
+    "url": "https://news.ycombinator.com/item?id=42641623",
+    "sourceUrl": "https://news.ycombinator.com/front?day=2026-03-20",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 414,
+    "city": "los_angeles"
+  },
+  {
+    "id": "b6914bf5-2809-42aa-bad5-96e3be0783bd",
+    "title": "Kolibri, a DIY music club",
+    "author": "@EastLondonCoder",
+    "description": "A DIY music club in Sweden, presented by EastLondonCoder",
+    "category": "OTHER",
+    "url": "https://kolibrinkpg.com",
+    "sourceUrl": "https://news.ycombinator.com/front?day=2026-01-30",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 143,
+    "city": "los_angeles"
+  },
+  {
+    "id": "e64ce214-3485-428f-adce-8d1202ae2354",
+    "title": "LA Metro App",
+    "author": "u/LAMetro",
+    "description": "A proposed app for LA Metro trip planning, fare payment, and customer communications",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
+    "sourceUrl": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "7ecd2c45-b84f-4042-8df0-f402a1ea8bc5",
+    "title": "Nicolas Dular's side projects",
+    "author": "Nicolas Dular",
+    "description": "A collection of side projects built by Nicolas Dular in 2025",
+    "category": "OTHER",
+    "url": "https://nicolasdular.com/blog/2025/11/28/side-projects-in-2025",
+    "sourceUrl": "https://nicolasdular.com/blog/2025/11/28/side-projects-in-2025",
+    "source": "blog",
+    "date": "2025",
+    "likes": 0,
+    "city": "los_angeles"
   }
 ]

@@ -108,29 +108,27 @@
     "city": "sf"
   },
   {
-    "id": "36236b98-f89f-4e6f-bb0e-a173c0998e32",
-    "title": "Interactive California Budget",
-    "author": "@sberens",
-    "description": "An interactive dashboard for the California budget, allowing users to explore and understand the budget in a more engaging way",
+    "id": "4cb17eb1-ccc3-42ee-b19a-7802cf86df17",
+    "title": "Job board aggregator for SWE jobs",
+    "author": "Unknown",
+    "description": "A job board aggregator that lists the best paying SWE jobs in one place",
     "category": "UTILITY",
-    "url": "https://california-budget.com",
-    "sourceUrl": "https://news.ycombinator.com/item?id=46891290",
+    "url": "https://news.ycombinator.com/item?id=44025484",
     "source": "hackernews",
     "date": "2026",
-    "likes": 39,
+    "likes": 0,
     "city": "sf"
   },
   {
-    "id": "cf39ab98-534c-496f-9d10-7681f4a71c90",
-    "title": "See what readers who loved your favorite book/author also loved to read",
-    "author": "@bwb",
-    "description": "A web app that allows users to enter a book or author and see what other books readers who loved that book/author also loved to read",
-    "category": "OTHER",
-    "url": "https://shepherd.com",
-    "sourceUrl": "https://news.ycombinator.com/item?id=46419822",
-    "source": "hackernews",
+    "id": "16291615-1175-4f41-ab53-558950406c50",
+    "title": "SF Parking App",
+    "author": "Unknown",
+    "description": "An app that detects parking restrictions in San Francisco",
+    "category": "UTILITY",
+    "url": "https://www.reddit.com/r/sanfrancisco/comments/1rkxzpt/update_the_sf_parking_app_that_went_viral_here_is",
+    "source": "reddit",
     "date": "2026",
-    "likes": 134,
+    "likes": 0,
     "city": "sf"
   }
 ]
