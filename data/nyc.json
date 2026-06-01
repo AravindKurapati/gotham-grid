@@ -1,5 +1,17 @@
 [
   {
+    "id": "github-1255834288",
+    "title": "CrimeMap NYC",
+    "author": "@Hicham77500",
+    "description": "CrimeMap NYC est une plateforme interactive d’analyse de la criminalité à New York, avec carte, filtres, dashboard et prévision des crimes à partir des données Open Data de la NYPD.",
+    "category": "UTILITY",
+    "url": "https://github.com/Hicham77500/CrimeMap-NYC",
+    "source": "github",
+    "date": "2026-06",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
     "id": "github-955594304",
     "title": "EquitableMapsProject",
     "author": "@femmecubator",
@@ -205,52 +217,14 @@
     "city": "nyc"
   },
   {
-    "id": "cd1aaa65-ac96-49d8-a1f4-7b436cbc66b3",
-    "title": "HN Wrapped 2025",
-    "author": "@hubraumhugo",
-    "description": "A project that uses LLM to review a user's year on Hacker News, generating roasts, stats, and a personalized front page from 2035.",
-    "category": "OTHER",
-    "url": "https://kadoa.com/",
-    "sourceUrl": "https://news.ycombinator.com/item?id=46336104",
+    "id": "a6569b68-c170-4c7e-a689-fb4b14359987",
+    "title": "Search London StreetView Panoramas by Text",
+    "author": "Unknown",
+    "description": "A project that allows searching London StreetView panoramas by text",
+    "category": "MAPS",
+    "url": "https://news.ycombinator.com/item?id=45995913",
+    "sourceUrl": "https://news.ycombinator.com/item?id=45995913",
     "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "6cbc68f1-1817-4df0-be37-4b406142a1c8",
-    "title": "Game Development Project",
-    "author": "toyetic",
-    "description": "A game development project with the goal of releasing in summer 2026.",
-    "category": "OTHER",
-    "url": "",
-    "sourceUrl": "https://news.ycombinator.com/item?id=46443744",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "13a2733f-c601-4473-a7a9-35d39a399203",
-    "title": "Brutalist Concrete Laptop Stand",
-    "author": "@sam-bee",
-    "description": "A DIY project to create a brutalist concrete laptop stand.",
-    "category": "OTHER",
-    "url": "https://sam-burns.com/",
-    "sourceUrl": "https://news.ycombinator.com/front?day=2026-04-07",
-    "source": "hackernews",
-    "date": "2024",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "a23164d2-e519-4cba-802e-87fd369baaa5",
-    "title": "Side Project Saturday",
-    "author": "",
-    "description": "A weekly side project meetup in Brooklyn where people can build and show off their projects.",
-    "category": "OTHER",
-    "url": "https://sideprojectsaturday.com",
-    "source": "other",
     "date": "2026",
     "likes": 0,
     "city": "nyc"

@@ -108,25 +108,12 @@
     "city": "sf"
   },
   {
-    "id": "1f8583bb-821d-48a8-a37e-f3d2626630bd",
-    "title": "BottleRock 2026 Lineup Coordinator",
-    "author": "u/unknown",
-    "description": "A free tool for coordinating the BottleRock 2026 lineup with friends",
-    "category": "UTILITY",
-    "url": "https://www.reddit.com/r/sanfrancisco/comments/1tkwebz/i_built_a_free_tool_for_coordinating_the",
-    "sourceUrl": "https://www.reddit.com/r/sanfrancisco/comments/1tkwebz/i_built_a_free_tool_for_coordinating_the",
-    "source": "reddit",
-    "date": "2026",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "99083eeb-dce4-4d44-bf09-240d9e388055",
+    "id": "5f066381-9515-4b40-99c0-5931c837f5a8",
     "title": "Interactive California Budget",
     "author": "Claude Code",
-    "description": "An interactive tool for exploring the California budget",
+    "description": "An interactive dashboard for the California budget, allowing users to explore and understand the budget in a more engaging way",
     "category": "UTILITY",
-    "url": "https://news.ycombinator.com/item?id=46891290",
+    "url": "https://california-budget.com",
     "sourceUrl": "https://news.ycombinator.com/item?id=46891290",
     "source": "hackernews",
     "date": "2026",

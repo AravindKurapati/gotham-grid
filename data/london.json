@@ -107,41 +107,5 @@
     "date": "2026-03",
     "likes": 0,
     "city": "london"
-  },
-  {
-    "id": "28320585-631a-4eaf-99d0-c5446be3fc8f",
-    "title": "Search London StreetView panoramas by text",
-    "author": "tantalor",
-    "description": "A searchable tool that lets you explore text captured across Google Street View imagery in London, including shop signs, posters, graffiti, and van numbers.",
-    "category": "MAPS",
-    "url": "https://news.ycombinator.com/item?id=45995913",
-    "source": "hackernews",
-    "date": "2025",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "5d1f3998-3f87-426c-a67d-c0b30b026d7f",
-    "title": "London Build",
-    "author": "u/subwaybuilder",
-    "description": "A London build project in a simulation game, featuring tram and Southeastern and Southern lines.",
-    "category": "OTHER",
-    "url": "https://www.reddit.com/r/subwaybuilder/comments/1q0raba/london_build_2025",
-    "source": "reddit",
-    "date": "2025",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "008e0a38-db73-476d-8ebc-cd6706b141b2",
-    "title": "Malapascua Dive Guide",
-    "author": "Unknown",
-    "description": "A 65-page guidebook covering local dive sites, marine life information, and good restaurants in Malapascua.",
-    "category": "OTHER",
-    "url": "https://www.reddit.com/r/scuba/comments/1t0ows2/i_made_a_65page_malapascua_dive_guide_2026_update",
-    "source": "reddit",
-    "date": "2026",
-    "likes": 0,
-    "city": "london"
   }
 ]
