@@ -13,6 +13,18 @@
     "city": "london"
   },
   {
+    "id": "github-1257291487",
+    "title": "pulse of london",
+    "author": "@akmalkhadir",
+    "description": "Live, unofficial map of how busy & disrupted London's rail network is right now vs a typical day — built on TfL Open Data.",
+    "category": "TRANSIT",
+    "url": "https://github.com/akmalkhadir/pulse-of-london",
+    "source": "github",
+    "date": "2026-06",
+    "likes": 0,
+    "city": "london"
+  },
+  {
     "id": "github-1085477676",
     "title": "0110 digital product frontend",
     "author": "@webdevgenius2014",
@@ -105,6 +117,57 @@
     "url": "https://github.com/hetu412patel/London_electricity_demand_prediction_dashboard",
     "source": "github",
     "date": "2026-03",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "de2d72c3-2b98-4e1c-908c-a5099171008f",
+    "title": "HN Companion",
+    "author": "@georgeck",
+    "description": "A web app that enhances the experience of reading Hacker News",
+    "category": "UTILITY",
+    "url": "https://hncompanion.com",
+    "sourceUrl": "https://news.ycombinator.com/front?day=2026-02-10&p=3",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "97eea3e1-f90c-4f86-a774-a2603b7939ba",
+    "title": "auxx.ai",
+    "author": "m4rkuskk",
+    "description": "An AI CRM",
+    "category": "AI",
+    "url": "https://auxx.ai/",
+    "sourceUrl": "https://news.ycombinator.com/item?id=47741527",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "201eac2c-01f8-4cc7-98fa-282d877011b4",
+    "title": "givedirection.com",
+    "author": "u/wangsj",
+    "description": "A website that teaches people how to deliver real products and not just a bunch of junk and slop that can’t be maintained",
+    "category": "UTILITY",
+    "url": "https://givedirection.com",
+    "sourceUrl": "https://news.ycombinator.com/item?id=47741527",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "71877ec2-aa5c-4c89-a474-7f361d6a7379",
+    "title": "PRISM",
+    "author": "Bryden Wood",
+    "description": "An open-source app for homebuilding that combines the Mayor's spatial planning rules with precision-manufactured home expertise",
+    "category": "UTILITY",
+    "url": "https://www.londonbuildexpo.com/news/london-launches-open-source-app-for-homebuilding",
+    "source": "other",
+    "date": "2026",
     "likes": 0,
     "city": "london"
   }
