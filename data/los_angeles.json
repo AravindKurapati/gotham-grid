@@ -106,53 +106,5 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
-  },
-  {
-    "id": "e1d4374e-f7de-4d92-893f-9872434a12d6",
-    "title": "2026 LA Marathon App",
-    "author": "Dilltree Inc",
-    "description": "An official race weekend app for tracking runners and accessing essential race information",
-    "category": "UTILITY",
-    "url": "https://apps.apple.com/tr/app/2026-la-marathon/id6742469528",
-    "source": "other",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "aa37d981-37b1-4edf-aeb5-c9892e7c4002",
-    "title": "Metro App",
-    "author": "LA Metro",
-    "description": "A trip planning, fare payment, and customer communications app for LA Metro",
-    "category": "TRANSIT",
-    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
-    "source": "reddit",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "da082269-c213-467f-b85f-b3aafbfd1fc0",
-    "title": "Huupe",
-    "author": "Goji Labs",
-    "description": "A smart basketball hoop app",
-    "category": "OTHER",
-    "url": "https://www.designrush.com/agency/mobile-app-design-development/california/los-angeles",
-    "source": "other",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "62c03373-3aa9-440d-8f0d-57f389237058",
-    "title": "Kolibri",
-    "author": "EastLondonCoder",
-    "description": "A DIY music club in Sweden",
-    "category": "OTHER",
-    "url": "https://news.ycombinator.com/front?day=2026-01-30&p=2",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
   }
 ]
