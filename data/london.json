@@ -121,10 +121,10 @@
     "city": "london"
   },
   {
-    "id": "b1b4b0ab-27b1-4a9a-97e4-bc428ee95fc1",
-    "title": "Auxx.ai",
-    "author": "@m4rkuskk",
-    "description": "An AI-powered CRM system, built over the course of a year.",
+    "id": "be85fb7e-4ed9-443b-933c-935487f8a50c",
+    "title": "auxx.ai",
+    "author": "AndrewKemendo",
+    "description": "An AI CRM platform",
     "category": "AI",
     "url": "https://auxx.ai",
     "sourceUrl": "https://news.ycombinator.com/item?id=47741527",
@@ -134,27 +134,14 @@
     "city": "london"
   },
   {
-    "id": "5f709462-7746-480e-8095-13a901cf8d5b",
-    "title": "Givedirection.com",
-    "author": "@AndrewKemendo",
-    "description": "A website that teaches people how to deliver real products, beyond just writing code.",
+    "id": "b8bea74d-d3a7-4b15-a0f0-7d3a2e363127",
+    "title": "givedirection.com",
+    "author": "AndrewKemendo",
+    "description": "A platform for teaching people how to deliver real products and not just code",
     "category": "UTILITY",
     "url": "https://givedirection.com",
     "sourceUrl": "https://news.ycombinator.com/item?id=47741527",
     "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "3747e4b2-9973-4da6-8dec-f8f7bd65de49",
-    "title": "Appsforum London",
-    "author": "Unknown",
-    "description": "A conference for app growth and revenue leaders, focusing on sustainable growth and monetization strategies.",
-    "category": "UTILITY",
-    "url": "https://www.appsforum.io/london",
-    "sourceUrl": "https://www.appsforum.io/london",
-    "source": "blog",
     "date": "2026",
     "likes": 0,
     "city": "london"

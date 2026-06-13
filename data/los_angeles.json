@@ -106,5 +106,53 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
+  },
+  {
+    "id": "2d6e2235-28d1-4e57-acce-e9c2d7440a98",
+    "title": "Learn with Tree",
+    "author": "u/learnwithtree",
+    "description": "A platform that curates expert insights into topics like Business, Sales, and Finance.",
+    "category": "UTILITY",
+    "url": "https://www.learnwithtree.com",
+    "source": "reddit",
+    "date": "2025",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "de934ffc-51a5-4ceb-8a71-9d2329b1607b",
+    "title": "Huupe",
+    "author": "Unknown",
+    "description": "The world's first smart basketball hoop, developed by Goji Labs.",
+    "category": "OTHER",
+    "url": "https://www.designrush.com/agency/mobile-app-design-development/california/los-angeles",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "20437536-b720-44a7-984c-dadbb86838bc",
+    "title": "LA Metro App",
+    "author": "Unknown",
+    "description": "A new app for trip planning, fare payment, and customer communications.",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "9a48e027-626c-41a2-95f8-c7002c0d47c7",
+    "title": "Nicolas Dular's Game",
+    "author": "Nicolas Dular",
+    "description": "A game built in Elixir, where players put in themes at the beginning of the game.",
+    "category": "OTHER",
+    "url": "https://nicolasdular.com/blog/2025/11/28/side-projects-in-2025",
+    "source": "blog",
+    "date": "2025",
+    "likes": 0,
+    "city": "los_angeles"
   }
 ]
