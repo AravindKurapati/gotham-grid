@@ -108,16 +108,28 @@
     "city": "sf"
   },
   {
-    "id": "9d05a2d8-3634-4906-9422-d5261295e839",
-    "title": "SF POPOS App",
-    "author": "u/SF_POPOS_App",
-    "description": "A free guide to San Francisco’s Privately Owned Public Open Spaces, featuring hidden rooftop gardens, plazas, and tucked-away spots downtown",
-    "category": "TRANSIT",
-    "url": "https://www.reddit.com/r/sanfrancisco/comments/1nfbdel/update_sf_popos_app_now_live_on_ios_26_android_16",
-    "sourceUrl": "https://www.reddit.com/r/sanfrancisco/comments/1nfbdel/update_sf_popos_app_now_live_on_ios_26_android_16",
-    "source": "reddit",
+    "id": "a917534d-3ac7-4b4c-8752-64e12ecf4950",
+    "title": "Interactive Map of US Lighthouses",
+    "author": "@idd2",
+    "description": "An interactive map of US lighthouses and navigational aids, available at lighthouses.app",
+    "category": "MAPS",
+    "url": "https://lighthouses.app",
+    "sourceUrl": "https://news.ycombinator.com/front?day=2026-01-26",
+    "source": "hackernews",
     "date": "2026",
-    "likes": 0,
+    "likes": 102,
+    "city": "sf"
+  },
+  {
+    "id": "1694150b-ed20-4cc7-83d9-9bb6a24e91b8",
+    "title": "Device Management Web Application",
+    "author": "bayeslaw",
+    "description": "A web application for managing and monitoring devices, with features like alert configuration and WebRTC-based p2p connections",
+    "category": "UTILITY",
+    "url": "https://news.ycombinator.com/item?id=46414570",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 22,
     "city": "sf"
   }
 ]

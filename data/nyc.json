@@ -215,5 +215,57 @@
     "date": "2026-03",
     "likes": 0,
     "city": "nyc"
+  },
+  {
+    "id": "67530a27-0a5c-4ade-9917-9741900eaf0a",
+    "title": "HN Wrapped 2025",
+    "author": "@vldszn",
+    "description": "An LLM reviews your year on Hacker News",
+    "category": "OTHER",
+    "url": "https://news.ycombinator.com/item?id=46336104",
+    "sourceUrl": "https://news.ycombinator.com/item?id=46336104",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "0c990dcb-82d6-4dc3-94b9-b36619365e79",
+    "title": "Microlandia",
+    "author": "u/embedding-shape",
+    "description": "A project modeling energy, climate, and new policies like universal basic income",
+    "category": "OTHER",
+    "url": "https://microlandia.city",
+    "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "a8160f24-4528-4533-a08b-b7543a53caed",
+    "title": "Time Portal",
+    "author": "u/author",
+    "description": "A mobile app to explore historical photos of New York",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/nycHistory/comments/1kj57ek/i_built_time_portal_an_app_to_explore_historical",
+    "sourceUrl": "https://www.reddit.com/r/nycHistory/comments/1kj57ek/i_built_time_portal_an_app_to_explore_historical",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "3276ba8b-8a70-4cbb-a1bb-17b2b9747895",
+    "title": "isometric.nyc",
+    "author": "Unknown",
+    "description": "A giant isometric pixel art map of NYC",
+    "category": "MAPS",
+    "url": "https://news.ycombinator.com/front?day=2026-01-22",
+    "sourceUrl": "https://news.ycombinator.com/front?day=2026-01-22",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
   }
 ]
