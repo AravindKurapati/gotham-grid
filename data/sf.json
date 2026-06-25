@@ -106,31 +106,5 @@
     "date": "2025-04",
     "likes": 0,
     "city": "sf"
-  },
-  {
-    "id": "280b2e5a-a348-4cde-a953-8564ee453309",
-    "title": "SF Board of Supervisors Vote Tracker",
-    "author": "u/anonymous",
-    "description": "A free site that tracks every SF Board of Supervisors vote and grades each supervisor on what they actually get done",
-    "category": "OTHER",
-    "url": "https://www.reddit.com/r/sanfrancisco/comments/1rk5tls/tech_giant_microsoft_moves_conference_from",
-    "sourceUrl": "https://www.reddit.com/r/sanfrancisco/",
-    "source": "reddit",
-    "date": "2026",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "3f14f052-5ea9-4b85-b07d-358559b3b85d",
-    "title": "Trombone Side Project",
-    "author": "Nicolas Dular",
-    "description": "A side project that involves building something around the trombone",
-    "category": "OTHER",
-    "url": "https://nicolasdular.com/blog/2025/11/28/side-projects-in-2025",
-    "sourceUrl": "https://nicolasdular.com/",
-    "source": "blog",
-    "date": "2025",
-    "likes": 0,
-    "city": "sf"
   }
 ]
