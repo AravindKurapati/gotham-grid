@@ -106,5 +106,17 @@
     "date": "2025-04",
     "likes": 0,
     "city": "sf"
+  },
+  {
+    "id": "20607417-8819-4348-9a93-c6899f069f97",
+    "title": "Interactive California Budget",
+    "author": "Claude Code",
+    "description": "An interactive visualization of the California budget",
+    "category": "UTILITY",
+    "url": "https://news.ycombinator.com/item?id=46891290",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "sf"
   }
 ]

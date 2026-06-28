@@ -121,7 +121,7 @@
     "city": "london"
   },
   {
-    "id": "bc2bb2c2-3003-40ec-817d-c14e279c09dc",
+    "id": "670a5ca1-97db-4563-999b-e0b45f76e5a6",
     "title": "Microlandia",
     "author": "u/embedding-shape",
     "description": "A project modeling energy, climate, and new policies like universal basic income",
@@ -134,7 +134,7 @@
     "city": "london"
   },
   {
-    "id": "9ac32c3b-6727-43b2-820f-5ead8e446013",
+    "id": "13ce6a21-0ac2-4bed-afb6-7dd8ae675b94",
     "title": "Easy Invoice PDF",
     "author": "u/vldszn",
     "description": "A free and open-source invoice generator with live PDF preview and instant download",
@@ -147,7 +147,7 @@
     "city": "london"
   },
   {
-    "id": "86502ea7-e571-484c-9502-a3894f04b54d",
+    "id": "059a09de-6df3-4864-956b-7f3462e756cd",
     "title": "WebGL Engine",
     "author": "u/bashmelek",
     "description": "A WebGL engine with a web app and backend for hosting games and toy projects",
@@ -155,6 +155,19 @@
     "url": "",
     "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
     "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "d914def4-b1ff-45e3-982b-a4ede744138e",
+    "title": "London Tech Week App",
+    "author": "London Tech Week",
+    "description": "A networking tool for London Tech Week 2026",
+    "category": "UTILITY",
+    "url": "https://londontechweek.com/london-tech-week-app",
+    "sourceUrl": "https://londontechweek.com/london-tech-week-app",
+    "source": "other",
     "date": "2026",
     "likes": 0,
     "city": "london"
