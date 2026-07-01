@@ -106,5 +106,78 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
+  },
+  {
+    "id": "346b6757-7f7a-4730-bcbb-68416d2411c8",
+    "title": "2026 LA Marathon App",
+    "author": "Dilltree Inc",
+    "description": "An official race weekend app for the 41st Running of the ASICS Los Angeles Marathon and LA 5K, allowing users to track runners and access essential race information",
+    "category": "UTILITY",
+    "url": "https://apps.apple.com/mk/app/2026-la-marathon/id6742469528",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "809a34f9-a53d-4363-800d-fef73741edc9",
+    "title": "AI Conversation Partner",
+    "author": "omarisbuilding",
+    "description": "A language practice app that uses AI to facilitate conversations",
+    "category": "AI",
+    "url": "https://apps.apple.com",
+    "sourceUrl": "https://news.ycombinator.com/item?id",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "079917d3-6389-4a45-81d2-a60c9a7e3b86",
+    "title": "Hacker News in SQLite",
+    "author": "Unknown",
+    "description": "A database of 22 GB of Hacker News data in SQLite format",
+    "category": "UTILITY",
+    "url": "https://news.ycombinator.com/highlights",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "47e5ea8c-d3fa-4baa-bd79-a774301407ae",
+    "title": "LA Metro Trip Planner",
+    "author": "LA Metro",
+    "description": "An upcoming app for trip planning, fare payment, and customer communications",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "89afd414-5daa-40c7-bb21-5a7829b79961",
+    "title": "LAX Automated People Mover",
+    "author": "LAWA",
+    "description": "An automated people mover system for Los Angeles International Airport",
+    "category": "TRANSIT",
+    "url": "https://www.lawa.org/transforminglax",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "2a79abd5-520d-4c02-b2b4-3240519fca13",
+    "title": "Walkway: Liminal Dreadful",
+    "author": "Unknown",
+    "description": "A concept for a walkway at LAX airport, described as 'liminal' and 'dreadful'",
+    "category": "OTHER",
+    "url": "https://www.reddit.com/r/LosAngeles/comments/1slen5y/walkway_liminal_dreadful_lax_c_2026",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
   }
 ]
