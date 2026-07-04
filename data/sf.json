@@ -108,42 +108,16 @@
     "city": "sf"
   },
   {
-    "id": "5ada0e5a-f4c8-4c6b-8151-4192af7efce1",
+    "id": "ad45159d-2c96-4814-bed1-84836e71a7b8",
     "title": "Interactive California Budget",
-    "author": "Claude Code",
-    "description": "An interactive visualization of the California budget, allowing users to explore and understand the state's financial situation.",
+    "author": "sberens",
+    "description": "An interactive dashboard for the California budget, created using Claude Code",
     "category": "UTILITY",
-    "url": "https://news.ycombinator.com/item?id=46891290",
+    "url": "https://california-budget.com",
     "sourceUrl": "https://news.ycombinator.com/item?id=46891290",
     "source": "hackernews",
     "date": "2026",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "74775755-4c4b-4d57-a768-1cc440937d3f",
-    "title": "Porting 100k lines from TypeScript to Rust",
-    "author": "ibobev",
-    "description": "A project showcasing the process of porting a large codebase from TypeScript to Rust using Claude Code.",
-    "category": "UTILITY",
-    "url": "https://vjeux.com",
-    "sourceUrl": "https://news.ycombinator.com/front?day=2026-01-26",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "6e0d27f0-d3ea-42db-98bb-76db0b23e6b6",
-    "title": "Western Neighborhoods Project",
-    "author": "Unknown",
-    "description": "A project dedicated to preserving and sharing the history of San Francisco's Western Neighborhoods.",
-    "category": "OTHER",
-    "url": "https://www.outsidelands.org",
-    "sourceUrl": "https://www.outsidelands.org",
-    "source": "blog",
-    "date": "2026",
-    "likes": 0,
+    "likes": 39,
     "city": "sf"
   }
 ]

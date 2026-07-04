@@ -121,10 +121,10 @@
     "city": "london"
   },
   {
-    "id": "feb167fc-2902-4fbf-bc6e-0a79667604b9",
+    "id": "983a8444-b605-41ef-b9e8-828bd6b7da90",
     "title": "Microlandia",
-    "author": "u/embedding-shape",
-    "description": "A city modeling project that simulates energy, climate, and new policies like universal basic income",
+    "author": "embedding-shape",
+    "description": "A project modeling energy, climate, and new policies like universal basic income",
     "category": "OTHER",
     "url": "https://microlandia.city",
     "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
@@ -134,12 +134,25 @@
     "city": "london"
   },
   {
-    "id": "6b698040-e8ad-4b6f-9239-0bcf5d300cd2",
+    "id": "57a7af9c-f055-4ecf-b0bd-abb332bc4864",
+    "title": "Coderscreen",
+    "author": "rogutkuba",
+    "description": "An open-source technical interview platform for real interview workflows",
+    "category": "UTILITY",
+    "url": "https://coderscreen.com/",
+    "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "be34418f-9c94-49bd-aa55-595275d17cbd",
     "title": "Drawers",
     "author": "wwwkieran",
-    "description": "A macOS app that gives each project its own dock, space, and windows",
+    "description": "A macOS app to give each project its own dock, space, and windows",
     "category": "UTILITY",
-    "url": "https://www.drawers.app",
+    "url": "https://news.ycombinator.com/item?id=48085993",
     "sourceUrl": "https://news.ycombinator.com/item?id=48085993",
     "source": "hackernews",
     "date": "2026",
@@ -147,7 +160,7 @@
     "city": "london"
   },
   {
-    "id": "48226962-f279-4b30-a2cd-935dee88b191",
+    "id": "5d6d3293-0286-4d16-9086-c2d605360eb8",
     "title": "PRISM",
     "author": "Bryden Wood",
     "description": "An open-source app for designing and constructing high-quality, factory-built homes",
