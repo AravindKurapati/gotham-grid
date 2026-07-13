@@ -217,7 +217,20 @@
     "city": "nyc"
   },
   {
-    "id": "e51f0686-30e5-4f79-988b-6b892a60bd79",
+    "id": "620b18ed-b555-404d-8f1b-5488f8c2c278",
+    "title": "HN Wrapped 2025",
+    "author": "@hubraumhugo",
+    "description": "A fun project that reviews your year on HN using LLM, generating roasts and stats based on your activity",
+    "category": "OTHER",
+    "url": "https://kadoa.com/",
+    "sourceUrl": "https://news.ycombinator.com/item?id=46336104",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 313,
+    "city": "nyc"
+  },
+  {
+    "id": "f41a8477-d43d-468c-804a-c97990b91318",
     "title": "Microlandia",
     "author": "embedding-shape",
     "description": "A project modeling energy, climate, and new policies like universal basic income",
@@ -230,42 +243,29 @@
     "city": "nyc"
   },
   {
-    "id": "1695a973-108f-424b-b7b0-891a40fbee6e",
+    "id": "fc2e6f42-949f-4eae-84b3-daf7f6404367",
     "title": "Ternlight",
-    "author": "soycaporal",
-    "description": "A 7 MB embedding model that runs in the browser",
+    "author": "@soycaporal",
+    "description": "A 7 MB embedding model that runs in the browser using WASM",
     "category": "AI",
     "url": "https://ternlight-demo.vercel.app/",
     "sourceUrl": "https://news.ycombinator.com/item?id=48811644",
     "source": "hackernews",
     "date": "2026",
-    "likes": 0,
+    "likes": 260,
     "city": "nyc"
   },
   {
-    "id": "6c3b54e0-63a1-4be0-97b1-9891ce5f6466",
-    "title": "NYT Top 100 Restaurants",
-    "author": "u/username",
-    "description": "An interactive tool to track the NYT 2025 Top 100 restaurants",
-    "category": "FOOD",
-    "url": "https://www.reddit.com/r/FoodNYC/comments/1oarzwl/visiting_nyc_and_wanted_to_eat_my_way_through_the",
-    "sourceUrl": "https://www.reddit.com/r/FoodNYC/comments/1oarzwl/visiting_nyc_and_wanted_to_eat_my_way_through_the",
-    "source": "reddit",
+    "id": "88eb88f1-7976-4b34-9ebc-f707a9824e1b",
+    "title": "Whim Files",
+    "author": "@whimbyte",
+    "description": "A fast, native Mac file manager with filters, fuzzy find, and no Electron",
+    "category": "UTILITY",
+    "url": "https://whimfiles.com/",
+    "sourceUrl": "https://news.ycombinator.com/item?id=48814952",
+    "source": "hackernews",
     "date": "2026",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "ad67e3e6-3169-4410-b158-3f6768460444",
-    "title": "Bailey and Sedgwick Avenues safety improvements",
-    "author": "NYC DOT",
-    "description": "A project proposing corridor safety improvements to Bailey and Sedgwick Avenues",
-    "category": "TRANSIT",
-    "url": "https://www.nyc.gov/html/dot/html/about/current-projects.shtml",
-    "sourceUrl": "https://www.nyc.gov/html/dot/html/about/current-projects.shtml",
-    "source": "other",
-    "date": "2026",
-    "likes": 0,
+    "likes": 22,
     "city": "nyc"
   }
 ]

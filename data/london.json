@@ -133,10 +133,10 @@
     "city": "london"
   },
   {
-    "id": "a3e9168b-144d-498f-b7f4-338dd72af8a7",
+    "id": "2c852328-27d0-42ff-9180-8dfb13610ae9",
     "title": "Microlandia",
     "author": "u/embedding-shape",
-    "description": "A web-based project modeling energy, climate, and new policies like universal basic income",
+    "description": "A project modeling energy, climate, and new policies like universal basic income",
     "category": "OTHER",
     "url": "https://microlandia.city",
     "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
@@ -146,7 +146,7 @@
     "city": "london"
   },
   {
-    "id": "0989c83d-70cf-466a-867a-a7c23f0f4f40",
+    "id": "513a9320-0ec2-4218-ae3e-7beb19d34814",
     "title": "Drawers",
     "author": "u/wwwkieran",
     "description": "A macOS app to give each project its own dock, space, and windows",
@@ -155,6 +155,18 @@
     "sourceUrl": "https://news.ycombinator.com/item?id=48085993",
     "source": "hackernews",
     "date": "2026-05",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "4ce136dd-12bd-4e0b-b131-189d3f9b93bf",
+    "title": "London Tech Week App",
+    "author": "London Tech Week",
+    "description": "A networking tool for London Tech Week 2026",
+    "category": "UTILITY",
+    "url": "https://londontechweek.com/london-tech-week-app",
+    "source": "producthunt",
+    "date": "2026",
     "likes": 0,
     "city": "london"
   }
