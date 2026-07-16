@@ -217,20 +217,7 @@
     "city": "nyc"
   },
   {
-    "id": "620b18ed-b555-404d-8f1b-5488f8c2c278",
-    "title": "HN Wrapped 2025",
-    "author": "@hubraumhugo",
-    "description": "A fun project that reviews your year on HN using LLM, generating roasts and stats based on your activity",
-    "category": "OTHER",
-    "url": "https://kadoa.com/",
-    "sourceUrl": "https://news.ycombinator.com/item?id=46336104",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 313,
-    "city": "nyc"
-  },
-  {
-    "id": "f41a8477-d43d-468c-804a-c97990b91318",
+    "id": "5e0a55ed-2566-4011-b361-6917fb67da52",
     "title": "Microlandia",
     "author": "embedding-shape",
     "description": "A project modeling energy, climate, and new policies like universal basic income",
@@ -243,29 +230,28 @@
     "city": "nyc"
   },
   {
-    "id": "fc2e6f42-949f-4eae-84b3-daf7f6404367",
-    "title": "Ternlight",
-    "author": "@soycaporal",
-    "description": "A 7 MB embedding model that runs in the browser using WASM",
-    "category": "AI",
-    "url": "https://ternlight-demo.vercel.app/",
-    "sourceUrl": "https://news.ycombinator.com/item?id=48811644",
+    "id": "4727a729-2ce9-42c3-8f97-021e4c9548b3",
+    "title": "HN Wrapped 2025",
+    "author": "hubraumhugo",
+    "description": "A project that reviews a user's year on Hacker News using an LLM",
+    "category": "UTILITY",
+    "url": "https://kadoa.com",
+    "sourceUrl": "https://news.ycombinator.com/item?id=46336104",
     "source": "hackernews",
     "date": "2026",
-    "likes": 260,
+    "likes": 0,
     "city": "nyc"
   },
   {
-    "id": "88eb88f1-7976-4b34-9ebc-f707a9824e1b",
-    "title": "Whim Files",
-    "author": "@whimbyte",
-    "description": "A fast, native Mac file manager with filters, fuzzy find, and no Electron",
-    "category": "UTILITY",
-    "url": "https://whimfiles.com/",
-    "sourceUrl": "https://news.ycombinator.com/item?id=48814952",
-    "source": "hackernews",
+    "id": "c39013f3-0d29-484d-935f-d8182abd8145",
+    "title": "Side Project Saturday",
+    "author": "Unknown",
+    "description": "A meetup for side projects in downtown Brooklyn",
+    "category": "OTHER",
+    "url": "https://sideprojectsaturday.com",
+    "source": "other",
     "date": "2026",
-    "likes": 22,
+    "likes": 0,
     "city": "nyc"
   }
 ]

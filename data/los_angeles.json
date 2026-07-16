@@ -106,5 +106,44 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
+  },
+  {
+    "id": "5182b59b-0dd1-446d-981c-1dd39179e5fe",
+    "title": "AI Conversation Partner",
+    "author": "@omarisbuilding",
+    "description": "An app to practice speaking languages, available on the App Store",
+    "category": "AI",
+    "url": "https://apps.apple.com/",
+    "sourceUrl": "https://news.ycombinator.com/item?id=47975571",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 65,
+    "city": "los_angeles"
+  },
+  {
+    "id": "97294924-ef8f-4b9c-be6f-f42c4e53939d",
+    "title": "LA Metro App",
+    "author": "u/LAMetro",
+    "description": "A new app for trip planning, fare payment, and customer communications, launching by 2026 World Cup",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app/",
+    "sourceUrl": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app/",
+    "source": "reddit",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "0131e89f-4eb7-4d64-a43d-41db9aba7078",
+    "title": "Elixir Game",
+    "author": "Nicolas Dular",
+    "description": "A side project game built in Elixir, with themes and generated questions",
+    "category": "OTHER",
+    "url": "https://nicolasdular.com/blog/2025/11/28/side-projects-in-2025",
+    "sourceUrl": "https://nicolasdular.com/blog/2025/11/28/side-projects-in-2025",
+    "source": "blog",
+    "date": "2025",
+    "likes": 0,
+    "city": "los_angeles"
   }
 ]
