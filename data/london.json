@@ -8,7 +8,7 @@
     "url": "https://adamjones.me/london-cycle-parking/",
     "sourceUrl": "https://github.com/domdomegg/london-cycle-parking",
     "source": "github",
-    "date": "2026-06",
+    "date": "2026-07",
     "likes": 0,
     "city": "london"
   },
@@ -133,26 +133,13 @@
     "city": "london"
   },
   {
-    "id": "8d7f815f-3e0d-42e7-85bb-2d91d5d7e957",
+    "id": "08ac2ace-04b1-4b45-a676-650b7dfa5a94",
     "title": "Microlandia",
-    "author": "u/sshine",
+    "author": "u/embedding-shape",
     "description": "A brutally honest city builder game",
     "category": "OTHER",
     "url": "",
     "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "74c39d71-de68-4b48-93c2-0c6e25e79521",
-    "title": "Undermind.ai",
-    "author": "cartucho1",
-    "description": "An AI-powered tool",
-    "category": "AI",
-    "url": "https://app.undermind.ai/",
-    "sourceUrl": "https://news.ycombinator.com/item?id=48884984",
     "source": "hackernews",
     "date": "2026",
     "likes": 0,
