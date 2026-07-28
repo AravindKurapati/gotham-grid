@@ -106,5 +106,44 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
+  },
+  {
+    "id": "336be3f0-aca2-47b6-b513-50af4b51302d",
+    "title": "LA Metro App",
+    "author": "u/numbleontwitter",
+    "description": "A transit app for trip planning, fare payment, and customer communications, to be developed by a third-party developer and launched by 2026",
+    "category": "TRANSIT",
+    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
+    "sourceUrl": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
+    "source": "reddit",
+    "date": "2025",
+    "likes": 175,
+    "city": "los_angeles"
+  },
+  {
+    "id": "a7486c5b-f246-443c-997c-bd7661a15e92",
+    "title": "Server Side AI SDK",
+    "author": "civancza",
+    "description": "An embeddable analytics tool with zero trust architecture, abstracting away AI/LLM complexity and adding text to visualization to dashboards",
+    "category": "AI",
+    "url": "https://news.ycombinator.com/item?id=46414570",
+    "sourceUrl": "https://news.ycombinator.com/item?id=46414570",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
+    "id": "0a8a8ca2-fad5-4bac-8cc9-445d3a0268c8",
+    "title": "Mood Logger",
+    "author": "Unknown",
+    "description": "A simple mood logging app, with premium insights available for $3/mo",
+    "category": "UTILITY",
+    "url": "https://ideaproof.io/lists/weekend-project-ideas",
+    "sourceUrl": "https://ideaproff.io/lists/weekend-project-ideas",
+    "source": "other",
+    "date": "2026",
+    "likes": 0,
+    "city": "los_angeles"
   }
 ]
