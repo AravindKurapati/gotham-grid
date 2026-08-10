@@ -203,5 +203,31 @@
     "date": "2026-03",
     "likes": 0,
     "city": "nyc"
+  },
+  {
+    "id": "d4243492-860c-441b-ab8e-8b8db656539b",
+    "title": "SpeakeasyFinder",
+    "author": "u/unknown",
+    "description": "An interactive website of all Hidden Bars and Speakeasies in NYC, allowing users to discover and explore these unique establishments",
+    "category": "FOOD",
+    "url": "https://speakeasyfinder.com",
+    "sourceUrl": "https://www.reddit.com/r/nyc/comments/1mck8fv/i_created_an_interactive_website_of_all_hidden",
+    "source": "reddit",
+    "date": "2025",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
+    "id": "2dd323ed-42f5-492f-bc41-51ad6b8e5114",
+    "title": "Radius.to",
+    "author": "radius89",
+    "description": "A Meetup.com alternative with fairer organiser pricing for smaller groups, allowing users to create and join events",
+    "category": "UTILITY",
+    "url": "https://radius.to",
+    "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
+    "source": "hackernews",
+    "date": "2026",
+    "likes": 0,
+    "city": "nyc"
   }
 ]
