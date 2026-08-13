@@ -205,28 +205,28 @@
     "city": "nyc"
   },
   {
-    "id": "d4243492-860c-441b-ab8e-8b8db656539b",
+    "id": "0808bd92-95dc-4e66-9030-3a6c2e2d4071",
     "title": "SpeakeasyFinder",
     "author": "u/unknown",
-    "description": "An interactive website of all Hidden Bars and Speakeasies in NYC, allowing users to discover and explore these unique establishments",
+    "description": "An interactive website mapping hidden bars and speakeasies in NYC",
     "category": "FOOD",
     "url": "https://speakeasyfinder.com",
-    "sourceUrl": "https://www.reddit.com/r/nyc/comments/1mck8fv/i_created_an_interactive_website_of_all_hidden",
+    "sourceUrl": "https://www.reddit.com/r/nyc/comments/1mck8fv/i_created_an_interactive_website_of_all_hidden/",
     "source": "reddit",
     "date": "2025",
     "likes": 0,
     "city": "nyc"
   },
   {
-    "id": "2dd323ed-42f5-492f-bc41-51ad6b8e5114",
-    "title": "Radius.to",
-    "author": "radius89",
-    "description": "A Meetup.com alternative with fairer organiser pricing for smaller groups, allowing users to create and join events",
+    "id": "f3bc3f21-4dc1-44f3-b153-7bf236659f8f",
+    "title": "Patio",
+    "author": "frenchman_in_ny",
+    "description": "A platform for renting tools and learning DIY, aiming to reduce waste",
     "category": "UTILITY",
-    "url": "https://radius.to",
-    "sourceUrl": "https://news.ycombinator.com/item?id=48528779",
+    "url": "https://news.ycombinator.com/item?id=44147803",
+    "sourceUrl": "https://news.ycombinator.com/item?id=44147803",
     "source": "hackernews",
-    "date": "2026",
+    "date": "2025",
     "likes": 0,
     "city": "nyc"
   }
