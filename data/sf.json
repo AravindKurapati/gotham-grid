@@ -106,44 +106,5 @@
     "date": "2026-04",
     "likes": 0,
     "city": "sf"
-  },
-  {
-    "id": "66bdbe6a-8b9b-4e8b-bbac-fecad834d0c5",
-    "title": "Isopolis",
-    "author": "u/burnoutdv",
-    "description": "An isometric pixel map of San Francisco",
-    "category": "MAPS",
-    "url": "https://news.ycombinator.com/item?id=49149966",
-    "sourceUrl": "https://news.ycombinator.com/item?id=49149966",
-    "source": "hackernews",
-    "date": "2025",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "ff4df603-b50d-4d7a-9f4e-f1eb8ef28e77",
-    "title": "Immersive Gaussian Splat experience of Sutro Tower, San Francisco",
-    "author": "vincentwoo",
-    "description": "An immersive Gaussian Splat experience of Sutro Tower, San Francisco",
-    "category": "MAPS",
-    "url": "https://vincentwoo.com",
-    "sourceUrl": "https://news.ycombinator.com/item?id=43120582",
-    "source": "hackernews",
-    "date": "2025",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "02864b0f-1725-4ca1-a71c-f3ff31f07d89",
-    "title": "Text to Speech Reader Application",
-    "author": "OfflineSergio",
-    "description": "A one time payment text to speech reader application for Mac and Windows",
-    "category": "UTILITY",
-    "url": "unknown",
-    "sourceUrl": "https://news.ycombinator.com/item?id=46414570",
-    "source": "hackernews",
-    "date": "2025",
-    "likes": 0,
-    "city": "sf"
   }
 ]
