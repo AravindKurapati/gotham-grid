@@ -106,44 +106,5 @@
     "date": "2026-04",
     "likes": 0,
     "city": "los_angeles"
-  },
-  {
-    "id": "e126e687-6159-49f3-b83a-142615b17d27",
-    "title": "Skeuomorphic Carpentry Simulator",
-    "author": "taylorfinley",
-    "description": "A carpentry simulator with an agent MCP that allows users to build and create virtual carpentry projects",
-    "category": "OTHER",
-    "url": "https://news.ycombinator.com/item?id=49233423",
-    "sourceUrl": "https://news.ycombinator.com/item?id=49233423",
-    "source": "hackernews",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "4ed5a03f-b15a-44f1-99ca-1d4d6c0c4e36",
-    "title": "LA Metro App",
-    "author": "Unknown",
-    "description": "A new app for trip planning, fare payment, and customer communications for LA Metro",
-    "category": "TRANSIT",
-    "url": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
-    "sourceUrl": "https://www.reddit.com/r/LAMetro/comments/1jj5g1a/la_metro_planning_to_create_new_app",
-    "source": "reddit",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "874ed5b4-f40e-4128-9608-95c7af3bd34c",
-    "title": "Mood Tracker",
-    "author": "Unknown",
-    "description": "A daily mood tracking application with premium insights",
-    "category": "OTHER",
-    "url": "https://ideaproof.io/lists/weekend-project-ideas",
-    "sourceUrl": "https://ideaproof.io/lists/weekend-project-ideas",
-    "source": "other",
-    "date": "2026",
-    "likes": 0,
-    "city": "los_angeles"
   }
 ]
