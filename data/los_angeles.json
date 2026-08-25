@@ -48,6 +48,18 @@
     "city": "los_angeles"
   },
   {
+    "id": "github-1343773785",
+    "title": "Crime Analysis In Los Angeles",
+    "author": "@vishnuvardhan939",
+    "description": "An interactive Power BI dashboard that analyzes crime incident data — visualizing crime volume, severity, status, victim demographics, and geographic/time-based patterns to support crime trend analysis.",
+    "category": "UTILITY",
+    "url": "https://github.com/vishnuvardhan939/Crime-Analysis-In-Los-Angeles",
+    "source": "github",
+    "date": "2026-08",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
     "id": "github-1273600122",
     "title": "CodeAlpha DataVisualization",
     "author": "@dipanjan-18",
@@ -80,18 +92,6 @@
     "url": "https://github.com/Gaurav-Bhatnagar-29/Crime-Analytics-Dashboard",
     "source": "github",
     "date": "2025-12",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "github-1301051460",
-    "title": "crime analytics powerbi",
-    "author": "@Yuangp01",
-    "description": "Los Angeles Crime Analytics Dashboard is an end-to-end data visualization and analytics project built with Power BI. It provides an interactive interface for exploring Los Angeles crime trends using Power Query, DAX, data modeling, and dynamic dashboards to support data-driven decision-making.",
-    "category": "UTILITY",
-    "url": "https://github.com/Yuangp01/crime-analytics-powerbi",
-    "source": "github",
-    "date": "2026-08",
     "likes": 0,
     "city": "los_angeles"
   },
