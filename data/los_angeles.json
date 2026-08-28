@@ -60,6 +60,18 @@
     "city": "los_angeles"
   },
   {
+    "id": "github-1349755889",
+    "title": "Los Angeles Crime Analysis",
+    "author": "@MahaAdelGad",
+    "description": "Los Angeles Crime Analysis using Python and Power BI. Includes data cleaning, exploratory data analysis, age grouping, time and crime pattern analysis, outlier detection, and visualizations with Pandas, Matplotlib, and Seaborn, followed by an interactive Power BI dashboard.",
+    "category": "UTILITY",
+    "url": "https://github.com/MahaAdelGad/Los-Angeles-Crime-Analysis",
+    "source": "github",
+    "date": "2026-08",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
     "id": "github-1273600122",
     "title": "CodeAlpha DataVisualization",
     "author": "@dipanjan-18",
@@ -80,18 +92,6 @@
     "url": "https://github.com/Laurlyna/Crime-Analysis",
     "source": "github",
     "date": "2026-06",
-    "likes": 0,
-    "city": "los_angeles"
-  },
-  {
-    "id": "github-1116943959",
-    "title": "Crime Analytics Dashboard",
-    "author": "@Gaurav-Bhatnagar-29",
-    "description": "A Power BI-based analytics dashboard that transforms Los Angeles crime data into interactive visualizations for trend analysis, hotspot detection, and decision support.",
-    "category": "UTILITY",
-    "url": "https://github.com/Gaurav-Bhatnagar-29/Crime-Analytics-Dashboard",
-    "source": "github",
-    "date": "2025-12",
     "likes": 0,
     "city": "los_angeles"
   },
