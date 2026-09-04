@@ -72,18 +72,6 @@
     "city": "sf"
   },
   {
-    "id": "github-1321557478",
-    "title": "crime analytics django dashboard",
-    "author": "@harshidkoladara",
-    "description": "A Django-based Crime Analytics dashboard integrating interactive FusionCharts visualizations for Indian crime statistics and a pre-trained machine learning model for San Francisco crime prediction.",
-    "category": "UTILITY",
-    "url": "https://github.com/harshidkoladara/crime-analytics-django-dashboard",
-    "source": "github",
-    "date": "2026-08",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
     "id": "github-975683438",
     "title": "Crime Data Analysis",
     "author": "@Kushagra-Sedwal",
@@ -92,6 +80,18 @@
     "url": "https://github.com/Kushagra-Sedwal/Crime-Data-Analysis",
     "source": "github",
     "date": "2025-04",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1321557478",
+    "title": "crime analytics django dashboard",
+    "author": "@harshidkoladara",
+    "description": "A Django-based Crime Analytics dashboard integrating interactive FusionCharts visualizations for Indian crime statistics and a pre-trained machine learning model for San Francisco crime prediction.",
+    "category": "UTILITY",
+    "url": "https://github.com/harshidkoladara/crime-analytics-django-dashboard",
+    "source": "github",
+    "date": "2026-08",
     "likes": 0,
     "city": "sf"
   },
