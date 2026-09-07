@@ -168,6 +168,18 @@
     "city": "nyc"
   },
   {
+    "id": "github-1359942002",
+    "title": "nyc bus map",
+    "author": "@Miqell24",
+    "description": "Interactive map of New York public transport (MTA subway and buses, LIRR, Metro-North, NICE, PATH, NJ Transit in Hudson and Essex) - GTFS + OSM + HMM map matching",
+    "category": "TRANSIT",
+    "url": "https://github.com/Miqell24/nyc-bus-map",
+    "source": "github",
+    "date": "2026-09",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
     "id": "github-1136991272",
     "title": "Customer Engagement statistics",
     "author": "@pprajnadata",
