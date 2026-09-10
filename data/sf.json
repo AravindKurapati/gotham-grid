@@ -72,18 +72,6 @@
     "city": "sf"
   },
   {
-    "id": "github-975683438",
-    "title": "Crime Data Analysis",
-    "author": "@Kushagra-Sedwal",
-    "description": "Tableau dashboard for visualizing San Francisco crime data, identifying regional trends and hot spots with interactive filtering and geo-mapping.",
-    "category": "MAPS",
-    "url": "https://github.com/Kushagra-Sedwal/Crime-Data-Analysis",
-    "source": "github",
-    "date": "2025-04",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
     "id": "github-1321557478",
     "title": "crime analytics django dashboard",
     "author": "@harshidkoladara",
@@ -92,6 +80,18 @@
     "url": "https://github.com/harshidkoladara/crime-analytics-django-dashboard",
     "source": "github",
     "date": "2026-08",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-975683438",
+    "title": "Crime Data Analysis",
+    "author": "@Kushagra-Sedwal",
+    "description": "Tableau dashboard for visualizing San Francisco crime data, identifying regional trends and hot spots with interactive filtering and geo-mapping.",
+    "category": "MAPS",
+    "url": "https://github.com/Kushagra-Sedwal/Crime-Data-Analysis",
+    "source": "github",
+    "date": "2025-04",
     "likes": 0,
     "city": "sf"
   },
