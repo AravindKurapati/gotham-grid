@@ -32,7 +32,19 @@
     "category": "ART",
     "url": "https://github.com/webdevgenius2014/0110_digital_product_frontend",
     "source": "github",
-    "date": "2026-08",
+    "date": "2026-09",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "github-1364525283",
+    "title": "London Crime Visualization",
+    "author": "@raphaelkzz",
+    "description": "London crime visualization: data pipeline, Streamlit dashboard, EDA and research outline",
+    "category": "UTILITY",
+    "url": "https://github.com/raphaelkzz/London-Crime-Visualization",
+    "source": "github",
+    "date": "2026-09",
     "likes": 0,
     "city": "london"
   },
@@ -105,18 +117,6 @@
     "url": "https://github.com/starkparsa/Lodon_bike_rides_dashboard",
     "source": "github",
     "date": "2025-07",
-    "likes": 0,
-    "city": "london"
-  },
-  {
-    "id": "github-948938333",
-    "title": "covid dashboard java",
-    "author": "@jd-paul",
-    "description": "A Java Swing application that visualizes COVID-19 data for London.",
-    "category": "UTILITY",
-    "url": "https://github.com/jd-paul/covid-dashboard-java",
-    "source": "github",
-    "date": "2025-03",
     "likes": 0,
     "city": "london"
   },
