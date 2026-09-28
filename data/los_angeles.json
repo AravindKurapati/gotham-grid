@@ -1,5 +1,17 @@
 [
   {
+    "id": "github-1391464571",
+    "title": "la walking",
+    "author": "@citina",
+    "description": "One Los Angeles map for people walking: police reports, calls to police and pedestrian crashes around a spot you pick. From LAPD and California open data.",
+    "category": "MAPS",
+    "url": "https://github.com/citina/la-walking",
+    "source": "github",
+    "date": "2026-09",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
     "id": "github-1190662841",
     "title": "Crime Data Analysis Dashboard Los Angeles",
     "author": "@Rotich12",
