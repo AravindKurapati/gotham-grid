@@ -96,6 +96,18 @@
     "city": "nyc"
   },
   {
+    "id": "github-1123241741",
+    "title": "AirbnbNewYork Visualization Dashboard",
+    "author": "@hanifathari",
+    "description": "This Streamlit project enables interactive exploration of the New York Airbnb dataset. Using dynamic filters for price and location, it transforms 100,000+ rows into a data-driven tool. Featuring panning, zooming, and tooltips, it helps users strategically identify accommodations that fit their budget and needs.",
+    "category": "UTILITY",
+    "url": "https://github.com/hanifathari/AirbnbNewYork_Visualization_Dashboard",
+    "source": "github",
+    "date": "2025-12",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
     "id": "github-905320685",
     "title": "Airbnb NewYork Dashboard",
     "author": "@umesh290",
@@ -152,18 +164,6 @@
     "url": "https://github.com/nbethala/Data-Visualization-Tableau",
     "source": "github",
     "date": "2025-03",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "github-1050589707",
-    "title": "NYC Borough dashboard",
-    "author": "@Aakash-Suryavanshi2",
-    "description": "Visualization on finding the best borough to live in New York City",
-    "category": "UTILITY",
-    "url": "https://github.com/Aakash-Suryavanshi2/NYC-Borough-dashboard",
-    "source": "github",
-    "date": "2025-09",
     "likes": 0,
     "city": "nyc"
   },

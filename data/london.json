@@ -7,7 +7,7 @@
     "category": "MAPS",
     "url": "https://github.com/chunhanlin242/london-crime-map",
     "source": "github",
-    "date": "2026-09",
+    "date": "2026-10",
     "likes": 0,
     "city": "london"
   },
@@ -20,7 +20,7 @@
     "url": "https://adamjones.me/london-cycle-parking/",
     "sourceUrl": "https://github.com/domdomegg/london-cycle-parking",
     "source": "github",
-    "date": "2026-07",
+    "date": "2026-10",
     "likes": 0,
     "city": "london"
   },
@@ -37,6 +37,19 @@
     "city": "london"
   },
   {
+    "id": "github-1406477416",
+    "title": "smartldn",
+    "author": "@palapplelabs",
+    "description": "A live open-data map of Greater London: TfL roads, Thames crossings, Tube, rail, buses, river, cycles, weather, air quality and planning. London port of HK Traffic Intelligence.",
+    "category": "TRANSIT",
+    "url": "https://labs.palapple.com/smartldn",
+    "sourceUrl": "https://github.com/palapplelabs/smartldn",
+    "source": "github",
+    "date": "2026-10",
+    "likes": 0,
+    "city": "london"
+  },
+  {
     "id": "github-1085477676",
     "title": "0110 digital product frontend",
     "author": "@webdevgenius2014",
@@ -44,7 +57,7 @@
     "category": "ART",
     "url": "https://github.com/webdevgenius2014/0110_digital_product_frontend",
     "source": "github",
-    "date": "2026-09",
+    "date": "2026-10",
     "likes": 0,
     "city": "london"
   },
@@ -56,7 +69,7 @@
     "category": "UTILITY",
     "url": "https://github.com/raphaelkzz/London-Crime-Visualization",
     "source": "github",
-    "date": "2026-09",
+    "date": "2026-10",
     "likes": 0,
     "city": "london"
   },
