@@ -180,6 +180,18 @@
     "city": "nyc"
   },
   {
+    "id": "github-1424343840",
+    "title": "MTA Daily Ridership",
+    "author": "@YOusefEhab-da",
+    "description": "\"MTA Daily Ridership is a data analytics project designed to track, visualize, and analyze daily passenger volume across New York City’s public transit systems (subways, buses, LIRR, and Metro-North). It provides actionable insights into commuter trends, post-pandemic recovery patterns, and transit system efficiency.\"",
+    "category": "TRANSIT",
+    "url": "https://github.com/YOusefEhab-da/MTA-Daily-Ridership",
+    "source": "github",
+    "date": "2026-10",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
     "id": "github-1136991272",
     "title": "Customer Engagement statistics",
     "author": "@pprajnadata",
