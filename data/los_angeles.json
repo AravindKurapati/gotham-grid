@@ -108,6 +108,18 @@
     "city": "los_angeles"
   },
   {
+    "id": "github-1429490844",
+    "title": "la county fastfood transit",
+    "author": "@YHN666888",
+    "description": "An interactive Web GIS map of McDonald's, KFC, and Subway locations and their straight-line proximity to bus stops and Metro rail stations across Los Angeles County.",
+    "category": "TRANSIT",
+    "url": "https://github.com/YHN666888/la-county-fastfood-transit",
+    "source": "github",
+    "date": "2026-10",
+    "likes": 0,
+    "city": "los_angeles"
+  },
+  {
     "id": "github-1224941014",
     "title": "vmla fixla app",
     "author": "@evanvmla",
