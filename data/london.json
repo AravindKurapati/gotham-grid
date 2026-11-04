@@ -50,6 +50,30 @@
     "city": "london"
   },
   {
+    "id": "github-1442043564",
+    "title": "uk train live",
+    "author": "@simpleapples",
+    "description": "Every train in Great Britain on one live map: National Rail from Network Rail open data, plus the Tube, Overground, Elizabeth line and DLR from TfL, moving along the real track.",
+    "category": "TRANSIT",
+    "url": "https://github.com/simpleapples/uk-train-live",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
+    "city": "london"
+  },
+  {
+    "id": "github-1442809782",
+    "title": "waterworks desk",
+    "author": "@archer7778",
+    "description": "Read-only operations console for water supply, sewer and drainage networks. Maps every site, explains what needs attention in plain language, and never sends a command to the plant. Demo: London’s storm overflows and rain gauges, live from open data.",
+    "category": "MAPS",
+    "url": "https://github.com/archer7778/waterworks-desk",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
+    "city": "london"
+  },
+  {
     "id": "github-1085477676",
     "title": "0110 digital product frontend",
     "author": "@webdevgenius2014",
