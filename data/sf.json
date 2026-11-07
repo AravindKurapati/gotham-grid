@@ -31,8 +31,20 @@
     "category": "MAPS",
     "url": "https://github.com/citina/sf-streets",
     "source": "github",
-    "date": "2026-10",
+    "date": "2026-11",
     "likes": 1,
+    "city": "sf"
+  },
+  {
+    "id": "github-1444954558",
+    "title": "Spirits",
+    "author": "@rudrakshchaudhry",
+    "description": "SF Spirits: an open-world pixel game on the real map of San Francisco. Spirits live at real places from DataSF open data (Next.js, Phaser, Elasticsearch, Mistral, Supabase).",
+    "category": "MAPS",
+    "url": "https://github.com/rudrakshchaudhry/Spirits",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
     "city": "sf"
   },
   {
