@@ -84,6 +84,18 @@
     "city": "sf"
   },
   {
+    "id": "github-1450547428",
+    "title": "san francisco airline analysis",
+    "author": "@sivarishiramesh-byte",
+    "description": "Interactive San Francisco Airline Analysis Dashboard created using Tableau Public to explore airline performance and visualize key insights.",
+    "category": "UTILITY",
+    "url": "https://github.com/sivarishiramesh-byte/san-francisco-airline-analysis",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
     "id": "github-1080233232",
     "title": "BikeShare Visualization",
     "author": "@se7ven7-7",
@@ -128,18 +140,6 @@
     "url": "https://github.com/Kushagra-Sedwal/Crime-Data-Analysis",
     "source": "github",
     "date": "2025-04",
-    "likes": 0,
-    "city": "sf"
-  },
-  {
-    "id": "github-1186258766",
-    "title": "SCI MET",
-    "author": "@chasenunez",
-    "description": "A browser-based, interactive dashboard for visualizing researcher output profiles using principles from the San Francisco Declaration on Research Assessment (DORA).",
-    "category": "UTILITY",
-    "url": "https://github.com/chasenunez/SCI_MET",
-    "source": "github",
-    "date": "2026-04",
     "likes": 0,
     "city": "sf"
   }

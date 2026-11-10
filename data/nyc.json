@@ -36,6 +36,19 @@
     "city": "nyc"
   },
   {
+    "id": "github-1452237650",
+    "title": "place finder",
+    "author": "@rfranci52",
+    "description": "Search places across New York City's five boroughs. A 2026 rebuild of a 2019 bootcamp app: Overture Maps open data in Postgres with PostGIS, served by a hardened Python function on Vercel.",
+    "category": "MAPS",
+    "url": "https://places.rakimfrancis.com",
+    "sourceUrl": "https://github.com/rfranci52/place-finder",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
+    "city": "nyc"
+  },
+  {
     "id": "github-1239150419",
     "title": "nyc zip pulse",
     "author": "@joshgreenman1973",
@@ -164,18 +177,6 @@
     "url": "https://github.com/nbethala/Data-Visualization-Tableau",
     "source": "github",
     "date": "2025-03",
-    "likes": 0,
-    "city": "nyc"
-  },
-  {
-    "id": "github-1359942002",
-    "title": "nyc bus map",
-    "author": "@Miqell24",
-    "description": "Interactive map of New York public transport (MTA subway and buses, LIRR, Metro-North, NICE, PATH, NJ Transit in Hudson and Essex) - GTFS + OSM + HMM map matching",
-    "category": "TRANSIT",
-    "url": "https://github.com/Miqell24/nyc-bus-map",
-    "source": "github",
-    "date": "2026-09",
     "likes": 0,
     "city": "nyc"
   },
