@@ -96,15 +96,15 @@
     "city": "los_angeles"
   },
   {
-    "id": "github-1256255106",
-    "title": "Crime Analysis",
-    "author": "@Laurlyna",
-    "description": "SQL & Excel analysis of 1M+ rows of Los Angeles crime data (2020-2025) with interactive dashboard visualization",
+    "id": "github-1462027362",
+    "title": "lax flight delay powerbi",
+    "author": "@Mr-Kanaan",
+    "description": "Power BI dashboard analyzing flight delays at Los Angeles International Airport using data visualization and KPIs.",
     "category": "UTILITY",
-    "url": "https://github.com/Laurlyna/Crime-Analysis",
+    "url": "https://github.com/Mr-Kanaan/lax-flight-delay-powerbi",
     "source": "github",
-    "date": "2026-06",
-    "likes": 0,
+    "date": "2026-11",
+    "likes": 1,
     "city": "los_angeles"
   },
   {
