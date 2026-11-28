@@ -36,6 +36,30 @@
     "city": "sf"
   },
   {
+    "id": "github-1473889801",
+    "title": "walkfit sf",
+    "author": "@Dewaldnel11",
+    "description": "Find where to live in San Francisco by what you walk to. Built on Overture Maps open data.",
+    "category": "MAPS",
+    "url": "https://github.com/Dewaldnel11/walkfit-sf",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
+    "id": "github-1475143326",
+    "title": "ai listing checker",
+    "author": "@IamMashed",
+    "description": "How do AI assistants see my business? A listing checker for San Francisco businesses, built on Overture Maps open data.",
+    "category": "MAPS",
+    "url": "https://github.com/IamMashed/ai-listing-checker",
+    "source": "github",
+    "date": "2026-11",
+    "likes": 0,
+    "city": "sf"
+  },
+  {
     "id": "github-1444954558",
     "title": "Spirits",
     "author": "@rudrakshchaudhry",
